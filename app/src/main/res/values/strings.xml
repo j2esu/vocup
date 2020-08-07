@@ -4,4 +4,6 @@
     <string name="loading_translation">Loading translation…</string>
     <string name="no_words">No words yet</string>
     <string name="add_word">Add word</string>
+    <string name="add_word_hint">Type a word</string>
+    <string name="save_to_vocabulary">Save to vocabulary</string>
 </resources>

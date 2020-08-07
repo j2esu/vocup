@@ -1,14 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="16dp"
     >
 
-    <TextView
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/addWordInput"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/add_word"
+        android:hint="@string/add_word_hint"
+        android:inputType="textCapSentences"
+        android:lines="1"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+        tools:ignore="Autofill"
+        />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/addWordSave"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:enabled="false"
+        android:text="@string/save_to_vocabulary"
         />
 
 </FrameLayout>

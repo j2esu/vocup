@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 interface Repo {
     fun getAllWords(): LiveData<List<Word>>
     suspend fun getTranslation(text: String): String
+    suspend fun addWord(text: String)
 }
 
 object RepoProvider {
