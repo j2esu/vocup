@@ -3,4 +3,5 @@
     <string name="cant_load_translation">"Can't load translation. Click to retry"</string>
     <string name="loading_translation">Loading translation…</string>
     <string name="no_words">No words yet</string>
+    <string name="add_word">Add word</string>
 </resources>

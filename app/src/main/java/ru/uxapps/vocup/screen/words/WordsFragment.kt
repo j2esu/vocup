@@ -15,12 +15,14 @@ class WordsFragment : Fragment(R.layout.fragment_words) {
 
     interface Host {
         fun openWord(word: Word)
+        fun openAddWord()
     }
 
     private val repo = RepoProvider.provideRepo()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         initWordsList(view)
+        initAddWordButton(view)
     }
 
     private fun initWordsList(view: View) {
@@ -36,6 +38,13 @@ class WordsFragment : Fragment(R.layout.fragment_words) {
             adapter.submitList(it)
             emptyView.isVisible = it.isEmpty()
             loadingPb.isVisible = false
+        }
+    }
+
+    private fun initAddWordButton(view: View) {
+        val btn = view.findViewById<View>(R.id.wordsAdd)
+        btn.setOnClickListener {
+            (activity as Host).openAddWord()
         }
     }
 }
