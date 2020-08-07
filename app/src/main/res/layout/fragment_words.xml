@@ -6,11 +6,28 @@
     android:layout_height="match_parent"
     >
 
+    <ProgressBar
+        android:id="@+id/wordsProgress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/wordsList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:listitem="@layout/item_word"
+        />
+
+    <TextView
+        android:id="@+id/wordsEmpty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/no_words"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+        android:visibility="gone"
         />
 
 </FrameLayout>

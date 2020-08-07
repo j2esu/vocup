@@ -2,6 +2,7 @@ package ru.uxapps.vocup.screen.words
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -29,8 +30,12 @@ class WordsFragment : Fragment(R.layout.fragment_words) {
         }
         rv.adapter = adapter
         rv.layoutManager = LinearLayoutManager(context)
+        val loadingPb = view.findViewById<View>(R.id.wordsProgress)
+        val emptyView = view.findViewById<View>(R.id.wordsEmpty)
         repo.getAllWords().observe(viewLifecycleOwner) {
             adapter.submitList(it)
+            emptyView.isVisible = it.isEmpty()
+            loadingPb.isVisible = false
         }
     }
 }
