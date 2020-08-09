@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
+import androidx.core.text.trimmedLength
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -42,7 +43,7 @@ class AddWordFragment : Fragment(R.layout.fragment_add_word) {
                 .distinctUntilChanged()
                 .debounce(500)
                 .mapLatest {
-                    if (it.isNotBlank()) {
+                    if (it.trimmedLength() > 1) {
                         try {
                             transTv.isEnabled = false
                             transTv.setText(R.string.loading_translation)
