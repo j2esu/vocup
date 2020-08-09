@@ -14,9 +14,8 @@ import java.io.IOException
 class WordFragment : Fragment(R.layout.fragment_word) {
 
     companion object Args {
-        private const val WORD_TEXT = "WORD_TEXT"
-        fun argsOf(word: Word) = bundleOf(WORD_TEXT to word.text)
-        private val WordFragment.wordText get() = requireArguments()[WORD_TEXT] as String
+        fun argsOf(word: Word) = bundleOf("word_text" to word.text)
+        private val WordFragment.wordText get() = requireArguments()["word_text"] as String
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
