@@ -31,7 +31,7 @@ object InMemoryRepo : Repo {
 
     override suspend fun getTranslation(text: String): String {
         delay(Random.nextLong(100, 2000))
-        if (Random.nextBoolean()) {
+        if (Random.nextInt() % 4 == 0) {
             throw IOException("Can't load translation")
         }
         return "Translated: $text"
