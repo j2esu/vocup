@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
-import androidx.core.text.trimmedLength
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -12,6 +11,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import ru.uxapps.vocup.R
 import ru.uxapps.vocup.data.repo
+import ru.uxapps.vocup.screen.addword.AddWordFragment.TranslationResult.*
 import ru.uxapps.vocup.util.input
 import java.io.IOException
 
@@ -41,28 +41,38 @@ class AddWordFragment : Fragment(R.layout.fragment_add_word) {
             inputEt.input(lifecycleScope).consumeAsFlow()
                 .map { it.trim() }
                 .distinctUntilChanged()
-                .debounce(500)
-                .mapLatest {
-                    if (it.trimmedLength() > 1) {
-                        try {
-                            transTv.isEnabled = false
-                            transTv.setText(R.string.loading_translation)
-                            repo.getTranslation(it)
-                        } catch (e: IOException) {
-                            null
+                .debounce(400)
+                .flatMapLatest {
+                    if (it.length > 1) {
+                        flow {
+                            emit(Progress)
+                            val trans = try {
+                                repo.getTranslation(it)
+                            } catch (e: IOException) {
+                                null
+                            }
+                            emit(if (trans != null) Success(trans) else Fail)
                         }
                     } else {
-                        ""
+                        flowOf(Empty)
                     }
                 }
                 .collect {
-                    if (it != null) {
-                        transTv.isEnabled = true
-                        transTv.text = it
-                    } else {
-                        transTv.setText(R.string.cant_load_translation)
+                    transTv.isEnabled = it is Success
+                    when (it) {
+                        Empty -> transTv.text = ""
+                        Progress -> transTv.setText(R.string.loading_translation)
+                        Fail -> transTv.setText(R.string.cant_load_translation)
+                        is Success -> transTv.text = it.result
                     }
                 }
         }
+    }
+
+    sealed class TranslationResult {
+        object Empty : TranslationResult()
+        object Progress : TranslationResult()
+        object Fail : TranslationResult()
+        data class Success(val result: String) : TranslationResult()
     }
 }
