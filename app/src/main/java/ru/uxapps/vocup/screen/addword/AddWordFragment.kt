@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 import ru.uxapps.vocup.R
-import ru.uxapps.vocup.data.RepoProvider
+import ru.uxapps.vocup.data.repo
 
 class AddWordFragment : Fragment(R.layout.fragment_add_word) {
 
@@ -16,13 +16,8 @@ class AddWordFragment : Fragment(R.layout.fragment_add_word) {
         fun closeAddWord()
     }
 
-    private val repo by lazy { RepoProvider.provideRepo() }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        initSaveButton(view)
-    }
-
-    private fun initSaveButton(view: View) {
+        // init save button
         val inputEt = view.findViewById<EditText>(R.id.addWordInput)
         val saveBtn = view.findViewById<View>(R.id.addWordSave)
         inputEt.doAfterTextChanged {

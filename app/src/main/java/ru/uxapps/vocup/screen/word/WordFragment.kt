@@ -7,26 +7,22 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import ru.uxapps.vocup.R
-import ru.uxapps.vocup.data.RepoProvider
 import ru.uxapps.vocup.data.Word
+import ru.uxapps.vocup.data.repo
 import java.io.IOException
 
 class WordFragment : Fragment(R.layout.fragment_word) {
 
-    companion object {
-        private const val ARG_WORD_TEXT = "ARG_WORD_TEXT"
-        fun argsOf(word: Word) = bundleOf(ARG_WORD_TEXT to word.text)
+    companion object Args {
+        private const val WORD_TEXT = "WORD_TEXT"
+        fun argsOf(word: Word) = bundleOf(WORD_TEXT to word.text)
+        private val WordFragment.wordText get() = requireArguments()[WORD_TEXT] as String
     }
-
-    private val wordText by lazy { requireNotNull(arguments?.getString(ARG_WORD_TEXT)) }
-    private val repo = RepoProvider.provideRepo()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        // init word text
         view.findViewById<TextView>(R.id.wordText).text = wordText
-        initTranslation(view)
-    }
-
-    private fun initTranslation(view: View) {
+        // init translation
         val transTv = view.findViewById<TextView>(R.id.wordTranslation)
         val loadTranslation = {
             transTv.isEnabled = false
@@ -41,6 +37,6 @@ class WordFragment : Fragment(R.layout.fragment_word) {
             }
         }
         transTv.setOnClickListener { loadTranslation() }
-        loadTranslation()
+        loadTranslation() // load translation immediately
     }
 }

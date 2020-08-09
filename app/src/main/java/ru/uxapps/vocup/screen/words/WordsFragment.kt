@@ -8,8 +8,8 @@ import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ru.uxapps.vocup.R
-import ru.uxapps.vocup.data.RepoProvider
 import ru.uxapps.vocup.data.Word
+import ru.uxapps.vocup.data.repo
 
 class WordsFragment : Fragment(R.layout.fragment_words) {
 
@@ -18,14 +18,8 @@ class WordsFragment : Fragment(R.layout.fragment_words) {
         fun openAddWord()
     }
 
-    private val repo = RepoProvider.provideRepo()
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        initWordsList(view)
-        initAddWordButton(view)
-    }
-
-    private fun initWordsList(view: View) {
+        // init words list
         val rv = view.findViewById<RecyclerView>(R.id.wordsList)
         val adapter = WordsListAdapter {
             (activity as Host).openWord(it)
@@ -39,9 +33,7 @@ class WordsFragment : Fragment(R.layout.fragment_words) {
             emptyView.isVisible = it.isEmpty()
             loadingPb.isVisible = false
         }
-    }
-
-    private fun initAddWordButton(view: View) {
+        // init add word button
         val btn = view.findViewById<View>(R.id.wordsAdd)
         btn.setOnClickListener {
             (activity as Host).openAddWord()
