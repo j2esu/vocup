@@ -9,7 +9,7 @@ import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.launch
 
 fun EditText.input(scope: CoroutineScope = GlobalScope): ReceiveChannel<String> {
-    val channel = Channel<String>(Channel.UNLIMITED)
+    val channel = Channel<String>(Channel.CONFLATED)
     scope.launch {
         channel.send(text.toString())
     }

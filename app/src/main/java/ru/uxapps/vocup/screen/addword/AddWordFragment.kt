@@ -70,7 +70,7 @@ class AddWordFragment : Fragment(R.layout.fragment_add_word) {
         }
     }
 
-    sealed class TranslationResult {
+    private sealed class TranslationResult {
         object Empty : TranslationResult()
         object Progress : TranslationResult()
         object Fail : TranslationResult()
