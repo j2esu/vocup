@@ -1,6 +1,5 @@
 package ru.uxapps.vocup.util
 
-import android.view.View
 import android.widget.EditText
 import androidx.core.widget.doAfterTextChanged
 import kotlinx.coroutines.CoroutineScope
@@ -22,12 +21,16 @@ fun EditText.input(scope: CoroutineScope = GlobalScope): ReceiveChannel<String> 
     return channel
 }
 
-fun View.clicks(scope: CoroutineScope = GlobalScope): ReceiveChannel<Unit> {
-    val channel = Channel<Unit>(Channel.UNLIMITED)
-    setOnClickListener {
+class Event<T>(private val scope: CoroutineScope) {
+
+    private val _channel = Channel<T>(Channel.UNLIMITED)
+    val channel: ReceiveChannel<T> = _channel
+
+    fun send(item: T) {
         scope.launch {
-            channel.send(Unit)
+            _channel.send(item)
         }
     }
-    return channel
 }
+
+fun Event<Unit>.send() = send(Unit)
