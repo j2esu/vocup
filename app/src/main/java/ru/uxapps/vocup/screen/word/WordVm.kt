@@ -1,8 +1,10 @@
 package ru.uxapps.vocup.screen.word
 
 import androidx.lifecycle.*
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.onStart
 import ru.uxapps.vocup.feature.TranslationFeature
 import ru.uxapps.vocup.repo
 
@@ -24,15 +26,16 @@ class WordVmImp(wordText: String) : ViewModel(), WordVm {
     }
 
     private val transFeature = TranslationFeature(repo)
-    private val loadTransEvent = MutableStateFlow(Any())
+    private val retryEvent = Channel<Unit>()
 
     override val word: LiveData<String> = MutableLiveData(wordText)
     override val translation: LiveData<TranslationFeature.State> =
-        loadTransEvent
+        retryEvent.consumeAsFlow()
+            .onStart { emit(Unit) }
             .flatMapLatest { transFeature.getTranslation(wordText) }
             .asLiveData()
 
     override fun onRetry() {
-        loadTransEvent.value = Any()
+        retryEvent.offer(Unit)
     }
 }
