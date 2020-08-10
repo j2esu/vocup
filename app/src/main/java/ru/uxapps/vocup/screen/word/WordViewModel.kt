@@ -1,12 +1,9 @@
 package ru.uxapps.vocup.screen.word
 
 import androidx.lifecycle.*
-import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import ru.uxapps.vocup.feature.TranslationFeature
 import ru.uxapps.vocup.repo
-import ru.uxapps.vocup.util.Event
-import ru.uxapps.vocup.util.send
 
 class WordViewModel(wordText: String) : ViewModel() {
 
@@ -20,14 +17,15 @@ class WordViewModel(wordText: String) : ViewModel() {
     }
 
     private val transFeature = TranslationFeature(repo)
-    private val transEvent = Event<Unit>(viewModelScope).apply { send() }
+    private val transEvent = MutableLiveData(Unit)
 
     val word: LiveData<String> = MutableLiveData(wordText)
     val translation: LiveData<TranslationFeature.State> =
-        transEvent.channel.consumeAsFlow()
+        transEvent.asFlow()
             .flatMapLatest { transFeature.getTranslation(wordText) }
             .asLiveData()
 
-    fun onRetryTranslation() = transEvent.send()
-
+    fun onRetryTranslation() {
+        transEvent.value = Unit
+    }
 }
