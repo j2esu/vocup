@@ -13,9 +13,9 @@ class WordsFragment : Fragment(R.layout.fragment_words) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val vm by viewModels<WordsViewModel>()
-        val wordsView = WordsViewImp(FragmentWordsBinding.bind(view),
+        val v = WordsViewImp(FragmentWordsBinding.bind(view),
             nav::openWord, nav::openAddWord)
-        vm.words.observe(viewLifecycleOwner, wordsView::setWords)
-        vm.loading.observe(viewLifecycleOwner, wordsView::setLoading)
+        vm.words.observe(viewLifecycleOwner, v::setWords)
+        vm.loading.observe(viewLifecycleOwner, v::setLoading)
     }
 }

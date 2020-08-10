@@ -6,17 +6,22 @@ import ru.uxapps.vocup.feature.TranslationFeature
 import ru.uxapps.vocup.feature.TranslationFeature.State.*
 
 interface WordView {
+
     fun setWordText(text: String)
     fun setTranslation(state: TranslationFeature.State)
+
+    interface Callback {
+        fun onRetryClick()
+    }
 }
 
 class WordViewImp(
     private val binding: FragmentWordBinding,
-    private val onRetryClick: () -> Unit
+    callback: WordView.Callback
 ) : WordView {
 
     init {
-        binding.wordTranslation.setOnClickListener { onRetryClick() }
+        binding.wordTranslation.setOnClickListener { callback.onRetryClick() }
     }
 
     override fun setWordText(text: String) {

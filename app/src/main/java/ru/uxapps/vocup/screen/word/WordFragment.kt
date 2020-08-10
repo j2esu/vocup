@@ -19,8 +19,10 @@ class WordFragment : Fragment(R.layout.fragment_word) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val vm by viewModels<WordViewModel> { WordViewModel.createFactory(wordText) }
-        val wordView = WordViewImp(FragmentWordBinding.bind(view), vm::onRetryTranslation)
-        vm.word.observe(viewLifecycleOwner, wordView::setWordText)
-        vm.translation.observe(viewLifecycleOwner, wordView::setTranslation)
+        val v = WordViewImp(FragmentWordBinding.bind(view), object : WordView.Callback {
+            override fun onRetryClick() = vm.onRetry()
+        })
+        vm.word.observe(viewLifecycleOwner, v::setWordText)
+        vm.translation.observe(viewLifecycleOwner, v::setTranslation)
     }
 }

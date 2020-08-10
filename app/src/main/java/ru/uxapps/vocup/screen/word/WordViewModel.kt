@@ -25,7 +25,7 @@ class WordViewModel(wordText: String) : ViewModel() {
             .flatMapLatest { transFeature.getTranslation(wordText) }
             .asLiveData()
 
-    fun onRetryTranslation() {
+    fun onRetry() {
         transEvent.value = Unit
     }
 }
