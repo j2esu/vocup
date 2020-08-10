@@ -5,17 +5,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import ru.uxapps.vocup.feature.TranslationFeature
 import ru.uxapps.vocup.repo
+import ru.uxapps.vocup.util.LiveEvent
+import ru.uxapps.vocup.util.MutableLiveEvent
+import ru.uxapps.vocup.util.send
 
 interface AddWordVm {
     val translation: LiveData<TranslationFeature.State?>
     val saveEnabled: LiveData<Boolean>
-    val onWordAdded: ReceiveChannel<String>
+    val onWordAdded: LiveEvent<String>
     fun onWordInput(text: String)
     fun onSave()
 }
@@ -41,7 +42,7 @@ class AddWordVmImp : ViewModel(), AddWordVm {
             input.trimmedLength() > 1 && !loading
         }.asLiveData()
 
-    override val onWordAdded = Channel<String>(Channel.UNLIMITED)
+    override val onWordAdded = MutableLiveEvent<String>()
 
     override fun onWordInput(text: String) {
         wordInput.value = text

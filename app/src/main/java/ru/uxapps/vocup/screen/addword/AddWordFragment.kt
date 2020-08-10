@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import ru.uxapps.vocup.R
 import ru.uxapps.vocup.databinding.FragmentAddWordBinding
+import ru.uxapps.vocup.util.consume
 
 class AddWordFragment : Fragment(R.layout.fragment_add_word) {
 
@@ -24,10 +24,6 @@ class AddWordFragment : Fragment(R.layout.fragment_add_word) {
             })
         vm.translation.observe(viewLifecycleOwner, v::setTranslation)
         vm.saveEnabled.observe(viewLifecycleOwner, v::setSaveEnabled)
-        lifecycleScope.launchWhenStarted {
-            for (event in vm.onWordAdded) {
-                (activity as Host).onWordAdded(event)
-            }
-        }
+        vm.onWordAdded.consume(viewLifecycleOwner, (activity as Host)::onWordAdded)
     }
 }
