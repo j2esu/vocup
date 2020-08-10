@@ -11,6 +11,6 @@ import ru.uxapps.vocup.repo
 class WordsViewModel : ViewModel() {
 
     val words: LiveData<List<Word>> = repo.getAllWords().filterNotNull().asLiveData()
-    val loading :LiveData<Boolean> = repo.getAllWords().map { it == null }.asLiveData()
+    val loading: LiveData<Boolean> = repo.getAllWords().map { it == null }.asLiveData()
 
 }
