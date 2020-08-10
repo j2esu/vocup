@@ -16,7 +16,7 @@ class AddWordFragment : Fragment(R.layout.fragment_add_word) {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val vm by viewModels<AddWordViewModel>()
+        val vm: AddWordVm by viewModels<AddWordVmImp>()
         val v = AddWordViewImp(FragmentAddWordBinding.bind(view),
             object : AddWordView.Callback {
                 override fun onWordInput(text: String) = vm.onWordInput(text)

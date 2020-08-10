@@ -12,7 +12,7 @@ import ru.uxapps.vocup.nav
 class WordsFragment : Fragment(R.layout.fragment_words) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val vm by viewModels<WordsViewModel>()
+        val vm: WordsVm by viewModels<WordsVmImp>()
         val v = WordsViewImp(FragmentWordsBinding.bind(view),
             nav::openWord, nav::openAddWord)
         vm.words.observe(viewLifecycleOwner, v::setWords)

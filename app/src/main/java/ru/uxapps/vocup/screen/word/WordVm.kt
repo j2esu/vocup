@@ -6,27 +6,33 @@ import kotlinx.coroutines.flow.flatMapLatest
 import ru.uxapps.vocup.feature.TranslationFeature
 import ru.uxapps.vocup.repo
 
-class WordViewModel(wordText: String) : ViewModel() {
+interface WordVm {
+    val word: LiveData<String>
+    val translation: LiveData<TranslationFeature.State>
+    fun onRetry()
+}
+
+class WordVmImp(wordText: String) : ViewModel(), WordVm {
 
     companion object {
         fun createFactory(wordText: String) = object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
                 @Suppress("UNCHECKED_CAST")
-                return WordViewModel(wordText) as T
+                return WordVmImp(wordText) as T
             }
         }
     }
 
     private val transFeature = TranslationFeature(repo)
-    private val transEvent = MutableStateFlow(Any())
+    private val loadTransEvent = MutableStateFlow(Any())
 
-    val word: LiveData<String> = MutableLiveData(wordText)
-    val translation: LiveData<TranslationFeature.State> =
-        transEvent
+    override val word: LiveData<String> = MutableLiveData(wordText)
+    override val translation: LiveData<TranslationFeature.State> =
+        loadTransEvent
             .flatMapLatest { transFeature.getTranslation(wordText) }
             .asLiveData()
 
-    fun onRetry() {
-        transEvent.value = Any()
+    override fun onRetry() {
+        loadTransEvent.value = Any()
     }
 }
