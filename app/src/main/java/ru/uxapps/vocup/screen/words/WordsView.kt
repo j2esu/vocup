@@ -1,11 +1,9 @@
 package ru.uxapps.vocup.screen.words
 
-import android.view.View
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import ru.uxapps.vocup.R
 import ru.uxapps.vocup.data.Word
+import ru.uxapps.vocup.databinding.FragmentWordsBinding
 
 interface WordsView {
     fun setWords(words: List<Word>)
@@ -13,30 +11,27 @@ interface WordsView {
 }
 
 class WordsViewImp(
-    root: View,
+    private val binding: FragmentWordsBinding,
     onWordClick: (Word) -> Unit,
     onAddWordClick: () -> Unit
 ) : WordsView {
 
     private val adapter = WordsListAdapter(onWordClick)
-    private val loadingPb = root.findViewById<View>(R.id.wordsProgress)
-    private val emptyView = root.findViewById<View>(R.id.wordsEmpty)
 
     init {
-        // init rv
-        val rv = root.findViewById<RecyclerView>(R.id.wordsList)
-        rv.adapter = adapter
-        rv.layoutManager = LinearLayoutManager(root.context)
-        // init add word button
-        root.findViewById<View>(R.id.wordsAdd).setOnClickListener { onAddWordClick() }
+        binding.wordsList.apply {
+            adapter = this@WordsViewImp.adapter
+            layoutManager = LinearLayoutManager(context)
+        }
+        binding.wordsAdd.setOnClickListener { onAddWordClick() }
     }
 
     override fun setWords(words: List<Word>) {
         adapter.submitList(words)
-        emptyView.isVisible = words.isEmpty()
+        binding.wordsEmpty.isVisible = words.isEmpty()
     }
 
     override fun setLoading(loading: Boolean) {
-        loadingPb.isVisible = loading
+        binding.wordsProgress.isVisible = loading
     }
 }
