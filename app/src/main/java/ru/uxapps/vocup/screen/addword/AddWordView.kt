@@ -2,6 +2,7 @@ package ru.uxapps.vocup.screen.addword
 
 import androidx.core.widget.doAfterTextChanged
 import ru.uxapps.vocup.R
+import ru.uxapps.vocup.data.Language
 import ru.uxapps.vocup.databinding.FragmentAddWordBinding
 import ru.uxapps.vocup.feature.TranslationFeature
 import ru.uxapps.vocup.feature.TranslationFeature.State.*
@@ -10,6 +11,7 @@ interface AddWordView {
 
     fun setTranslation(state: TranslationFeature.State?)
     fun setSaveEnabled(enabled: Boolean)
+    fun setLanguages(lang: List<Language>)
 
     interface Callback {
         fun onWordInput(text: String)
@@ -39,5 +41,9 @@ class AddWordViewImp(
 
     override fun setSaveEnabled(enabled: Boolean) {
         binding.addWordSave.isEnabled = enabled
+    }
+
+    override fun setLanguages(lang: List<Language>) {
+        binding.addWordLang.text = lang.first().toString()
     }
 }

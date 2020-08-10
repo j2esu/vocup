@@ -9,15 +9,18 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import ru.uxapps.vocup.data.Language
 import ru.uxapps.vocup.feature.TranslationFeature
 import ru.uxapps.vocup.repo
 
 interface AddWordVm {
     val translation: LiveData<TranslationFeature.State?>
     val saveEnabled: LiveData<Boolean>
+    val languages: LiveData<List<Language>>
     val onWordAdded: ReceiveChannel<String>
     fun onWordInput(text: String)
     fun onSave()
+    fun chooseLang(lang: Language)
 }
 
 class AddWordVmImp : ViewModel(), AddWordVm {
@@ -41,6 +44,9 @@ class AddWordVmImp : ViewModel(), AddWordVm {
             input.trimmedLength() > 1 && !loading
         }.asLiveData()
 
+    override val languages: LiveData<List<Language>> =
+        repo.getTargetLang().map { listOf(it) + Language.values() }.asLiveData()
+
     override val onWordAdded = Channel<String>(Channel.UNLIMITED)
 
     override fun onWordInput(text: String) {
@@ -54,5 +60,9 @@ class AddWordVmImp : ViewModel(), AddWordVm {
             repo.addWord(wordText)
             onWordAdded.send(wordText)
         }
+    }
+
+    override fun chooseLang(lang: Language) {
+        TODO("not implemented")
     }
 }

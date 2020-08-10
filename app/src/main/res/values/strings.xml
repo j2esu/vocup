@@ -6,6 +6,6 @@
     <string name="no_words">No words yet</string>
     <string name="add_word">Add word</string>
     <string name="add_word_hint">Type a word</string>
-    <string name="save_to_dict">Save to dictionary</string>
+    <string name="save_to_dict">Save</string>
     <string name="word_saved">\"%s\" saved to dictionary</string>
 </resources>
