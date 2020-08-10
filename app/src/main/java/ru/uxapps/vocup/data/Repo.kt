@@ -1,9 +1,9 @@
 package ru.uxapps.vocup.data
 
-import androidx.lifecycle.LiveData
+import kotlinx.coroutines.flow.Flow
 
 interface Repo {
-    fun getAllWords(): LiveData<List<Word>>
+    fun getAllWords(): Flow<List<Word>?>
     suspend fun getTranslation(text: String): String
     suspend fun addWord(text: String)
 }
