@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:enabled="false"
-        android:text="@string/save_to_vocabulary"
+        android:text="@string/save_to_dict"
         />
 
 </FrameLayout>

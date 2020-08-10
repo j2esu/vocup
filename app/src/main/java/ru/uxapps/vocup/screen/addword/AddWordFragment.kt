@@ -19,7 +19,7 @@ import ru.uxapps.vocup.util.input
 class AddWordFragment : Fragment(R.layout.fragment_add_word) {
 
     interface Host {
-        fun closeAddWord()
+        fun onWordAdded(text: String)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -32,8 +32,9 @@ class AddWordFragment : Fragment(R.layout.fragment_add_word) {
         saveBtn.setOnClickListener {
             saveBtn.isEnabled = false
             lifecycleScope.launch {
-                repo.addWord(inputEt.text.toString())
-                (activity as Host).closeAddWord()
+                val wordText = inputEt.text.toString()
+                repo.addWord(wordText)
+                (activity as Host).onWordAdded(wordText)
             }
         }
         // init translation
