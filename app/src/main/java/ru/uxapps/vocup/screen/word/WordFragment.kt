@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.onStart
 import ru.uxapps.vocup.R
 import ru.uxapps.vocup.data.Word
-import ru.uxapps.vocup.data.repo
+import ru.uxapps.vocup.repo
 import ru.uxapps.vocup.feature.TranslationFeature
 import ru.uxapps.vocup.feature.TranslationFeature.State.*
 import ru.uxapps.vocup.util.clicks

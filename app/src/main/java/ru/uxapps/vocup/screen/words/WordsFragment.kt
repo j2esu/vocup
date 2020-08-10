@@ -8,8 +8,8 @@ import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ru.uxapps.vocup.R
-import ru.uxapps.vocup.data.repo
-import ru.uxapps.vocup.screen.nav
+import ru.uxapps.vocup.repo
+import ru.uxapps.vocup.nav
 
 class WordsFragment : Fragment(R.layout.fragment_words) {
 

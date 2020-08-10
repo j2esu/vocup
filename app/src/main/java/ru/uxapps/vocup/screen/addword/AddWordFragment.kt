@@ -11,9 +11,9 @@ import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import ru.uxapps.vocup.R
-import ru.uxapps.vocup.data.repo
 import ru.uxapps.vocup.feature.TranslationFeature
 import ru.uxapps.vocup.feature.TranslationFeature.State.*
+import ru.uxapps.vocup.repo
 import ru.uxapps.vocup.util.input
 
 class AddWordFragment : Fragment(R.layout.fragment_add_word) {

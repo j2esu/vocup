@@ -1,6 +1,5 @@
 package ru.uxapps.vocup.data
 
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 
 interface Repo {
@@ -8,7 +7,5 @@ interface Repo {
     suspend fun getTranslation(text: String): String
     suspend fun addWord(text: String)
 }
-
-val Fragment.repo: Repo get() = InMemoryRepo
 
 data class Word(val text: String)
