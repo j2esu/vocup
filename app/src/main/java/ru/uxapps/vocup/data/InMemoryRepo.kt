@@ -5,6 +5,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import java.io.IOException
@@ -30,7 +31,7 @@ object InMemoryRepo : Repo {
         }
     }
 
-    override fun getAllWords() = words
+    override fun getAllWords() = words.filterNotNull()
 
     override suspend fun getTranslation(text: String): String {
         delay(Random.nextLong(100, 2000))
