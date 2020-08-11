@@ -1,10 +1,19 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+    <style name="AppTheme" parent="BaseAppTheme.v27.DayNight" />
+
+    <style name="BaseAppTheme.DayNight" />
+
+    <style name="BaseAppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">#7E57C2</item>
+        <item name="colorPrimaryVariant">#D1C4E9</item>
+        <item name="colorSecondary">#B39DDB</item>
+        <item name="android:statusBarColor">#222</item>
+        <item name="appBarLayoutStyle">@style/Vocup.AppBar</item>
+    </style>
+
+    <style name="Vocup.AppBar" parent="@style/Widget.MaterialComponents.AppBarLayout.PrimarySurface">
+        <item name="android:background">?colorPrimaryVariant</item>
     </style>
 
 </resources>

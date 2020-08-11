@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme" parent="BaseAppTheme.v23.DayNight" />
+
+    <style name="BaseAppTheme.v23.DayNight">
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+
+    <style name="BaseAppTheme.v23" parent="BaseAppTheme.DayNight">
+        <item name="android:statusBarColor">?colorPrimaryVariant</item>
+    </style>
+
+</resources>

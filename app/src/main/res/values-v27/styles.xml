@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme" parent="BaseAppTheme.v27.DayNight" />
+
+    <style name="BaseAppTheme.v27.DayNight">
+        <item name="android:windowLightNavigationBar">true</item>
+    </style>
+
+    <style name="BaseAppTheme.v27" parent="BaseAppTheme.v23.DayNight">
+        <item name="android:navigationBarColor">?android:colorBackground</item>
+    </style>
+</resources>
