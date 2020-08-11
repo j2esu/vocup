@@ -6,7 +6,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import java.io.IOException
 import kotlin.random.Random
@@ -14,6 +13,7 @@ import kotlin.random.Random
 object InMemoryRepo : Repo {
 
     private val words: MutableStateFlow<List<Word>?> = MutableStateFlow(null)
+    private val targetLang = MutableStateFlow(suggestTargetLang())
 
     init {
         GlobalScope.launch {
@@ -29,6 +29,11 @@ object InMemoryRepo : Repo {
                 Word("Dog")
             )
         }
+        GlobalScope.launch {
+            getTargetLangPref()?.let {
+                targetLang.value = it
+            }
+        }
     }
 
     override fun getAllWords() = words.filterNotNull()
@@ -38,14 +43,15 @@ object InMemoryRepo : Repo {
         if (Random.nextInt() % 4 == 0) {
             throw IOException("Can't load translation")
         }
-        return "Translated: $text"
+        return "Translated to ${targetLang.value}: $text"
     }
 
-    override fun getTargetLang(): Flow<Language> = flow {
-        emit(getTargetLangPref() ?: suggestTargetLang())
-    }
+    override fun getTargetLang(): Flow<Language> = targetLang
 
-    private suspend fun getTargetLangPref(): Language? = null // TODO: 8/10/2020 get from prefs
+    private suspend fun getTargetLangPref(): Language? {
+        delay(3000)
+        return null
+    }
 
     private fun suggestTargetLang(): Language {
         val userLocales = LocaleListCompat.getAdjustedDefault()
@@ -58,8 +64,8 @@ object InMemoryRepo : Repo {
         return Language.English
     }
 
-    override suspend fun setTargetLang(long: Language) {
-        TODO("not implemented")
+    override suspend fun setTargetLang(lang: Language) {
+        targetLang.value = lang
     }
 
     override suspend fun addWord(text: String) {

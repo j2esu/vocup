@@ -36,6 +36,7 @@ class AddWordImp(
             .map { it.trim() }
             .distinctUntilChanged()
             .debounce(400)
+            .combine(repo.getTargetLang()) { input, _ -> input }
             .flatMapLatest {
                 if (it.length > 1) transFeature.getTranslation(it) else flowOf(null)
             }
@@ -47,7 +48,9 @@ class AddWordImp(
         }.asLiveData()
 
     override val languages: LiveData<List<Language>> =
-        repo.getTargetLang().map { listOf(it) + Language.values() }.asLiveData()
+        repo.getTargetLang().map {
+            listOf(it) + (Language.values().toList() - it)
+        }.asLiveData()
 
     override val onWordAdded = MutableLiveEvent<String>()
 
@@ -65,6 +68,8 @@ class AddWordImp(
     }
 
     override fun chooseLang(lang: Language) {
-        TODO("not implemented")
+        scope.launch {
+            repo.setTargetLang(lang)
+        }
     }
 }

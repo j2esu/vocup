@@ -7,7 +7,7 @@ interface Repo {
     suspend fun getTranslation(text: String): String
     suspend fun addWord(text: String)
     fun getTargetLang(): Flow<Language>
-    suspend fun setTargetLang(long: Language)
+    suspend fun setTargetLang(lang: Language)
 }
 
 data class Word(val text: String)

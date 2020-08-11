@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clipToPadding="false"
     android:padding="16dp"
     >
 
@@ -12,10 +13,12 @@
         android:id="@+id/addWordInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
         android:hint="@string/add_word_hint"
         android:inputType="textCapSentences"
         android:lines="1"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+        android:paddingVertical="16dp"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
         tools:ignore="Autofill"
         />
 
@@ -24,26 +27,30 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:gravity="center"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
         tools:text="@tools:sample/cities"
         />
 
-    <TextView
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/addWordLang"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+        app:icon="@drawable/ic_arrow_up"
+        app:iconGravity="end"
         tools:text="@tools:sample/cities"
         />
 
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addWordSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:text="@string/save_to_dict"
-        app:icon="@drawable/ic_save"
+        android:src="@drawable/ic_save"
+        android:visibility="invisible"
         />
 
 </FrameLayout>

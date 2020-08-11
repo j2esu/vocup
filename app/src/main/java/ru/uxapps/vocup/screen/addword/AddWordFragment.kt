@@ -1,7 +1,9 @@
 package ru.uxapps.vocup.screen.addword
 
 import android.os.Bundle
+import android.view.Gravity
 import android.view.View
+import androidx.appcompat.widget.PopupMenu
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -21,7 +23,11 @@ class AddWordFragment : Fragment(R.layout.fragment_add_word) {
         val vm by viewModels<AddWordViewModel>()
         val binding = FragmentAddWordBinding.bind(view)
         with(vm.addWord) {
-            binding.addWordSave.setOnClickListener { onSave() }
+            binding.addWordSave.setOnClickListener {
+                if (!binding.addWordSave.isOrWillBeHidden) {
+                    onSave()
+                }
+            }
             binding.addWordInput.doAfterTextChanged { onWordInput(it.toString()) }
             translation.observe(viewLifecycleOwner) {
                 binding.addWordTranslation.isEnabled = it is Translation.State.Success
@@ -33,10 +39,20 @@ class AddWordFragment : Fragment(R.layout.fragment_add_word) {
                 }
             }
             saveEnabled.observe(viewLifecycleOwner) {
-                binding.addWordSave.isEnabled = it
+                if (it) binding.addWordSave.show() else binding.addWordSave.hide()
             }
-            languages.observe(viewLifecycleOwner) {
-                binding.addWordLang.text = it.first().toString()
+            languages.observe(viewLifecycleOwner) { languages ->
+                binding.addWordLang.text = languages.first().toString()
+                binding.addWordLang.setOnClickListener { v ->
+                    val popupMenu = PopupMenu(requireContext(), v, Gravity.TOP)
+                    languages.drop(1).forEach { lang ->
+                        popupMenu.menu.add(lang.toString()).setOnMenuItemClickListener {
+                            chooseLang(lang)
+                            true
+                        }
+                    }
+                    popupMenu.show()
+                }
             }
             onWordAdded.consume(viewLifecycleOwner, (activity as Host)::onWordAdded)
         }
