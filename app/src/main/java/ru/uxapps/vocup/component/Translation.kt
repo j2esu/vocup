@@ -1,12 +1,12 @@
-package ru.uxapps.vocup.feature
+package ru.uxapps.vocup.component
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import ru.uxapps.vocup.component.Translation.State.*
 import ru.uxapps.vocup.data.Repo
-import ru.uxapps.vocup.feature.TranslationFeature.State.*
 import java.io.IOException
 
-class TranslationFeature(private val repo: Repo) {
+class Translation(private val repo: Repo) {
 
     sealed class State {
         data class Success(val result: String) : State()

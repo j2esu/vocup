@@ -1,21 +1,19 @@
-package ru.uxapps.vocup.screen.addword
+package ru.uxapps.vocup.component
 
 import androidx.core.text.trimmedLength
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import ru.uxapps.vocup.data.Language
-import ru.uxapps.vocup.feature.TranslationFeature
-import ru.uxapps.vocup.repo
+import ru.uxapps.vocup.data.Repo
 import ru.uxapps.vocup.util.LiveEvent
 import ru.uxapps.vocup.util.MutableLiveEvent
 import ru.uxapps.vocup.util.send
 
-interface AddWordVm {
-    val translation: LiveData<TranslationFeature.State?>
+interface AddWordModel {
+    val translation: LiveData<Translation.State?>
     val saveEnabled: LiveData<Boolean>
     val languages: LiveData<List<Language>>
     val onWordAdded: LiveEvent<String>
@@ -24,13 +22,16 @@ interface AddWordVm {
     fun chooseLang(lang: Language)
 }
 
-class AddWordVmImp : ViewModel(), AddWordVm {
+class AddWordImp(
+    private val repo: Repo,
+    private val scope: CoroutineScope
+) : AddWordModel {
 
-    private val transFeature = TranslationFeature(repo)
+    private val transFeature = Translation(repo)
     private val wordInput = MutableStateFlow("")
     private val isLoading = MutableStateFlow(false)
 
-    override val translation: LiveData<TranslationFeature.State?> =
+    override val translation: LiveData<Translation.State?> =
         wordInput
             .map { it.trim() }
             .distinctUntilChanged()
@@ -48,7 +49,6 @@ class AddWordVmImp : ViewModel(), AddWordVm {
     override val languages: LiveData<List<Language>> =
         repo.getTargetLang().map { listOf(it) + Language.values() }.asLiveData()
 
-
     override val onWordAdded = MutableLiveEvent<String>()
 
     override fun onWordInput(text: String) {
@@ -58,7 +58,7 @@ class AddWordVmImp : ViewModel(), AddWordVm {
     override fun onSave() {
         isLoading.value = true
         val wordText = requireNotNull(wordInput.value)
-        viewModelScope.launch {
+        scope.launch {
             repo.addWord(wordText)
             onWordAdded.send(wordText)
         }
