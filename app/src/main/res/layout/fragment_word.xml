@@ -17,7 +17,7 @@
         />
 
     <TextView
-        android:id="@+id/wordTranslation"
+        android:id="@+id/wordDetails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="?selectableItemBackgroundBorderless"

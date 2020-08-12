@@ -2,10 +2,10 @@
     <string name="app_name">Voc Up</string>
     <string name="reload_translation">"Can't load translation. Click to retry"</string>
     <string name="cant_load_translation">"Can't load translation"</string>
-    <string name="loading_translation">Loading translation…</string>
     <string name="no_words">No words yet</string>
     <string name="add_word">Add word</string>
     <string name="add_word_hint">Type a word</string>
     <string name="save_to_dict">Save</string>
     <string name="word_saved">\"%s\" saved to dictionary</string>
+    <string name="loading_details">Loading details</string>
 </resources>

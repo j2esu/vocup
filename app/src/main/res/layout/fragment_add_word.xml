@@ -22,13 +22,20 @@
         tools:ignore="Autofill"
         />
 
+    <ProgressBar
+        android:id="@+id/addWordProgress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        />
+
     <TextView
         android:id="@+id/addWordTranslation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
         tools:text="@tools:sample/cities"
         />
 
@@ -44,13 +51,12 @@
         tools:text="@tools:sample/cities"
         />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/addWordSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:src="@drawable/ic_save"
-        android:visibility="invisible"
+        android:text="@string/save_to_dict"
         />
 
 </FrameLayout>
