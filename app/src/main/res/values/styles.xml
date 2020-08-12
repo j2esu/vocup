@@ -5,14 +5,14 @@
     <style name="BaseAppTheme.DayNight" />
 
     <style name="BaseAppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="colorPrimary">#7E57C2</item>
-        <item name="colorPrimaryVariant">#D1C4E9</item>
+        <item name="colorPrimary">#9575CD</item>
         <item name="colorSecondary">#B39DDB</item>
+        <item name="colorPrimaryVariant">#EDE7F6</item>
         <item name="android:statusBarColor">#222</item>
         <item name="appBarLayoutStyle">@style/Vocup.AppBar</item>
     </style>
 
-    <style name="Vocup.AppBar" parent="@style/Widget.MaterialComponents.AppBarLayout.PrimarySurface">
+    <style name="Vocup.AppBar" parent="@style/Widget.MaterialComponents.AppBarLayout.Primary">
         <item name="android:background">?colorPrimaryVariant</item>
     </style>
 
