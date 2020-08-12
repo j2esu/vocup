@@ -30,6 +30,15 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/addWortTransList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="80dp"
+        android:layout_marginBottom="56dp"
+        tools:listitem="@layout/item_trans"
+        />
+
     <ProgressBar
         android:id="@+id/addWordProgress"
         android:layout_width="wrap_content"
@@ -38,13 +47,23 @@
         />
 
     <TextView
-        android:id="@+id/addWordTranslation"
+        android:id="@+id/addWordEmptyList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-        tools:text="@tools:sample/cities"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+        android:text="@string/no_translations"
+        />
+
+    <TextView
+        android:id="@+id/addWordLoadError"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+        android:text="@string/cant_load_translation"
         />
 
     <com.google.android.material.button.MaterialButton

@@ -2,6 +2,7 @@
     <string name="app_name">Voc Up</string>
     <string name="reload_translation">"Can't load translation. Click to retry"</string>
     <string name="cant_load_translation">"Can't load translation"</string>
+    <string name="no_translations">No translations found</string>
     <string name="no_words">No words yet</string>
     <string name="add_word">Add word</string>
     <string name="add_word_hint">Enter a word</string>

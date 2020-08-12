@@ -7,6 +7,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
+import java.io.IOException
+import kotlin.random.Random
 
 object InMemoryRepo : Repo {
 
@@ -65,6 +67,11 @@ object InMemoryRepo : Repo {
 
     override suspend fun getTranslation(word: String, lang: Language): List<Definition> {
         delay(1000)
+        if (Random.nextInt() % 3 == 0) {
+            throw IOException("Can't load translation")
+        } else if (Random.nextInt() % 3 == 0) {
+            return emptyList()
+        }
         return listOf(
             Definition(
                 "hello",

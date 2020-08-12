@@ -7,7 +7,7 @@
     <style name="BaseAppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">#9575CD</item>
         <item name="colorSecondary">#B39DDB</item>
-        <item name="colorPrimaryVariant">#EDE7F6</item>
+        <item name="colorPrimaryVariant">#fff</item>
         <item name="android:statusBarColor">#222</item>
         <item name="appBarLayoutStyle">@style/Vocup.AppBar</item>
     </style>
