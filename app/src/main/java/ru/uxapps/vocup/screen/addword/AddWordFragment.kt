@@ -44,9 +44,8 @@ class AddWordFragment : Fragment(R.layout.fragment_add_word) {
             saveEnabled.observe(viewLifecycleOwner) {
                 binding.addWordSave.isEnabled = it
             }
-            maxWordLength.observe(viewLifecycleOwner) {
-                binding.addWordInput.editText?.filters = arrayOf(InputFilter.LengthFilter(it))
-            }
+            binding.addWordInput.editText?.filters =
+                arrayOf(InputFilter.LengthFilter(maxWordLength))
             languages.observe(viewLifecycleOwner) { languages ->
                 binding.addWordLang.text = languages.first().toString()
                 binding.addWordLang.setOnClickListener { v ->

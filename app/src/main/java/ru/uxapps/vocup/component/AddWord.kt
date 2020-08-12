@@ -1,7 +1,6 @@
 package ru.uxapps.vocup.component
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
@@ -20,7 +19,7 @@ interface AddWord {
 
     val translation: LiveData<Translation>
     val saveEnabled: LiveData<Boolean>
-    val maxWordLength: LiveData<Int>
+    val maxWordLength: Int
     val languages: LiveData<List<Language>>
     val onWordAdded: LiveEvent<String>
     fun onWordInput(text: String)
@@ -76,7 +75,7 @@ class AddWordImp(
             normalizeInput(input).length in WORD_RANGE && !loading
         }.asLiveData()
 
-    override val maxWordLength = MutableLiveData(WORD_RANGE.last)
+    override val maxWordLength = WORD_RANGE.last
 
     override val languages: LiveData<List<Language>> =
         repo.getTargetLang().map {
