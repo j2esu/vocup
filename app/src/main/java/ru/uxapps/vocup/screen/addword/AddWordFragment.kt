@@ -8,6 +8,7 @@ import androidx.lifecycle.observe
 import ru.uxapps.vocup.R
 import ru.uxapps.vocup.data.Language
 import ru.uxapps.vocup.databinding.FragmentAddWordBinding
+import ru.uxapps.vocup.nav
 import ru.uxapps.vocup.util.consume
 
 class AddWordFragment : Fragment(R.layout.fragment_add_word) {
@@ -22,6 +23,7 @@ class AddWordFragment : Fragment(R.layout.fragment_add_word) {
             override fun onSave() = vm.addWord.onSave()
             override fun onInput(input: String) = vm.addWord.onInput(input)
             override fun onLangClick(lang: Language) = vm.addWord.onChooseLang(lang)
+            override fun onUp() = nav.up()
         })
         with(vm.addWord) {
             translation.observe(viewLifecycleOwner, v::setTranslation)

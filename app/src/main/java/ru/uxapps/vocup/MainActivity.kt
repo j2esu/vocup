@@ -38,6 +38,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), Navigation, AddW
         }
     }
 
+    override fun up() = onBackPressed()
+
     override fun onWordAdded(text: String) {
         Toast.makeText(this, getString(R.string.word_saved, text), Toast.LENGTH_SHORT).show()
         supportFragmentManager.popBackStack()

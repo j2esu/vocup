@@ -8,7 +8,7 @@
     </style>
 
     <style name="BaseAppTheme.v23" parent="BaseAppTheme.DayNight">
-        <item name="android:statusBarColor">?colorPrimaryVariant</item>
+        <item name="android:statusBarColor">?colorPrimarySurface</item>
     </style>
 
 </resources>

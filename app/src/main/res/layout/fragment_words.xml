@@ -7,6 +7,19 @@
     android:layout_height="match_parent"
     >
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        >
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:title="@string/app_name"
+            />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
     <ProgressBar
         android:id="@+id/wordsProgress"
         android:layout_width="wrap_content"
@@ -18,6 +31,7 @@
         android:id="@+id/wordsList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="?actionBarSize"
         tools:listitem="@layout/item_word"
         />
 

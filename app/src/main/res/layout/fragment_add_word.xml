@@ -1,89 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clipToPadding="false"
-    android:padding="16dp"
+    android:orientation="vertical"
     >
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/addWordInput"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="?actionBarSize"
         >
 
-        <com.google.android.material.textfield.TextInputEditText
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/addWordToolbar"
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:menu="@menu/add_word"
+            app:navigationIcon="?homeAsUpIndicator"
+            >
+
+            <EditText
+                android:id="@+id/addWordInput"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:hint="@string/add_word_hint"
+                android:inputType="textCapSentences"
+                android:lines="1"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                tools:ignore="Autofill,LabelFor"
+                >
+
+                <requestFocus />
+
+            </EditText>
+
+        </com.google.android.material.appbar.MaterialToolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/addWortTransList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="8dp"
+            tools:listitem="@layout/item_trans"
+            />
+
+        <ProgressBar
+            android:id="@+id/addWordProgress"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="@string/add_word_hint"
-            android:inputType="textCapSentences"
-            android:lines="1"
-            android:paddingVertical="20dp"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
+            android:layout_gravity="center"
+            />
+
+        <TextView
+            android:id="@+id/addWordEmptyList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/no_translations"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
             />
 
-    </com.google.android.material.textfield.TextInputLayout>
+        <TextView
+            android:id="@+id/addWordLoadError"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/cant_load_translation"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+            />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/addWortTransList"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="80dp"
-        android:layout_marginBottom="56dp"
-        tools:listitem="@layout/item_trans"
-        />
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/addWordSave"
+            style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_margin="16dp"
+            android:text="@string/save_to_dict"
+            android:visibility="invisible"
+            tools:visibility="visible"
+            />
 
-    <ProgressBar
-        android:id="@+id/addWordProgress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        />
+    </FrameLayout>
 
-    <TextView
-        android:id="@+id/addWordEmptyList"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-        android:text="@string/no_translations"
-        />
-
-    <TextView
-        android:id="@+id/addWordLoadError"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-        android:text="@string/cant_load_translation"
-        />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/addWordLang"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-        app:icon="@drawable/ic_arrow_up"
-        app:iconGravity="end"
-        tools:text="@tools:sample/cities"
-        />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/addWordSave"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:text="@string/save_to_dict"
-        />
-
-</FrameLayout>
+</LinearLayout>
