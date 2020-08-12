@@ -9,18 +9,26 @@
     android:padding="16dp"
     >
 
-    <EditText
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/addWordInput"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:hint="@string/add_word_hint"
-        android:inputType="textCapSentences"
-        android:lines="1"
-        android:paddingVertical="16dp"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-        tools:ignore="Autofill"
-        />
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/add_word_hint"
+            android:inputType="textCapSentences"
+            android:lines="1"
+            android:paddingVertical="20dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <ProgressBar
         android:id="@+id/addWordProgress"

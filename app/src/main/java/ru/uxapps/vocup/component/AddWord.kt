@@ -1,52 +1,69 @@
 package ru.uxapps.vocup.component
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import ru.uxapps.vocup.component.AddWord.Translation
+import ru.uxapps.vocup.data.Definition
 import ru.uxapps.vocup.data.Language
 import ru.uxapps.vocup.data.Repo
 import ru.uxapps.vocup.util.LiveEvent
 import ru.uxapps.vocup.util.MutableLiveEvent
 import ru.uxapps.vocup.util.send
+import java.io.IOException
 
-interface AddWordModel {
-    val translation: LiveData<TranslationLoader.State?>
+interface AddWord {
+
+    val translation: LiveData<Translation>
     val saveEnabled: LiveData<Boolean>
+    val maxWordLength: LiveData<Int>
     val languages: LiveData<List<Language>>
     val onWordAdded: LiveEvent<String>
     fun onWordInput(text: String)
     fun onSave()
     fun chooseLang(lang: Language)
+
+    sealed class Translation {
+        object Idle : Translation()
+        object Progress : Translation()
+        data class Success(val result: List<Definition>) : Translation()
+        object Fail : Translation()
+    }
 }
 
 class AddWordImp(
     private val repo: Repo,
     private val scope: CoroutineScope
-) : AddWordModel {
+) : AddWord {
 
     companion object {
-        private val WORD_RANGE = 2..20
+        private val WORD_RANGE = 2..30
     }
 
-    private val transFeature = TranslationLoader(repo)
     private val wordInput = MutableStateFlow("")
     private val isLoading = MutableStateFlow(false)
 
-    override val translation: LiveData<TranslationLoader.State?> =
+    override val translation: LiveData<Translation> =
         wordInput
             .map { normalizeInput(it) }
             .distinctUntilChanged()
             .combine(repo.getTargetLang()) { input, lang -> input to lang }
             .transformLatest { (input, lang) ->
                 if (input.length in WORD_RANGE) {
-                    emit(TranslationLoader.State.Progress)
+                    emit(Translation.Progress)
                     delay(400)
-                    emitAll(transFeature.loadTranslation(input, lang))
+                    val result = try {
+                        repo.getTranslation(input, lang)
+                    } catch (e: IOException) {
+                        null
+                    }
+                    emit(if (result != null) Translation.Success(result) else Translation.Fail)
                 } else {
-                    emit(null)
+                    emit(Translation.Idle)
                 }
             }
             .asLiveData()
@@ -58,6 +75,8 @@ class AddWordImp(
         combine(wordInput, isLoading) { input, loading ->
             normalizeInput(input).length in WORD_RANGE && !loading
         }.asLiveData()
+
+    override val maxWordLength = MutableLiveData(WORD_RANGE.last)
 
     override val languages: LiveData<List<Language>> =
         repo.getTargetLang().map {
