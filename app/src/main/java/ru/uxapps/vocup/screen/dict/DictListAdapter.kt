@@ -1,4 +1,4 @@
-package ru.uxapps.vocup.screen.words
+package ru.uxapps.vocup.screen.dict
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,9 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import ru.uxapps.vocup.data.Word
 import ru.uxapps.vocup.databinding.ItemWordBinding
 
-class WordListAdapter(
+class DictListAdapter(
     private val onWordClick: (Word) -> Unit
-) : ListAdapter<Word, WordListAdapter.WordVh>(object : DiffUtil.ItemCallback<Word>() {
+) : ListAdapter<Word, DictListAdapter.WordVh>(object : DiffUtil.ItemCallback<Word>() {
     override fun areItemsTheSame(oldItem: Word, newItem: Word) = oldItem.text == newItem.text
     override fun areContentsTheSame(oldItem: Word, newItem: Word) = oldItem == newItem
 }) {

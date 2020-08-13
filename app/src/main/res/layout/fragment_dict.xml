@@ -21,14 +21,14 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <ProgressBar
-        android:id="@+id/wordsProgress"
+        android:id="@+id/dictProgress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/wordsList"
+        android:id="@+id/dictList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?actionBarSize"
@@ -36,7 +36,7 @@
         />
 
     <TextView
-        android:id="@+id/wordsEmpty"
+        android:id="@+id/dictEmpty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -46,7 +46,7 @@
         />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/wordsAdd"
+        android:id="@+id/dictAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
