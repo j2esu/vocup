@@ -9,4 +9,5 @@
     <string name="word_saved">\"%s\" saved to dictionary</string>
     <string name="loading_details">Loading details</string>
     <string name="translation_language">Translation language</string>
+    <string name="trans_meaning_pattern"> • %s</string>
 </resources>

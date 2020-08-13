@@ -8,7 +8,8 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import ru.uxapps.vocup.R
 import ru.uxapps.vocup.component.AddWord
-import ru.uxapps.vocup.component.AddWord.Translation.*
+import ru.uxapps.vocup.component.AddWord.TransItem
+import ru.uxapps.vocup.component.AddWord.TransState.*
 import ru.uxapps.vocup.data.Language
 import ru.uxapps.vocup.databinding.FragmentAddWordBinding
 
@@ -18,17 +19,17 @@ class AddWordView(
 ) {
 
     interface Callback {
-        fun onSave()
+        fun onSave(item: TransItem)
+        fun onRemove(item: TransItem)
         fun onInput(input: String)
         fun onLangClick(lang: Language)
         fun onUp()
     }
 
-    private val adapter = TransListAdapter()
+    private val adapter = TransListAdapter(callback::onSave, callback::onRemove)
 
     init {
         with(binding) {
-            addWordSave.setOnClickListener { callback.onSave() }
             addWordInput.doAfterTextChanged { callback.onInput(it.toString()) }
             addWortTransList.adapter = adapter
             addWortTransList.layoutManager = LinearLayoutManager(root.context)
@@ -38,15 +39,11 @@ class AddWordView(
         }
     }
 
-    fun setTranslation(state: AddWord.Translation) = with(binding) {
+    fun setTranslation(state: AddWord.TransState) = with(binding) {
         addWordProgress.isVisible = state is Progress
         addWordLoadError.isVisible = state is Fail
         addWordEmptyList.isVisible = state is Success && state.result.isEmpty()
         adapter.submitList(if (state is Success) state.result else emptyList())
-    }
-
-    fun setSaveEnabled(enabled: Boolean) = with(binding) {
-        if (enabled) addWordSave.show() else addWordSave.hide()
     }
 
     fun setMaxWordLength(length: Int) = with(binding) {

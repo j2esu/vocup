@@ -6,32 +6,32 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import ru.uxapps.vocup.component.AddWord.Translation
-import ru.uxapps.vocup.data.Definition
+import ru.uxapps.vocup.component.AddWord.TransItem
+import ru.uxapps.vocup.component.AddWord.TransState
 import ru.uxapps.vocup.data.Language
 import ru.uxapps.vocup.data.Repo
-import ru.uxapps.vocup.util.LiveEvent
-import ru.uxapps.vocup.util.MutableLiveEvent
-import ru.uxapps.vocup.util.send
+import ru.uxapps.vocup.data.Trans
+import ru.uxapps.vocup.util.asStateFlow
 import java.io.IOException
 
 interface AddWord {
 
-    val translation: LiveData<Translation>
-    val saveEnabled: LiveData<Boolean>
+    val translation: LiveData<TransState>
     val maxWordLength: Int
     val languages: LiveData<List<Language>>
-    val onWordAdded: LiveEvent<String>
     fun onInput(text: String)
-    fun onSave()
+    fun onSave(item: TransItem)
+    fun onRemove(item: TransItem)
     fun onChooseLang(lang: Language)
 
-    sealed class Translation {
-        object Idle : Translation()
-        object Progress : Translation()
-        data class Success(val result: List<Definition>) : Translation()
-        object Fail : Translation()
+    sealed class TransState {
+        object Idle : TransState()
+        object Progress : TransState()
+        data class Success(val result: List<TransItem>) : TransState()
+        object Fail : TransState()
     }
+
+    data class TransItem(val trans: Trans, val saved: Boolean)
 }
 
 class AddWordImp(
@@ -44,36 +44,39 @@ class AddWordImp(
     }
 
     private val wordInput = MutableStateFlow("")
-    private val isLoading = MutableStateFlow(false)
+    private val allWords = repo.getAllWords().asStateFlow(scope)
 
-    override val translation: LiveData<Translation> =
+    override val translation: LiveData<TransState> =
         wordInput
             .map { normalizeInput(it) }
             .distinctUntilChanged()
             .combine(repo.getTargetLang()) { input, lang -> input to lang }
             .transformLatest { (input, lang) ->
                 if (input.length in WORD_RANGE) {
-                    emit(Translation.Progress)
+                    emit(TransState.Progress)
                     delay(400)
                     val result = try {
                         repo.getTranslation(input, lang)
                     } catch (e: IOException) {
                         null
                     }
-                    emit(if (result != null) Translation.Success(result) else Translation.Fail)
+                    if (result != null) {
+                        emitAll(allWords.filterNotNull().map { savedWords ->
+                            TransState.Success(result.map { trans ->
+                                TransItem(trans, savedWords.any { it.text == trans.text })
+                            })
+                        })
+                    } else {
+                        emit(TransState.Fail)
+                    }
                 } else {
-                    emit(Translation.Idle)
+                    emit(TransState.Idle)
                 }
             }
             .asLiveData()
 
     private fun normalizeInput(input: String) =
-        input.trim().replace(Regex("\\s+"), "")
-
-    override val saveEnabled: LiveData<Boolean> =
-        combine(wordInput, isLoading) { input, loading ->
-            normalizeInput(input).length in WORD_RANGE && !loading
-        }.asLiveData()
+        input.trim().replace(Regex("\\s+"), " ")
 
     override val maxWordLength = WORD_RANGE.last
 
@@ -82,18 +85,19 @@ class AddWordImp(
             listOf(it) + (Language.values().toList() - it)
         }.asLiveData()
 
-    override val onWordAdded = MutableLiveEvent<String>()
-
     override fun onInput(text: String) {
         wordInput.value = text
     }
 
-    override fun onSave() {
-        isLoading.value = true
-        val wordText = requireNotNull(wordInput.value)
+    override fun onSave(item: TransItem) {
         scope.launch {
-            repo.addWord(wordText)
-            onWordAdded.send(wordText)
+            repo.addWord(item.trans.text)
+        }
+    }
+
+    override fun onRemove(item: TransItem) {
+        scope.launch {
+            repo.removeWord(item.trans.text)
         }
     }
 

@@ -83,18 +83,6 @@
             android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
             />
 
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/addWordSave"
-            style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center_horizontal"
-            android:layout_margin="16dp"
-            android:text="@string/save_to_dict"
-            android:visibility="invisible"
-            tools:visibility="visible"
-            />
-
     </FrameLayout>
 
 </LinearLayout>

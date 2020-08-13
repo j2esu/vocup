@@ -65,53 +65,25 @@ object InMemoryRepo : Repo {
         targetLang.value = lang
     }
 
-    override suspend fun getTranslation(word: String, lang: Language): List<Definition> {
+    override suspend fun getTranslation(word: String, lang: Language): List<Trans> {
         delay(1000)
-        if (Random.nextInt() % 4 == 0) {
+        if (Random.nextInt() % 5 == 0) {
             throw IOException("Can't load translation")
-        } else if (Random.nextInt() % 4 == 0) {
+        } else if (Random.nextInt() % 5 == 0) {
             return emptyList()
         }
-        return listOf(
-            Definition(
-                "hello",
-                "существительное",
-                "həˈləʊ",
-                listOf(
-                    Translation(
-                        "привет",
-                        listOf("добрый день", "Здравствуй"),
-                        listOf("hi", "good afternoon"),
-                        listOf(
-                            Example("big hello", "большой привет")
-                        )
-                    ),
-                    Translation("приветствие", emptyList(), emptyList(), emptyList())
-                )
-            ),
-            Definition(
-                "hello",
-                "глагол",
-                "həˈləʊ",
-                listOf(
-                    Translation("здравствуйте", emptyList(), listOf("hi"), emptyList()),
-                    Translation("поздороваться", emptyList(), listOf("greet"), emptyList()),
-                    Translation("приветствовать", emptyList(), emptyList(), emptyList())
-                )
-            ),
-            Definition(
-                "hello",
-                "междометие",
-                "həˈləʊ",
-                listOf(
-                    Translation("АЛЛО", emptyList(), emptyList(), emptyList()),
-                    Translation("ау", emptyList(), emptyList(), emptyList())
-                )
-            )
-        )
+        return List(Random.nextInt(1, 5)) { transIndex ->
+            Trans("$word $transIndex", List(Random.nextInt(1, 10)) { meaningIndex ->
+                "Meaning $meaningIndex"
+            })
+        }
     }
 
     override suspend fun addWord(text: String) {
-        words.value = words.value?.plus(Word(text))
+        words.value = listOf(Word(text)) + (words.value ?: emptyList())
+    }
+
+    override suspend fun removeWord(text: String) {
+        words.value = words.value?.minus(Word(text))
     }
 }
