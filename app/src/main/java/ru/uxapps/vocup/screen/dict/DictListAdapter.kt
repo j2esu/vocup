@@ -11,7 +11,7 @@ import ru.uxapps.vocup.databinding.ItemWordBinding
 class DictListAdapter(
     private val onWordClick: (Word) -> Unit
 ) : ListAdapter<Word, DictListAdapter.WordVh>(object : DiffUtil.ItemCallback<Word>() {
-    override fun areItemsTheSame(oldItem: Word, newItem: Word) = oldItem.text == newItem.text
+    override fun areItemsTheSame(oldItem: Word, newItem: Word) = oldItem.trans == newItem.trans
     override fun areContentsTheSame(oldItem: Word, newItem: Word) = oldItem == newItem
 }) {
 
@@ -31,7 +31,7 @@ class DictListAdapter(
         }
 
         fun bind(word: Word) {
-            binding.wordText.text = word.text
+            binding.wordText.text = word.trans.text
         }
     }
 }

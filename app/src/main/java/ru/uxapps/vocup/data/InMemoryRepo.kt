@@ -18,16 +18,7 @@ object InMemoryRepo : Repo {
     init {
         GlobalScope.launch {
             delay(1000)
-            words.value = listOf(
-                Word("Hello"),
-                Word("Word"),
-                Word("Test"),
-                Word("Vocabulary"),
-                Word("Apple"),
-                Word("Pen"),
-                Word("Cat"),
-                Word("Dog")
-            )
+            words.value = emptyList()
         }
         GlobalScope.launch {
             getTargetLangPref()?.let {
@@ -38,9 +29,9 @@ object InMemoryRepo : Repo {
 
     override fun getAllWords() = words.filterNotNull()
 
-    override suspend fun getDetails(word: String): String {
+    override suspend fun getWord(text: String): Word? {
         delay(1000)
-        return "Details for: $word"
+        return words.value?.find { it.trans.text == text }
     }
 
     override fun getTargetLang(): Flow<Language> = targetLang
@@ -58,14 +49,14 @@ object InMemoryRepo : Repo {
                 return supportedLang
             }
         }
-        return Language.English
+        return Language.Russian
     }
 
     override suspend fun setTargetLang(lang: Language) {
         targetLang.value = lang
     }
 
-    override suspend fun getTranslation(word: String, lang: Language): List<Trans> {
+    override suspend fun getTranslations(word: String, lang: Language): List<Trans> {
         delay(1000)
         if (Random.nextInt() % 5 == 0) {
             throw IOException("Can't load translation")
@@ -79,11 +70,11 @@ object InMemoryRepo : Repo {
         }
     }
 
-    override suspend fun addWord(text: String) {
-        words.value = listOf(Word(text)) + (words.value ?: emptyList())
+    override suspend fun addWord(trans: Trans) {
+        words.value = listOf(Word(trans)) + (words.value ?: emptyList())
     }
 
-    override suspend fun removeWord(text: String) {
-        words.value = words.value?.minus(Word(text))
+    override suspend fun removeWord(trans: Trans) {
+        words.value = words.value?.filter { it.trans.text != trans.text }
     }
 }

@@ -54,7 +54,7 @@ class AddWordView(
         val langItem = addWordToolbar.menu.findItem(R.id.menu_lang)
         langItem.subMenu.clear()
         languages.forEachIndexed { i, lang ->
-            val item = langItem.subMenu.add(lang.toString()).setOnMenuItemClickListener {
+            val item = langItem.subMenu.add(lang.nativeName).setOnMenuItemClickListener {
                 callback.onLangClick(lang)
                 true
             }

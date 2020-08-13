@@ -21,5 +21,4 @@ class WordListImp(repo: Repo) : WordList {
             .onStart { emit(null) }
             .map { it == null }
             .asLiveData()
-
 }

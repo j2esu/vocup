@@ -56,14 +56,14 @@ class AddWordImp(
                     emit(TransState.Progress)
                     delay(400)
                     val result = try {
-                        repo.getTranslation(input, lang)
+                        repo.getTranslations(input, lang)
                     } catch (e: IOException) {
                         null
                     }
                     if (result != null) {
                         emitAll(allWords.filterNotNull().map { savedWords ->
                             TransState.Success(result.map { trans ->
-                                TransItem(trans, savedWords.any { it.text == trans.text })
+                                TransItem(trans, savedWords.any { it.trans.text == trans.text })
                             })
                         })
                     } else {
@@ -91,13 +91,13 @@ class AddWordImp(
 
     override fun onSave(item: TransItem) {
         scope.launch {
-            repo.addWord(item.trans.text)
+            repo.addWord(item.trans)
         }
     }
 
     override fun onRemove(item: TransItem) {
         scope.launch {
-            repo.removeWord(item.trans.text)
+            repo.removeWord(item.trans)
         }
     }
 

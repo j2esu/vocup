@@ -13,7 +13,7 @@ import ru.uxapps.vocup.databinding.FragmentWordBinding
 class WordFragment : Fragment(R.layout.fragment_word) {
 
     companion object Args {
-        fun argsOf(word: Word) = bundleOf("word" to word.text)
+        fun argsOf(word: Word) = bundleOf("word" to word.trans.text)
         private val WordFragment.wordText get() = requireArguments()["word"] as String
     }
 
@@ -25,7 +25,8 @@ class WordFragment : Fragment(R.layout.fragment_word) {
                 binding.wordText.text = it
             }
             details.observe(viewLifecycleOwner) {
-                binding.wordDetails.text = it ?: getString(R.string.loading_details)
+                binding.wordDetails.text = it?.trans?.meanings?.joinToString(", ")
+                    ?: getString(R.string.loading_details)
             }
         }
     }
