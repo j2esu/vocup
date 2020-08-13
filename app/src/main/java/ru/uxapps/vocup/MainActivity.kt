@@ -7,8 +7,8 @@ import androidx.fragment.app.commit
 import ru.uxapps.vocup.data.Word
 import ru.uxapps.vocup.screen.Navigation
 import ru.uxapps.vocup.screen.addword.AddWordFragment
+import ru.uxapps.vocup.screen.nav.NavFragment
 import ru.uxapps.vocup.screen.word.WordFragment
-import ru.uxapps.vocup.screen.words.WordsFragment
 
 class MainActivity : AppCompatActivity(R.layout.activity_main), Navigation {
 
@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), Navigation {
         super.onCreate(savedInstanceState)
         if (savedInstanceState == null) {
             supportFragmentManager.commit {
-                add(R.id.mainContainer, WordsFragment())
+                add(R.id.mainContainer, NavFragment())
             }
         }
     }

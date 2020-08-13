@@ -10,4 +10,7 @@
     <string name="loading_details">Loading details</string>
     <string name="translation_language">Translation language</string>
     <string name="trans_meaning_pattern"> • %s</string>
+    <string name="title_dict">Dictionary</string>
+    <string name="title_learn">Learn</string>
+    <string name="title_explore">Explore</string>
 </resources>
