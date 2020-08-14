@@ -14,7 +14,7 @@
         >
 
         <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/addWordToolbar"
+            android:id="@+id/add_word_toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:menu="@menu/add_word"
@@ -22,7 +22,7 @@
             >
 
             <EditText
-                android:id="@+id/addWordInput"
+                android:id="@+id/add_word_input"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent"
@@ -47,7 +47,7 @@
         >
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/addWortTransList"
+            android:id="@+id/add_word_trans_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
@@ -57,14 +57,14 @@
             />
 
         <ProgressBar
-            android:id="@+id/addWordProgress"
+            android:id="@+id/add_word_progress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             />
 
         <TextView
-            android:id="@+id/addWordEmptyList"
+            android:id="@+id/add_word_empty_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -74,7 +74,7 @@
             />
 
         <TextView
-            android:id="@+id/addWordLoadError"
+            android:id="@+id/add_word_load_error"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

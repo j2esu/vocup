@@ -16,14 +16,14 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), Navigation, Word
         super.onCreate(savedInstanceState)
         if (savedInstanceState == null) {
             supportFragmentManager.commit {
-                add(R.id.mainContainer, NavFragment())
+                add(R.id.main_container, NavFragment())
             }
         }
     }
 
     override fun openWord(word: Word) {
         supportFragmentManager.commit {
-            replace(R.id.mainContainer, WordFragment::class.java, WordFragment.argsOf(word))
+            replace(R.id.main_container, WordFragment::class.java, WordFragment.argsOf(word))
             setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
             addToBackStack(null)
         }
@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), Navigation, Word
 
     override fun openAddWord() {
         supportFragmentManager.commit {
-            replace(R.id.mainContainer, AddWordFragment())
+            replace(R.id.main_container, AddWordFragment())
             setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
             addToBackStack(null)
         }

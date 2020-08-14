@@ -9,7 +9,7 @@
     >
 
     <ImageView
-        android:id="@+id/wordUp"
+        android:id="@+id/word_up"
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:background="?selectableItemBackgroundBorderless"
@@ -19,7 +19,7 @@
         />
 
     <TextView
-        android:id="@+id/wordText"
+        android:id="@+id/word_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="16dp"
@@ -33,7 +33,7 @@
         >
 
         <LinearLayout
-            android:id="@+id/wordDetails"
+            android:id="@+id/word_details"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
@@ -82,7 +82,7 @@
         </LinearLayout>
 
         <ProgressBar
-            android:id="@+id/wordProgress"
+            android:id="@+id/word_progress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

@@ -19,7 +19,7 @@ class NavFragment : Fragment(R.layout.fragment_nav) {
             setOnNavigationItemSelectedListener {
                 if (selectedItemId != it.itemId || childFragmentManager.fragments.isEmpty()) {
                     childFragmentManager.commit {
-                        replace(R.id.navContainer, when (it.itemId) {
+                        replace(R.id.nav_container, when (it.itemId) {
                             R.id.menu_nav_dict -> DictFragment()
                             R.id.menu_nav_learn -> LearnFragment()
                             R.id.menu_nav_explore -> ExploreFragment()
