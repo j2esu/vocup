@@ -53,7 +53,7 @@
             android:clipToPadding="false"
             android:paddingHorizontal="16dp"
             android:paddingTop="8dp"
-            tools:listitem="@layout/item_trans"
+            tools:listitem="@layout/item_def"
             />
 
         <ProgressBar

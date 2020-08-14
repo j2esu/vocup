@@ -5,15 +5,15 @@ import kotlinx.coroutines.flow.Flow
 interface Repo {
     fun getAllWords(): Flow<List<Word>>
     suspend fun getWord(text: String): Word?
-    suspend fun addWord(trans: Trans)
-    suspend fun removeWord(trans: Trans)
+    suspend fun addWord(def: Def)
+    suspend fun removeWord(def: Def)
     fun getTargetLang(): Flow<Language>
     suspend fun setTargetLang(lang: Language)
-    suspend fun getTranslations(word: String, lang: Language): List<Trans>
+    suspend fun getTranslations(word: String, lang: Language): List<Def>
 }
 
-data class Word(val trans: Trans)
-data class Trans(val text: String, val meanings: List<String>)
+data class Word(val text: String, val translations: List<String>)
+data class Def(val text: String, val translations: List<String>)
 
 enum class Language(val code: String, val nativeName: String) {
     Afrikaans("af", "Afrikaans"),

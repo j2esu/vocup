@@ -6,32 +6,32 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import ru.uxapps.vocup.component.AddWord.TransItem
-import ru.uxapps.vocup.component.AddWord.TransState
+import ru.uxapps.vocup.component.AddWord.DefItem
+import ru.uxapps.vocup.component.AddWord.DefState
+import ru.uxapps.vocup.data.Def
 import ru.uxapps.vocup.data.Language
 import ru.uxapps.vocup.data.Repo
-import ru.uxapps.vocup.data.Trans
 import ru.uxapps.vocup.util.asStateFlow
 import java.io.IOException
 
 interface AddWord {
 
-    val translation: LiveData<TransState>
+    val definitions: LiveData<DefState>
     val maxWordLength: Int
     val languages: LiveData<List<Language>>
     fun onInput(text: String)
-    fun onSave(item: TransItem)
-    fun onRemove(item: TransItem)
+    fun onSave(item: DefItem)
+    fun onRemove(item: DefItem)
     fun onChooseLang(lang: Language)
 
-    sealed class TransState {
-        object Idle : TransState()
-        object Progress : TransState()
-        data class Success(val result: List<TransItem>) : TransState()
-        object Fail : TransState()
+    sealed class DefState {
+        object Idle : DefState()
+        object Loading : DefState()
+        data class Data(val items: List<DefItem>) : DefState()
+        object Error : DefState()
     }
 
-    data class TransItem(val trans: Trans, val saved: Boolean)
+    data class DefItem(val def: Def, val saved: Boolean)
 }
 
 class AddWordImp(
@@ -46,14 +46,14 @@ class AddWordImp(
     private val wordInput = MutableStateFlow("")
     private val allWords = repo.getAllWords().asStateFlow(scope)
 
-    override val translation: LiveData<TransState> =
+    override val definitions: LiveData<DefState> =
         wordInput
             .map { normalizeInput(it) }
             .distinctUntilChanged()
             .combine(repo.getTargetLang()) { input, lang -> input to lang }
             .transformLatest { (input, lang) ->
                 if (input.length in WORD_RANGE) {
-                    emit(TransState.Progress)
+                    emit(DefState.Loading)
                     delay(400)
                     val result = try {
                         repo.getTranslations(input, lang)
@@ -61,16 +61,16 @@ class AddWordImp(
                         null
                     }
                     if (result != null) {
-                        emitAll(allWords.filterNotNull().map { savedWords ->
-                            TransState.Success(result.map { trans ->
-                                TransItem(trans, savedWords.any { it.trans.text == trans.text })
+                        emitAll(allWords.filterNotNull().map { words ->
+                            DefState.Data(result.map { def ->
+                                DefItem(def, words.any { it.text == def.text })
                             })
                         })
                     } else {
-                        emit(TransState.Fail)
+                        emit(DefState.Error)
                     }
                 } else {
-                    emit(TransState.Idle)
+                    emit(DefState.Idle)
                 }
             }
             .asLiveData()
@@ -89,15 +89,15 @@ class AddWordImp(
         wordInput.value = text
     }
 
-    override fun onSave(item: TransItem) {
+    override fun onSave(item: DefItem) {
         scope.launch {
-            repo.addWord(item.trans)
+            repo.addWord(item.def)
         }
     }
 
-    override fun onRemove(item: TransItem) {
+    override fun onRemove(item: DefItem) {
         scope.launch {
-            repo.removeWord(item.trans)
+            repo.removeWord(item.def)
         }
     }
 

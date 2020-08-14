@@ -9,8 +9,8 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import ru.uxapps.vocup.R
 import ru.uxapps.vocup.component.AddWord
-import ru.uxapps.vocup.component.AddWord.TransItem
-import ru.uxapps.vocup.component.AddWord.TransState.*
+import ru.uxapps.vocup.component.AddWord.DefItem
+import ru.uxapps.vocup.component.AddWord.DefState.*
 import ru.uxapps.vocup.data.Language
 import ru.uxapps.vocup.databinding.FragmentAddWordBinding
 
@@ -20,14 +20,14 @@ class AddWordView(
 ) {
 
     interface Callback {
-        fun onSave(item: TransItem)
-        fun onRemove(item: TransItem)
+        fun onSave(item: DefItem)
+        fun onRemove(item: DefItem)
         fun onInput(input: String)
         fun onLangClick(lang: Language)
         fun onUp()
     }
 
-    private val adapter = TransListAdapter(callback::onSave, callback::onRemove)
+    private val adapter = DefListAdapter(callback::onSave, callback::onRemove)
 
     init {
         with(binding) {
@@ -40,11 +40,11 @@ class AddWordView(
         }
     }
 
-    fun setTranslation(state: AddWord.TransState) = with(binding) {
-        addWordProgress.isVisible = state is Progress
-        addWordLoadError.isVisible = state is Fail
-        addWordEmptyList.isVisible = state is Success && state.result.isEmpty()
-        adapter.submitList(if (state is Success) state.result else emptyList())
+    fun setDefState(state: AddWord.DefState) = with(binding) {
+        addWordProgress.isVisible = state is Loading
+        addWordLoadError.isVisible = state is Error
+        addWordEmptyList.isVisible = state is Data && state.items.isEmpty()
+        adapter.submitList(if (state is Data) state.items else emptyList())
     }
 
     fun setMaxWordLength(length: Int) = with(binding) {

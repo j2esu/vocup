@@ -12,7 +12,7 @@ import ru.uxapps.vocup.util.inflateBinding
 class DictListAdapter(
     private val onWordClick: (Word) -> Unit
 ) : ListAdapter<Word, DictListAdapter.WordVh>(object : DiffUtil.ItemCallback<Word>() {
-    override fun areItemsTheSame(oldItem: Word, newItem: Word) = oldItem.trans == newItem.trans
+    override fun areItemsTheSame(oldItem: Word, newItem: Word) = oldItem.text == newItem.text
     override fun areContentsTheSame(oldItem: Word, newItem: Word) = oldItem == newItem
 }) {
 
@@ -28,9 +28,9 @@ class DictListAdapter(
         }
 
         fun bind(word: Word) = with(binding) {
-            wordText.text = word.trans.text
-            wordTransCount.text = root.resources.getString(R.string.meanings_count_pattern,
-                word.trans.meanings.size)
+            wordText.text = word.text
+            wordTransCount.text = root.resources.getString(R.string.trans_count_pattern,
+                word.translations.size)
         }
     }
 }

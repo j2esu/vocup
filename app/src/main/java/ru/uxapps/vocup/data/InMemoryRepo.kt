@@ -18,7 +18,7 @@ object InMemoryRepo : Repo {
     init {
         GlobalScope.launch {
             delay(1000)
-            words.value = listOf(Word(Trans("Hello", listOf("Привет", "Здравствуй"))))
+            words.value = listOf(Word("Hello", listOf("Привет", "Здравствуй")))
         }
         GlobalScope.launch {
             getTargetLangPref()?.let {
@@ -31,7 +31,7 @@ object InMemoryRepo : Repo {
 
     override suspend fun getWord(text: String): Word? {
         delay(1000)
-        return words.value?.find { it.trans.text == text }
+        return words.value?.find { it.text == text }
     }
 
     override fun getTargetLang(): Flow<Language> = targetLang
@@ -56,7 +56,7 @@ object InMemoryRepo : Repo {
         targetLang.value = lang
     }
 
-    override suspend fun getTranslations(word: String, lang: Language): List<Trans> {
+    override suspend fun getTranslations(word: String, lang: Language): List<Def> {
         delay(1000)
         if (Random.nextInt(5) == 0) {
             if (Random.nextBoolean()) {
@@ -65,20 +65,20 @@ object InMemoryRepo : Repo {
                 return emptyList()
             }
         }
-        return List(Random.nextInt(1, 5)) { transIndex ->
-            Trans("$word $transIndex (${lang.code})",
-                List(Random.nextInt(1, 10)) { meanIndex ->
-                    "Meaning $meanIndex"
+        return List(Random.nextInt(1, 5)) { defIndex ->
+            Def("$word $defIndex (${lang.code})",
+                List(Random.nextInt(1, 10)) { transIndex ->
+                    "Translation $transIndex"
                 }
             )
         }
     }
 
-    override suspend fun addWord(trans: Trans) {
-        words.value = listOf(Word(trans)) + (words.value ?: emptyList())
+    override suspend fun addWord(def: Def) {
+        words.value = words.value?.let { listOf(Word(def.text, def.translations)) + it }
     }
 
-    override suspend fun removeWord(trans: Trans) {
-        words.value = words.value?.filter { it.trans.text != trans.text }
+    override suspend fun removeWord(def: Def) {
+        words.value = words.value?.filter { it.text != def.text }
     }
 }

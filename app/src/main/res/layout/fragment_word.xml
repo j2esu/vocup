@@ -52,12 +52,12 @@
                     android:layout_weight="1"
                     android:background="?selectableItemBackgroundBorderless"
                     android:padding="16dp"
-                    android:text="@string/meanings"
+                    android:text="@string/translations"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
                     />
 
                 <ImageView
-                    android:id="@+id/wordAddMeaning"
+                    android:id="@+id/word_add_trans"
                     android:layout_width="56dp"
                     android:layout_height="56dp"
                     android:background="?selectableItemBackgroundBorderless"
@@ -70,12 +70,12 @@
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/wordMeaningsList"
+                android:id="@+id/word_trans_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scrollIndicators="top"
                 tools:itemCount="5"
-                tools:listitem="@layout/item_mean"
+                tools:listitem="@layout/item_trans"
                 tools:targetApi="m"
                 />
 

@@ -21,7 +21,7 @@ class WordFragment : Fragment(R.layout.fragment_word) {
     }
 
     companion object Args {
-        fun argsOf(word: Word) = bundleOf("word" to word.trans.text)
+        fun argsOf(word: Word) = bundleOf("word" to word.text)
         private val WordFragment.wordText get() = requireArguments()["word"] as String
     }
 
@@ -29,8 +29,8 @@ class WordFragment : Fragment(R.layout.fragment_word) {
         val vm by viewModels<WordViewModel>()
         val binding = FragmentWordBinding.bind(view)
         with(vm.wordDetails(wordText)) {
-            val listAdapter = MeaningListAdapter()
-            binding.wordMeaningsList.apply {
+            val listAdapter = TransListAdapter()
+            binding.wordTransList.apply {
                 adapter = listAdapter
                 layoutManager = LinearLayoutManager(context)
             }
@@ -39,7 +39,7 @@ class WordFragment : Fragment(R.layout.fragment_word) {
                 binding.wordDetails.isVisible = it is State.Data
                 when (it) {
                     State.Error -> (activity as Host).onWordNotFound(wordText)
-                    is State.Data -> listAdapter.submitList(it.word.trans.meanings)
+                    is State.Data -> listAdapter.submitList(it.word.translations)
                 }
             }
             word.observe(viewLifecycleOwner) {
