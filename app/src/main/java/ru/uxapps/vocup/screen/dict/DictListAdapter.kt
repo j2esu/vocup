@@ -1,13 +1,13 @@
 package ru.uxapps.vocup.screen.dict
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import ru.uxapps.vocup.R
 import ru.uxapps.vocup.data.Word
 import ru.uxapps.vocup.databinding.ItemWordBinding
+import ru.uxapps.vocup.util.inflateBinding
 
 class DictListAdapter(
     private val onWordClick: (Word) -> Unit
@@ -16,19 +16,15 @@ class DictListAdapter(
     override fun areContentsTheSame(oldItem: Word, newItem: Word) = oldItem == newItem
 }) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WordVh {
-        return WordVh(ItemWordBinding.inflate(LayoutInflater.from(parent.context), parent, false)) {
-            onWordClick(getItem(it))
-        }
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+        WordVh(parent.inflateBinding(ItemWordBinding::inflate))
 
     override fun onBindViewHolder(holder: WordVh, position: Int) = holder.bind(getItem(position))
 
-    class WordVh(private val binding: ItemWordBinding, onItemClick: (Int) -> Unit) :
-        RecyclerView.ViewHolder(binding.root) {
+    inner class WordVh(private val binding: ItemWordBinding) : ViewHolder(binding.root) {
 
         init {
-            binding.root.setOnClickListener { onItemClick(adapterPosition) }
+            binding.root.setOnClickListener { onWordClick(getItem(adapterPosition)) }
         }
 
         fun bind(word: Word) = with(binding) {

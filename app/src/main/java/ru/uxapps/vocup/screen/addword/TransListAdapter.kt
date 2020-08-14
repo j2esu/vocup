@@ -1,13 +1,13 @@
 package ru.uxapps.vocup.screen.addword
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import ru.uxapps.vocup.R
 import ru.uxapps.vocup.component.AddWord.TransItem
 import ru.uxapps.vocup.databinding.ItemTransBinding
+import ru.uxapps.vocup.util.inflateBinding
 
 class TransListAdapter(
     private val onSave: (TransItem) -> Unit,
@@ -24,12 +24,11 @@ class TransListAdapter(
     ) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        TransVh(ItemTransBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        TransVh(parent.inflateBinding(ItemTransBinding::inflate))
 
     override fun onBindViewHolder(holder: TransVh, position: Int) = holder.bind(getItem(position))
 
-    inner class TransVh(private val binding: ItemTransBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    inner class TransVh(private val binding: ItemTransBinding) : ViewHolder(binding.root) {
 
         init {
             binding.transBg.setOnClickListener {

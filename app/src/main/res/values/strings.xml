@@ -13,4 +13,5 @@
     <string name="title_learn">Learn</string>
     <string name="title_explore">Explore</string>
     <string name="meanings_count_pattern">%d meanings</string>
+    <string name="meanings">Meanings</string>
 </resources>

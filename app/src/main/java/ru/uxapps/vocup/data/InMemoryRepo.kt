@@ -18,7 +18,7 @@ object InMemoryRepo : Repo {
     init {
         GlobalScope.launch {
             delay(1000)
-            words.value = emptyList()
+            words.value = listOf(Word(Trans("Hello", listOf("Привет", "Здравствуй"))))
         }
         GlobalScope.launch {
             getTargetLangPref()?.let {
@@ -58,15 +58,19 @@ object InMemoryRepo : Repo {
 
     override suspend fun getTranslations(word: String, lang: Language): List<Trans> {
         delay(1000)
-        if (Random.nextInt() % 5 == 0) {
-            throw IOException("Can't load translation")
-        } else if (Random.nextInt() % 5 == 0) {
-            return emptyList()
+        if (Random.nextInt(5) == 0) {
+            if (Random.nextBoolean()) {
+                throw IOException("Can't load translation")
+            } else {
+                return emptyList()
+            }
         }
         return List(Random.nextInt(1, 5)) { transIndex ->
-            Trans("$word $transIndex", List(Random.nextInt(1, 10)) { meaningIndex ->
-                "Meaning $meaningIndex"
-            })
+            Trans("$word $transIndex (${lang.code})",
+                List(Random.nextInt(1, 10)) { meanIndex ->
+                    "Meaning $meanIndex"
+                }
+            )
         }
     }
 

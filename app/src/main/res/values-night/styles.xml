@@ -4,7 +4,7 @@
     <style name="BaseAppTheme.DayNight">
         <item name="colorPrimary">#7A50C1</item>
         <item name="colorPrimarySurface">#161616</item>
-        <item name="colorSecondary">#383240</item>
+        <item name="colorSecondary">#4A148C</item>
         <item name="colorOnPrimary">#fafafa</item>
         <item name="colorOnSecondary">#fafafa</item>
     </style>

@@ -3,14 +3,22 @@ package ru.uxapps.vocup.screen.word
 import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
+import androidx.recyclerview.widget.LinearLayoutManager
 import ru.uxapps.vocup.R
+import ru.uxapps.vocup.component.WordDetails.State
 import ru.uxapps.vocup.data.Word
 import ru.uxapps.vocup.databinding.FragmentWordBinding
+import ru.uxapps.vocup.nav
 
 class WordFragment : Fragment(R.layout.fragment_word) {
+
+    interface Host {
+        fun onWordNotFound(text: String)
+    }
 
     companion object Args {
         fun argsOf(word: Word) = bundleOf("word" to word.trans.text)
@@ -21,13 +29,23 @@ class WordFragment : Fragment(R.layout.fragment_word) {
         val vm by viewModels<WordViewModel>()
         val binding = FragmentWordBinding.bind(view)
         with(vm.wordDetails(wordText)) {
+            val listAdapter = MeaningListAdapter()
+            binding.wordMeaningsList.apply {
+                adapter = listAdapter
+                layoutManager = LinearLayoutManager(context)
+            }
+            details.observe(viewLifecycleOwner) {
+                binding.wordProgress.isVisible = it is State.Loading
+                binding.wordDetails.isVisible = it is State.Data
+                when (it) {
+                    State.Error -> (activity as Host).onWordNotFound(wordText)
+                    is State.Data -> listAdapter.submitList(it.word.trans.meanings)
+                }
+            }
             word.observe(viewLifecycleOwner) {
                 binding.wordText.text = it
             }
-            details.observe(viewLifecycleOwner) {
-                binding.wordDetails.text = it?.trans?.meanings?.joinToString(", ")
-                    ?: getString(R.string.loading_details)
-            }
         }
+        binding.wordUp.setOnClickListener { nav.up() }
     }
 }

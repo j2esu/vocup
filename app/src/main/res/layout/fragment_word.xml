@@ -1,28 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:orientation="vertical"
     >
+
+    <ImageView
+        android:id="@+id/wordUp"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:background="?selectableItemBackgroundBorderless"
+        android:padding="16dp"
+        app:srcCompat="?homeAsUpIndicator"
+        tools:ignore="ContentDescription"
+        />
 
     <TextView
         android:id="@+id/wordText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline3"
+        android:padding="16dp"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
         tools:text="@tools:sample/cities"
         />
 
-    <TextView
-        android:id="@+id/wordDetails"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="?selectableItemBackgroundBorderless"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-        tools:text="@tools:sample/cities"
-        />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <LinearLayout
+            android:id="@+id/wordDetails"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                tools:ignore="UseCompoundDrawables"
+                >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="?selectableItemBackgroundBorderless"
+                    android:padding="16dp"
+                    android:text="@string/meanings"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                    />
+
+                <ImageView
+                    android:id="@+id/wordAddMeaning"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:background="?selectableItemBackgroundBorderless"
+                    android:padding="16dp"
+                    android:tint="?colorPrimary"
+                    app:srcCompat="@drawable/ic_add"
+                    tools:ignore="ContentDescription"
+                    />
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/wordMeaningsList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollIndicators="top"
+                tools:itemCount="5"
+                tools:listitem="@layout/item_mean"
+                tools:targetApi="m"
+                />
+
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/wordProgress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            />
+
+    </FrameLayout>
 
 </LinearLayout>

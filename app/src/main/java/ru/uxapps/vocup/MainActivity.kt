@@ -10,7 +10,7 @@ import ru.uxapps.vocup.screen.addword.AddWordFragment
 import ru.uxapps.vocup.screen.nav.NavFragment
 import ru.uxapps.vocup.screen.word.WordFragment
 
-class MainActivity : AppCompatActivity(R.layout.activity_main), Navigation {
+class MainActivity : AppCompatActivity(R.layout.activity_main), Navigation, WordFragment.Host {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,5 +38,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), Navigation {
     }
 
     override fun up() = onBackPressed()
+
+    override fun onWordNotFound(text: String) = supportFragmentManager.popBackStack()
 
 }
