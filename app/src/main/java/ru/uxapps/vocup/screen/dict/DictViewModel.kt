@@ -1,10 +1,11 @@
 package ru.uxapps.vocup.screen.dict
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import ru.uxapps.vocup.component.WordList
 import ru.uxapps.vocup.component.WordListImp
 import ru.uxapps.vocup.repo
 
 class DictViewModel : ViewModel() {
-    val wordList: WordList = WordListImp(repo)
+    val wordList: WordList = WordListImp(repo, viewModelScope)
 }

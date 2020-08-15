@@ -11,8 +11,10 @@ class Event<T>(val data: T) {
         private set
 
     fun consume(consumer: (T) -> Unit) {
-        consumer(data)
-        consumed = true
+        if (!consumed) {
+            consumer(data)
+            consumed = true
+        }
     }
 }
 

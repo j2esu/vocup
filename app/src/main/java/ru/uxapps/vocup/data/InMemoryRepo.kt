@@ -18,7 +18,10 @@ object InMemoryRepo : Repo {
     init {
         GlobalScope.launch {
             delay(1000)
-            words.value = listOf(Word("Hello", listOf("Привет", "Здравствуй")))
+            words.value = listOf(
+                Word("Hello", listOf("Привет", "Здравствуй", "Алло")),
+                Word("World", listOf("Мир", "Вселенная", "Общество", "Свет"))
+            )
         }
         GlobalScope.launch {
             getTargetLangPref()?.let {
@@ -74,11 +77,17 @@ object InMemoryRepo : Repo {
         }
     }
 
-    override suspend fun addWord(def: Def) {
-        words.value = words.value?.let { listOf(Word(def.text, def.translations)) + it }
+    override suspend fun addWord(def: Def) = addWordInner(def.text, def.translations)
+    override suspend fun addWord(word: Word) = addWordInner(word.text, word.translations)
+
+    private fun addWordInner(text: String, translations: List<String>) {
+        words.value = words.value?.let { listOf(Word(text, translations)) + it }
     }
 
-    override suspend fun removeWord(def: Def) {
-        words.value = words.value?.filter { it.text != def.text }
+    override suspend fun removeWord(def: Def) = removeWordInner(def.text)
+    override suspend fun removeWord(word: Word) = removeWordInner(word.text)
+
+    private fun removeWordInner(text: String) {
+        words.value = words.value?.filter { it.text != text }
     }
 }
