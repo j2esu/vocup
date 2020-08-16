@@ -12,8 +12,8 @@
         android:id="@+id/word_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        app:navigationIcon="?homeAsUpIndicator"
         app:menu="@menu/word"
+        app:navigationIcon="?homeAsUpIndicator"
         />
 
     <TextView
@@ -25,67 +25,59 @@
         tools:text="@tools:sample/cities"
         />
 
-    <FrameLayout
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:minHeight="200dp"
         >
 
         <LinearLayout
-            android:id="@+id/word_details"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
+            android:layout_height="48dp"
+            android:background="?colorSecondary"
+            android:orientation="horizontal"
+            tools:ignore="UseCompoundDrawables"
             >
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                tools:ignore="UseCompoundDrawables"
-                >
+                android:layout_weight="1"
+                android:background="?selectableItemBackgroundBorderless"
+                android:padding="16dp"
+                android:text="@string/translations"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                />
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="?selectableItemBackgroundBorderless"
-                    android:padding="16dp"
-                    android:text="@string/translations"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
-                    />
-
-                <ImageView
-                    android:id="@+id/word_add_trans"
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
-                    android:background="?selectableItemBackgroundBorderless"
-                    android:padding="16dp"
-                    android:tint="?colorPrimary"
-                    app:srcCompat="@drawable/ic_add"
-                    tools:ignore="ContentDescription"
-                    />
-
-            </LinearLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/word_trans_list"
-                android:layout_width="match_parent"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/word_edit_trans"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:scrollIndicators="top"
-                tools:itemCount="5"
-                tools:listitem="@layout/item_trans"
-                tools:targetApi="m"
+                android:text="@string/edit"
                 />
 
         </LinearLayout>
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/word_trans_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="48dp"
+            android:scrollIndicators="top"
+            tools:itemCount="5"
+            tools:listitem="@layout/item_trans"
+            tools:targetApi="m"
+            />
+
         <ProgressBar
-            android:id="@+id/word_progress"
+            android:id="@+id/word_trans_progress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             />
 
-    </FrameLayout>
+    </com.google.android.material.card.MaterialCardView>
 
 </LinearLayout>

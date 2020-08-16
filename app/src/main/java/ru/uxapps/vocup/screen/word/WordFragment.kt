@@ -10,11 +10,12 @@ import ru.uxapps.vocup.R
 import ru.uxapps.vocup.data.Word
 import ru.uxapps.vocup.databinding.FragmentWordBinding
 import ru.uxapps.vocup.nav
+import ru.uxapps.vocup.util.consume
 
 class WordFragment : Fragment(R.layout.fragment_word) {
 
     interface Host {
-        fun onDeleteWord(word: Word)
+        fun onDeleteWord(text: String)
     }
 
     companion object {
@@ -25,13 +26,13 @@ class WordFragment : Fragment(R.layout.fragment_word) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val vm by viewModels<WordViewModel>()
         val v = WordView(FragmentWordBinding.bind(view), object : WordView.Callback {
-            override fun onWordNotFound() = nav.up()
             override fun onUp() = nav.up()
-            override fun onDelete(word: Word) = (activity as Host).onDeleteWord(word)
+            override fun onDelete() = (activity as Host).onDeleteWord(wordText)
         })
         with(vm.wordDetails(wordText)) {
-            details.observe(viewLifecycleOwner, v::setDetails)
-            word.observe(viewLifecycleOwner, v::setWordText)
+            translations.observe(viewLifecycleOwner, v::setTranslations)
+            text.observe(viewLifecycleOwner, v::setWordText)
+            onWordNotFound.consume(viewLifecycleOwner, nav::up)
         }
     }
 }

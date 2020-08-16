@@ -3,8 +3,6 @@ package ru.uxapps.vocup.screen.word
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import ru.uxapps.vocup.R
-import ru.uxapps.vocup.component.WordDetails
-import ru.uxapps.vocup.data.Word
 import ru.uxapps.vocup.databinding.FragmentWordBinding
 
 class WordView(
@@ -13,31 +11,31 @@ class WordView(
 ) {
 
     private val transAdapter = TransListAdapter()
-    private var word: Word? = null
 
     init {
-        binding.wordToolbar.apply {
-            setNavigationOnClickListener { callback.onUp() }
-            menu.findItem(R.id.menu_word_del).setOnMenuItemClickListener {
-                word?.let { callback.onDelete(it) }
-                true
+        with(binding) {
+            wordToolbar.apply {
+                setNavigationOnClickListener { callback.onUp() }
+                menu.findItem(R.id.menu_word_del).setOnMenuItemClickListener {
+                    callback.onDelete()
+                    true
+                }
             }
-        }
-        binding.wordTransList.apply {
-            adapter = transAdapter
-            layoutManager = LinearLayoutManager(context)
+            wordTransList.apply {
+                adapter = transAdapter
+                layoutManager = LinearLayoutManager(context)
+            }
+            wordEditTrans.setOnClickListener {
+                // TODO: 8/16/2020 handle edit action
+            }
         }
     }
 
-    fun setDetails(state: WordDetails.State) = with(binding) {
-        wordProgress.isVisible = state is WordDetails.State.Loading
-        wordDetails.isVisible = state is WordDetails.State.Data
-        when (state) {
-            WordDetails.State.Error -> callback.onWordNotFound()
-            is WordDetails.State.Data -> {
-                transAdapter.submitList(state.word.translations)
-                word = state.word
-            }
+    fun setTranslations(trans: List<String>?) = with(binding) {
+        wordTransProgress.isVisible = trans == null
+        if (trans != null) {
+            transAdapter.submitList(trans)
+            // TODO: 8/16/2020 empty trans view
         }
     }
 
@@ -46,8 +44,7 @@ class WordView(
     }
 
     interface Callback {
-        fun onWordNotFound()
         fun onUp()
-        fun onDelete(word: Word)
+        fun onDelete()
     }
 }

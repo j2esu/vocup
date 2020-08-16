@@ -14,7 +14,7 @@ import ru.uxapps.vocup.util.send
 
 class MainActivity : AppCompatActivity(R.layout.activity_main), Navigation, WordFragment.Host {
 
-    override val onDeleteWord = MutableLiveEvent<Word>()
+    override val onDeleteWord = MutableLiveEvent<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,8 +45,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), Navigation, Word
 
     override fun up() = onBackPressed()
 
-    override fun onDeleteWord(word: Word) {
+    override fun onDeleteWord(text: String) {
         supportFragmentManager.popBackStack()
-        onDeleteWord.send(word)
+        onDeleteWord.send(text)
     }
 }
