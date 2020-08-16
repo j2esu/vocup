@@ -25,7 +25,7 @@ class DictView(
         fun onClick(word: Word)
     }
 
-    private val listAdapter = DictListAdapter(callback::onClick)
+    private val listAdapter = WordListAdapter(callback::onClick)
 
     init {
         binding.dictAdd.setOnClickListener { callback.onAdd() }

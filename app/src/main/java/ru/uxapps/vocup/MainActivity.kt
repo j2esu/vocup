@@ -9,8 +9,12 @@ import ru.uxapps.vocup.screen.Navigation
 import ru.uxapps.vocup.screen.addword.AddWordFragment
 import ru.uxapps.vocup.screen.nav.NavFragment
 import ru.uxapps.vocup.screen.word.WordFragment
+import ru.uxapps.vocup.util.MutableLiveEvent
+import ru.uxapps.vocup.util.send
 
 class MainActivity : AppCompatActivity(R.layout.activity_main), Navigation, WordFragment.Host {
+
+    override val onDeleteWord = MutableLiveEvent<Word>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +27,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), Navigation, Word
 
     override fun openWord(word: Word) {
         supportFragmentManager.commit {
-            replace(R.id.main_container, WordFragment::class.java, WordFragment.argsOf(word))
+            supportFragmentManager.findFragmentById(R.id.main_container)?.let(::hide)
+            add(R.id.main_container, WordFragment::class.java, WordFragment.argsOf(word))
             setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
             addToBackStack(null)
         }
@@ -31,7 +36,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), Navigation, Word
 
     override fun openAddWord() {
         supportFragmentManager.commit {
-            replace(R.id.main_container, AddWordFragment())
+            supportFragmentManager.findFragmentById(R.id.main_container)?.let(::hide)
+            add(R.id.main_container, AddWordFragment())
             setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
             addToBackStack(null)
         }
@@ -39,6 +45,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), Navigation, Word
 
     override fun up() = onBackPressed()
 
-    override fun onWordNotFound(text: String) = supportFragmentManager.popBackStack()
-
+    override fun onDeleteWord(word: Word) {
+        supportFragmentManager.popBackStack()
+        onDeleteWord.send(word)
+    }
 }

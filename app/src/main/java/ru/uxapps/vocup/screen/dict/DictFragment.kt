@@ -25,5 +25,6 @@ class DictFragment : Fragment(R.layout.fragment_dict) {
             loading.observe(viewLifecycleOwner, v::setLoading)
             onUndoRemoved.consume(viewLifecycleOwner, v::showRemoveWordUndo)
         }
+        nav.onDeleteWord.consume(viewLifecycleOwner, vm.wordList::onRemove)
     }
 }

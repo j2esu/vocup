@@ -8,14 +8,12 @@
     android:orientation="vertical"
     >
 
-    <ImageView
-        android:id="@+id/word_up"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:background="?selectableItemBackgroundBorderless"
-        android:padding="16dp"
-        app:srcCompat="?homeAsUpIndicator"
-        tools:ignore="ContentDescription"
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/word_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        app:navigationIcon="?homeAsUpIndicator"
+        app:menu="@menu/word"
         />
 
     <TextView

@@ -16,4 +16,5 @@
     <string name="translations">Translations</string>
     <string name="word_removed">Word was removed</string>
     <string name="undo">Undo</string>
+    <string name="delete_word">Delete word</string>
 </resources>
