@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import ru.uxapps.vocup.util.move
 import java.io.IOException
 import kotlin.random.Random
 
@@ -90,5 +91,18 @@ object InMemoryRepo : Repo {
 
     private fun removeWordInner(text: String) {
         words.value = words.value?.filter { it.text != text }
+    }
+
+    override suspend fun moveTrans(wordText: String, from: Int, to: Int) {
+        val currentWords = words.value!!
+        val wordIndex = currentWords.indexOfFirst { it.text == wordText }
+        if (wordIndex != -1) {
+            val word = currentWords[wordIndex]
+            val newTrans = word.translations.move(from, to)
+            val newWords = currentWords.toMutableList().apply {
+                set(wordIndex, Word(word.text, newTrans, word.created))
+            }
+            words.value = newWords
+        }
     }
 }

@@ -8,63 +8,52 @@
     android:orientation="vertical"
     >
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/word_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        app:menu="@menu/word"
-        app:navigationIcon="?homeAsUpIndicator"
-        />
-
-    <TextView
-        android:id="@+id/word_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
-        tools:text="@tools:sample/cities"
-        />
-
-    <com.google.android.material.card.MaterialCardView
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:minHeight="200dp"
         >
 
-        <LinearLayout
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/word_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:background="?colorSecondary"
-            android:orientation="horizontal"
-            tools:ignore="UseCompoundDrawables"
-            >
+            android:layout_height="?actionBarSize"
+            app:menu="@menu/word"
+            app:navigationIcon="?homeAsUpIndicator"
+            />
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="?selectableItemBackgroundBorderless"
-                android:padding="16dp"
-                android:text="@string/translations"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-                />
+        <TextView
+            android:id="@+id/word_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+            tools:text="@tools:sample/cities"
+            />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/word_edit_trans"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="@string/edit"
-                />
+    </com.google.android.material.appbar.AppBarLayout>
 
-        </LinearLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="?selectableItemBackgroundBorderless"
+            android:padding="16dp"
+            android:text="@string/translations"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+            />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/word_trans_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="48dp"
+            android:layout_marginTop="56dp"
+            android:clipToPadding="false"
+            android:overScrollMode="never"
             android:scrollIndicators="top"
             tools:itemCount="5"
             tools:listitem="@layout/item_trans"
@@ -78,6 +67,6 @@
             android:layout_gravity="center"
             />
 
-    </com.google.android.material.card.MaterialCardView>
+    </FrameLayout>
 
 </LinearLayout>

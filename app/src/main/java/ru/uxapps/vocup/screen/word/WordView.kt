@@ -10,7 +10,13 @@ class WordView(
         private val callback: Callback
 ) {
 
-    private val transAdapter = TransListAdapter()
+    interface Callback {
+        fun onUp()
+        fun onDelete()
+        fun onMove(from: Int, to: Int)
+    }
+
+    private val transAdapter = TransListAdapter(callback::onMove)
 
     init {
         with(binding) {
@@ -25,9 +31,6 @@ class WordView(
                 adapter = transAdapter
                 layoutManager = LinearLayoutManager(context)
             }
-            wordEditTrans.setOnClickListener {
-                // TODO: 8/16/2020 handle edit action
-            }
         }
     }
 
@@ -35,16 +38,10 @@ class WordView(
         wordTransProgress.isVisible = trans == null
         if (trans != null) {
             transAdapter.submitList(trans)
-            // TODO: 8/16/2020 empty trans view
         }
     }
 
     fun setWordText(text: String) = with(binding) {
         wordText.text = text
-    }
-
-    interface Callback {
-        fun onUp()
-        fun onDelete()
     }
 }

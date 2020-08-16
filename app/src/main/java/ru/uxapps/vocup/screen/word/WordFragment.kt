@@ -25,11 +25,13 @@ class WordFragment : Fragment(R.layout.fragment_word) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val vm by viewModels<WordViewModel>()
+        val wordDetails = vm.wordDetails(wordText)
         val v = WordView(FragmentWordBinding.bind(view), object : WordView.Callback {
             override fun onUp() = nav.up()
             override fun onDelete() = (activity as Host).onDeleteWord(wordText)
+            override fun onMove(from: Int, to: Int) = wordDetails.onMoveTrans(from, to)
         })
-        with(vm.wordDetails(wordText)) {
+        with(wordDetails) {
             translations.observe(viewLifecycleOwner, v::setTranslations)
             text.observe(viewLifecycleOwner, v::setWordText)
             onWordNotFound.consume(viewLifecycleOwner, nav::up)

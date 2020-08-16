@@ -1,15 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/trans_text"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_weight="1"
     android:background="?selectableItemBackground"
-    android:gravity="start|center_vertical"
-    android:minHeight="?listPreferredItemHeight"
-    android:padding="16dp"
-    android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-    tools:text="@tools:sample/lorem"
-    />
+    >
+
+    <TextView
+        android:id="@+id/trans_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="?selectableItemBackground"
+        android:drawableStart="@drawable/ic_label"
+        android:drawablePadding="16dp"
+        android:gravity="start|center_vertical"
+        android:minHeight="?listPreferredItemHeight"
+        android:padding="16dp"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+        app:drawableTint="?colorSecondary"
+        tools:text="@tools:sample/lorem"
+        />
+
+    <ImageView
+        android:id="@+id/trans_drag"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_gravity="center_vertical"
+        android:background="?selectableItemBackgroundBorderless"
+        android:padding="16dp"
+        app:srcCompat="@drawable/ic_drag"
+        tools:ignore="ContentDescription"
+        />
+
+</LinearLayout>

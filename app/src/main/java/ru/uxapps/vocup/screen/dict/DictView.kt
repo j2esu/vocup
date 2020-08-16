@@ -33,12 +33,10 @@ class DictView(
             adapter = listAdapter
             layoutManager = LinearLayoutManager(context)
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
-            addItemDecoration(ItemTouchHelper(object : ItemTouchHelper.Callback() {
-
+            addItemDecoration(ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
+                0, ItemTouchHelper.START or ItemTouchHelper.END
+            ) {
                 private val swipeBg = context.getDrawable(R.drawable.word_swipe_bg)!!
-
-                override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: ViewHolder) =
-                    makeMovementFlags(0, ItemTouchHelper.START or ItemTouchHelper.END)
 
                 override fun onMove(recyclerView: RecyclerView, viewHolder: ViewHolder, target: ViewHolder) =
                     false

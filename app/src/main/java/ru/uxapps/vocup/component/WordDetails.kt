@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.launch
 import ru.uxapps.vocup.data.Repo
 import ru.uxapps.vocup.util.LiveEvent
 import ru.uxapps.vocup.util.MutableLiveEvent
@@ -17,9 +18,14 @@ interface WordDetails {
     val text: LiveData<String>
     val translations: LiveData<List<String>?>
     val onWordNotFound: LiveEvent<Unit>
+    fun onMoveTrans(from: Int, to: Int)
 }
 
-class WordDetailsImp(wordText: String, repo: Repo, scope: CoroutineScope) : WordDetails {
+class WordDetailsImp(
+        private val wordText: String,
+        private val repo: Repo,
+        private val scope: CoroutineScope
+) : WordDetails {
 
     override val onWordNotFound = MutableLiveEvent<Unit>()
 
@@ -33,4 +39,10 @@ class WordDetailsImp(wordText: String, repo: Repo, scope: CoroutineScope) : Word
 
     override val text = word.mapNotNull { it?.text }.onStart { emit(wordText) }.asLiveData()
     override val translations = word.map { it?.translations }.onStart { emit(null) }.asLiveData()
+
+    override fun onMoveTrans(from: Int, to: Int) {
+        scope.launch {
+            repo.moveTrans(wordText, from, to)
+        }
+    }
 }
