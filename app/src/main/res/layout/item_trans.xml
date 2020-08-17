@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?selectableItemBackground"
+    android:background="@drawable/trans_item_bg"
     >
 
     <TextView
@@ -13,7 +13,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="?selectableItemBackground"
         android:drawableStart="@drawable/ic_label"
         android:drawablePadding="16dp"
         android:gravity="start|center_vertical"
@@ -29,7 +28,6 @@
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:layout_gravity="center_vertical"
-        android:background="?selectableItemBackgroundBorderless"
         android:padding="16dp"
         app:srcCompat="@drawable/ic_drag"
         tools:ignore="ContentDescription"

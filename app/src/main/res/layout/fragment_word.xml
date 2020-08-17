@@ -40,7 +40,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:background="?selectableItemBackgroundBorderless"
             android:padding="16dp"
             android:text="@string/translations"
@@ -51,7 +51,7 @@
             android:id="@+id/word_trans_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="56dp"
+            android:layout_marginTop="72dp"
             android:clipToPadding="false"
             android:overScrollMode="never"
             android:scrollIndicators="top"

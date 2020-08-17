@@ -1,13 +1,17 @@
 package ru.uxapps.vocup.screen.word
 
 import android.annotation.SuppressLint
+import android.graphics.Canvas
 import android.view.MotionEvent
+import android.view.View
 import android.view.ViewGroup
+import androidx.core.math.MathUtils
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import ru.uxapps.vocup.R
 import ru.uxapps.vocup.databinding.ItemTransBinding
 import ru.uxapps.vocup.util.inflateBinding
 import java.util.*
@@ -22,11 +26,14 @@ class TransListAdapter(
     }
 ) {
 
+    private var dragTransZ: Float = 0f
+
     private val touchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
         ItemTouchHelper.UP or ItemTouchHelper.DOWN, 0
     ) {
 
         private var prevList: List<String>? = null
+        private var dragged: View? = null
 
         override fun onMove(recyclerView: RecyclerView, viewHolder: ViewHolder,
                 target: ViewHolder): Boolean {
@@ -44,14 +51,34 @@ class TransListAdapter(
                 }
                 prevList = null
             }
+            viewHolder.itemView.animate().cancel()
+            viewHolder.itemView.translationZ = 0f
+            viewHolder.itemView.isActivated = false
             super.clearView(recyclerView, viewHolder)
         }
 
         override fun onSelectedChanged(viewHolder: ViewHolder?, actionState: Int) {
             if (actionState == ItemTouchHelper.ACTION_STATE_DRAG) {
                 prevList = currentList
+                dragged = viewHolder?.itemView
+                dragged?.isActivated = true
+                dragged?.animate()?.translationZ(dragTransZ)
+            } else if (actionState == ItemTouchHelper.ACTION_STATE_IDLE) {
+                dragged?.animate()?.translationZ(0f)
+                dragged = null
             }
             super.onSelectedChanged(viewHolder, actionState)
+        }
+
+        override fun isLongPressDragEnabled() = false
+
+        override fun onChildDraw(c: Canvas, recyclerView: RecyclerView, viewHolder: ViewHolder,
+                dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {
+            super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+            // don't go outside rv
+            viewHolder.itemView.apply {
+                y = MathUtils.clamp(y, 0f, (recyclerView.height - height).toFloat())
+            }
         }
 
         override fun onSwiped(viewHolder: ViewHolder, direction: Int) {
@@ -60,6 +87,7 @@ class TransListAdapter(
     })
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        dragTransZ = recyclerView.resources.getDimension(R.dimen.trans_drag_z)
         recyclerView.addItemDecoration(touchHelper)
         touchHelper.attachToRecyclerView(recyclerView)
     }
@@ -78,6 +106,9 @@ class TransListAdapter(
                     touchHelper.startDrag(this)
                 }
                 false
+            }
+            binding.root.setOnClickListener {
+                // TODO: 8/17/2020 open edit
             }
         }
 
