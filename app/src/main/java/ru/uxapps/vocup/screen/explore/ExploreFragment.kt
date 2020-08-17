@@ -1,4 +1,4 @@
-package ru.uxapps.vocup.screen
+package ru.uxapps.vocup.screen.explore
 
 import androidx.fragment.app.Fragment
 import ru.uxapps.vocup.R
