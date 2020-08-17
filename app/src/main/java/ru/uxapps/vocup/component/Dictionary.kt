@@ -12,7 +12,7 @@ import ru.uxapps.vocup.util.LiveEvent
 import ru.uxapps.vocup.util.MutableLiveEvent
 import ru.uxapps.vocup.util.send
 
-interface WordList {
+interface Dictionary {
 
     val words: LiveData<List<Word>>
     val loading: LiveData<Boolean>
@@ -22,10 +22,10 @@ interface WordList {
     fun onRemove(wordText: String)
 }
 
-class WordListImp(
+class DictionaryImp(
     private val repo: Repo,
     private val scope: CoroutineScope
-) : WordList {
+) : Dictionary {
 
     override val onUndoRemoved = MutableLiveEvent<() -> Unit>()
     override val words: LiveData<List<Word>> = repo.getAllWords().asLiveData()

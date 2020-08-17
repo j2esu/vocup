@@ -17,14 +17,14 @@ class DictFragment : Fragment(R.layout.fragment_dict) {
         val vm by viewModels<DictViewModel>()
         val v = DictView(FragmentDictBinding.bind(view), object : DictView.Callback {
             override fun onAdd() = nav.openAddWord()
-            override fun onSwipe(word: Word) = vm.wordList.onRemove(word)
+            override fun onSwipe(word: Word) = vm.dictionary.onRemove(word)
             override fun onClick(word: Word) = nav.openWord(word)
         })
-        with(vm.wordList) {
+        with(vm.dictionary) {
             words.observe(viewLifecycleOwner, v::setWords)
             loading.observe(viewLifecycleOwner, v::setLoading)
             onUndoRemoved.consume(viewLifecycleOwner, v::showRemoveWordUndo)
         }
-        nav.onDeleteWord.consume(viewLifecycleOwner, vm.wordList::onRemove)
+        nav.onDeleteWord.consume(viewLifecycleOwner, vm.dictionary::onRemove)
     }
 }
