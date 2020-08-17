@@ -71,7 +71,7 @@ object InMemoryRepo : Repo {
         }
         return List(Random.nextInt(1, 5)) { defIndex ->
             Def("$word $defIndex (${lang.code})",
-                List(Random.nextInt(1, 10)) { transIndex ->
+                List(Random.nextInt(1, 30)) { transIndex ->
                     "Translation $transIndex"
                 }
             )

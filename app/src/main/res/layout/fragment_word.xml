@@ -8,50 +8,54 @@
     android:orientation="vertical"
     >
 
-    <com.google.android.material.appbar.AppBarLayout
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/word_toolbar"
         android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        app:menu="@menu/word"
+        app:navigationIcon="?homeAsUpIndicator"
+        />
+
+    <TextView
+        android:id="@+id/word_text"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        >
-
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/word_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
-            app:menu="@menu/word"
-            app:navigationIcon="?homeAsUpIndicator"
-            />
-
-        <TextView
-            android:id="@+id/word_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
-            tools:text="@tools:sample/cities"
-            />
-
-    </com.google.android.material.appbar.AppBarLayout>
+        android:padding="16dp"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+        tools:text="@tools:sample/cities"
+        />
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         >
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:background="?selectableItemBackgroundBorderless"
             android:padding="16dp"
             android:text="@string/translations"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
             />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/word_add_trans"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/add"
+            />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/word_trans_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="72dp"
+            android:layout_marginTop="56dp"
             android:clipToPadding="false"
             android:overScrollMode="never"
             android:scrollIndicators="top"
@@ -62,11 +66,13 @@
 
         <ProgressBar
             android:id="@+id/word_trans_progress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
             />
 
     </FrameLayout>
+
 
 </LinearLayout>
