@@ -13,10 +13,10 @@ class WordView(
     interface Callback {
         fun onUp()
         fun onDelete()
-        fun onMove(from: Int, to: Int)
+        fun onReorderTrans(newTrans: List<String>)
     }
 
-    private val transAdapter = TransListAdapter(callback::onMove)
+    private val transAdapter = TransListAdapter(callback::onReorderTrans)
 
     init {
         with(binding) {

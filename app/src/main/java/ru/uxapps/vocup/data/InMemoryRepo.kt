@@ -8,7 +8,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import ru.uxapps.vocup.util.move
 import java.io.IOException
 import kotlin.random.Random
 
@@ -79,8 +78,11 @@ object InMemoryRepo : Repo {
         }
     }
 
-    override suspend fun addWord(def: Def) = addWordInner(def.text, def.translations, System.nanoTime())
-    override suspend fun addWord(word: Word) = addWordInner(word.text, word.translations, word.created)
+    override suspend fun addWord(def: Def) =
+        addWordInner(def.text, def.translations, System.nanoTime())
+
+    override suspend fun addWord(word: Word) =
+        addWordInner(word.text, word.translations, word.created)
 
     private fun addWordInner(text: String, translations: List<String>, created: Long) {
         words.value = words.value?.let { listOf(Word(text, translations, created)) + it }
@@ -93,16 +95,13 @@ object InMemoryRepo : Repo {
         words.value = words.value?.filter { it.text != text }
     }
 
-    override suspend fun moveTrans(wordText: String, from: Int, to: Int) {
+    override suspend fun setTranslations(word: String, trans: List<String>) {
         val currentWords = words.value!!
-        val wordIndex = currentWords.indexOfFirst { it.text == wordText }
+        val wordIndex = currentWords.indexOfFirst { it.text == word }
         if (wordIndex != -1) {
-            val word = currentWords[wordIndex]
-            val newTrans = word.translations.move(from, to)
-            val newWords = currentWords.toMutableList().apply {
-                set(wordIndex, Word(word.text, newTrans, word.created))
+            words.value = currentWords.toMutableList().apply {
+                set(wordIndex, get(wordIndex).copy(translations = trans))
             }
-            words.value = newWords
         }
     }
 }

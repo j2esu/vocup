@@ -14,7 +14,7 @@ import java.util.*
 
 
 class TransListAdapter(
-        private val onDrag: (from: Int, to: Int) -> Unit
+        private val onReorder: (List<String>) -> Unit
 ) : ListAdapter<String, TransListAdapter.TransVh>(
     object : DiffUtil.ItemCallback<String>() {
         override fun areItemsTheSame(oldItem: String, newItem: String) = oldItem == newItem
@@ -26,7 +26,7 @@ class TransListAdapter(
         ItemTouchHelper.UP or ItemTouchHelper.DOWN, 0
     ) {
 
-        private var dragStartPos: Int? = null
+        private var prevList: List<String>? = null
 
         override fun onMove(recyclerView: RecyclerView, viewHolder: ViewHolder,
                 target: ViewHolder): Boolean {
@@ -38,19 +38,18 @@ class TransListAdapter(
         }
 
         override fun clearView(recyclerView: RecyclerView, viewHolder: ViewHolder) {
-            dragStartPos?.let {
-                val dragEndPos = viewHolder.adapterPosition
-                if (it != dragEndPos) {
-                    onDrag(it, dragEndPos)
+            prevList?.let {
+                if (prevList != currentList) {
+                    onReorder(currentList)
                 }
-                dragStartPos = null
+                prevList = null
             }
             super.clearView(recyclerView, viewHolder)
         }
 
         override fun onSelectedChanged(viewHolder: ViewHolder?, actionState: Int) {
             if (actionState == ItemTouchHelper.ACTION_STATE_DRAG) {
-                dragStartPos = viewHolder!!.adapterPosition
+                prevList = currentList
             }
             super.onSelectedChanged(viewHolder, actionState)
         }

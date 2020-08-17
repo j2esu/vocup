@@ -18,7 +18,7 @@ interface WordDetails {
     val text: LiveData<String>
     val translations: LiveData<List<String>?>
     val onWordNotFound: LiveEvent<Unit>
-    fun onMoveTrans(from: Int, to: Int)
+    fun onReorderTrans(newTrans: List<String>)
 }
 
 class WordDetailsImp(
@@ -40,9 +40,9 @@ class WordDetailsImp(
     override val text = word.mapNotNull { it?.text }.onStart { emit(wordText) }.asLiveData()
     override val translations = word.map { it?.translations }.onStart { emit(null) }.asLiveData()
 
-    override fun onMoveTrans(from: Int, to: Int) {
+    override fun onReorderTrans(newTrans: List<String>) {
         scope.launch {
-            repo.moveTrans(wordText, from, to)
+            repo.setTranslations(wordText, newTrans)
         }
     }
 }
