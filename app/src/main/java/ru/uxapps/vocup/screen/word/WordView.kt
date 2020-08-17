@@ -6,8 +6,8 @@ import ru.uxapps.vocup.R
 import ru.uxapps.vocup.databinding.FragmentWordBinding
 
 class WordView(
-        private val binding: FragmentWordBinding,
-        private val callback: Callback
+    private val binding: FragmentWordBinding,
+    private val callback: Callback
 ) {
 
     interface Callback {

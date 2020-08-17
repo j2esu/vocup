@@ -22,9 +22,9 @@ interface WordDetails {
 }
 
 class WordDetailsImp(
-        private val wordText: String,
-        private val repo: Repo,
-        private val scope: CoroutineScope
+    private val wordText: String,
+    private val repo: Repo,
+    private val scope: CoroutineScope
 ) : WordDetails {
 
     override val onWordNotFound = MutableLiveEvent<Unit>()

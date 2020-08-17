@@ -19,12 +19,14 @@ class NavFragment : Fragment(R.layout.fragment_nav) {
             setOnNavigationItemSelectedListener {
                 if (selectedItemId != it.itemId || childFragmentManager.fragments.isEmpty()) {
                     childFragmentManager.commit {
-                        replace(R.id.nav_container, when (it.itemId) {
-                            R.id.menu_nav_dict -> DictFragment()
-                            R.id.menu_nav_learn -> LearnFragment()
-                            R.id.menu_nav_explore -> ExploreFragment()
-                            else -> error("Unknown menu: ${it.title}")
-                        })
+                        replace(
+                            R.id.nav_container, when (it.itemId) {
+                                R.id.menu_nav_dict -> DictFragment()
+                                R.id.menu_nav_learn -> LearnFragment()
+                                R.id.menu_nav_explore -> ExploreFragment()
+                                else -> error("Unknown menu: ${it.title}")
+                            }
+                        )
                         setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                     }
                 }

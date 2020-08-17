@@ -23,8 +23,8 @@ interface WordList {
 }
 
 class WordListImp(
-        private val repo: Repo,
-        private val scope: CoroutineScope
+    private val repo: Repo,
+    private val scope: CoroutineScope
 ) : WordList {
 
     override val onUndoRemoved = MutableLiveEvent<() -> Unit>()

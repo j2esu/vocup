@@ -29,8 +29,8 @@ class WordListAdapter(
 
         fun bind(word: Word) = with(binding) {
             wordText.text = word.text
-            wordTransCount.text = root.resources.getString(R.string.trans_count_pattern,
-                word.translations.size)
+            wordTransCount.text =
+                root.resources.getString(R.string.trans_count_pattern, word.translations.size)
         }
     }
 }

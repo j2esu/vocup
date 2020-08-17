@@ -61,8 +61,9 @@ class AddWordView(
             }
             if (i == 0) {
                 item.icon = root.context.getDrawable(R.drawable.ic_done)?.apply {
-                    setTintList(ContextCompat.getColorStateList(root.context,
-                        R.color.target_lang_tint))
+                    setTintList(
+                        ContextCompat.getColorStateList(root.context, R.color.target_lang_tint)
+                    )
                 }
             }
         }

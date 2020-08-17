@@ -18,7 +18,7 @@ import java.util.*
 
 
 class TransListAdapter(
-        private val onReorder: (List<String>) -> Unit
+    private val onReorder: (List<String>) -> Unit
 ) : ListAdapter<String, TransListAdapter.TransVh>(
     object : DiffUtil.ItemCallback<String>() {
         override fun areItemsTheSame(oldItem: String, newItem: String) = oldItem == newItem
@@ -35,10 +35,9 @@ class TransListAdapter(
         private var prevList: List<String>? = null
         private var dragged: View? = null
 
-        override fun onMove(recyclerView: RecyclerView, viewHolder: ViewHolder,
-                target: ViewHolder): Boolean {
+        override fun onMove(rv: RecyclerView, vh: ViewHolder, target: ViewHolder): Boolean {
             currentList.toMutableList().apply {
-                Collections.swap(this, viewHolder.adapterPosition, target.adapterPosition)
+                Collections.swap(this, vh.adapterPosition, target.adapterPosition)
                 submitList(this)
             }
             return true
@@ -72,8 +71,10 @@ class TransListAdapter(
 
         override fun isLongPressDragEnabled() = false
 
-        override fun onChildDraw(c: Canvas, recyclerView: RecyclerView, viewHolder: ViewHolder,
-                dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {
+        override fun onChildDraw(
+            c: Canvas, recyclerView: RecyclerView, viewHolder: ViewHolder,
+            dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean
+        ) {
             super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
             // don't go outside rv
             viewHolder.itemView.apply {

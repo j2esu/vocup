@@ -15,8 +15,8 @@ import kotlin.math.abs
 import kotlin.math.round
 
 class DictView(
-        private val binding: FragmentDictBinding,
-        private val callback: Callback
+    private val binding: FragmentDictBinding,
+    private val callback: Callback
 ) {
 
     interface Callback {
@@ -38,15 +38,16 @@ class DictView(
             ) {
                 private val swipeBg = context.getDrawable(R.drawable.word_swipe_bg)!!
 
-                override fun onMove(recyclerView: RecyclerView, viewHolder: ViewHolder, target: ViewHolder) =
-                    false
+                override fun onMove(rv: RecyclerView, vh: ViewHolder, target: ViewHolder) = false
 
                 override fun onSwiped(viewHolder: ViewHolder, direction: Int) {
                     callback.onSwipe(listAdapter.currentList[viewHolder.adapterPosition])
                 }
 
-                override fun onChildDraw(canvas: Canvas, recyclerView: RecyclerView, viewHolder: ViewHolder,
-                        dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {
+                override fun onChildDraw(
+                    canvas: Canvas, recyclerView: RecyclerView, viewHolder: ViewHolder,
+                    dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean
+                ) {
                     val item = viewHolder.itemView
                     val clipLeft = if (dX >= 0) 0 else item.width + dX.toInt()
                     val clipRight = if (dX >= 0) dX.toInt() else item.width
@@ -54,7 +55,9 @@ class DictView(
                     swipeBg.setBounds(0, item.top, item.width, item.bottom)
                     swipeBg.alpha = round((1 - abs(dX / item.width)) * 255).toInt()
                     swipeBg.draw(canvas)
-                    super.onChildDraw(canvas, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+                    super.onChildDraw(
+                        canvas, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive
+                    )
                 }
             }).also { it.attachToRecyclerView(this) })
         }
