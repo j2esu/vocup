@@ -104,15 +104,6 @@ object InMemoryRepo : Repo {
         }
     }
 
-    override suspend fun addTranslation(word: String, trans: String) {
-        withWord(word) { currentWords, wordIndex ->
-            words.value = currentWords.toMutableList().apply {
-                val newTrans = listOf(trans) + get(wordIndex).translations
-                set(wordIndex, get(wordIndex).copy(translations = newTrans))
-            }
-        }
-    }
-
     private fun withWord(word: String, action: (List<Word>, Int) -> Unit) {
         val currentWords = words.value
         if (currentWords != null) {

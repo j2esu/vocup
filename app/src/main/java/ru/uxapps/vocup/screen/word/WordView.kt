@@ -15,9 +15,10 @@ class WordView(
         fun onDelete()
         fun onReorderTrans(newTrans: List<String>)
         fun onAddTrans()
+        fun onEditTrans(trans: String)
     }
 
-    private val transAdapter = TransListAdapter(callback::onReorderTrans)
+    private val transAdapter = TransListAdapter(callback::onReorderTrans, callback::onEditTrans)
 
     init {
         with(binding) {

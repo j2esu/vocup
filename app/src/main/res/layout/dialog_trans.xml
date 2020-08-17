@@ -2,7 +2,7 @@
 <EditText
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/add_trans_input"
+    android:id="@+id/trans_input"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@android:color/transparent"
@@ -10,7 +10,7 @@
     android:inputType="textCapSentences"
     android:lines="1"
     android:paddingHorizontal="24dp"
-    android:paddingVertical="16dp"
+    android:paddingVertical="36dp"
     android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
     tools:ignore="Autofill"
     >

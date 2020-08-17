@@ -3,20 +3,20 @@ package ru.uxapps.vocup.component
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapNotNull
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import ru.uxapps.vocup.data.Repo
-import ru.uxapps.vocup.util.LiveEvent
-import ru.uxapps.vocup.util.MutableLiveEvent
 import ru.uxapps.vocup.util.asStateFlow
-import ru.uxapps.vocup.util.send
 
 interface WordDetails {
     val text: LiveData<String>
     val translations: LiveData<List<String>?>
-    val onWordNotFound: LiveEvent<Unit>
     fun onReorderTrans(newTrans: List<String>)
     fun onAddTrans(text: String)
+    fun onEditTrans(trans: String, newText: String)
 }
 
 class WordDetailsImp(
@@ -25,16 +25,7 @@ class WordDetailsImp(
     private val scope: CoroutineScope
 ) : WordDetails {
 
-    override val onWordNotFound = MutableLiveEvent<Unit>()
-
-    private val word = repo.getWord(wordText)
-        .onEach {
-            if (it == null) {
-                onWordNotFound.send()
-            }
-        }
-        .filterNotNull()
-        .asStateFlow(scope)
+    private val word = repo.getWord(wordText).filterNotNull().asStateFlow(scope)
 
     override val text = word.mapNotNull { it?.text }.onStart { emit(wordText) }.asLiveData()
     override val translations = word.map { it?.translations }.onStart { emit(null) }.asLiveData()
@@ -47,7 +38,25 @@ class WordDetailsImp(
 
     override fun onAddTrans(text: String) {
         scope.launch {
-            repo.addTranslation(wordText, text)
+            translations.value?.let {
+                repo.setTranslations(wordText, listOf(text) + it)
+            }
+        }
+    }
+
+    override fun onEditTrans(trans: String, newText: String) {
+        scope.launch {
+            translations.value?.let { currentTrans ->
+                val newTrans = currentTrans.toMutableList().apply {
+                    val index = indexOfFirst { it == trans }
+                    if (newText.isNotBlank()) {
+                        set(index, newText)
+                    } else {
+                        removeAt(index)
+                    }
+                }
+                repo.setTranslations(wordText, newTrans)
+            }
         }
     }
 }

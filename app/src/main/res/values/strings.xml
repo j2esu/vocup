@@ -22,4 +22,6 @@
     <string name="add_translation">Add translation</string>
     <string name="enter_text">Enter text</string>
     <string name="save">Save</string>
+    <string name="edit_translation">Edit translation</string>
+    <string name="delete">Delete</string>
 </resources>

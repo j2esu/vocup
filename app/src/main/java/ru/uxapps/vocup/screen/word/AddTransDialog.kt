@@ -9,7 +9,7 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import ru.uxapps.vocup.R
-import ru.uxapps.vocup.databinding.DialogAddTransBinding
+import ru.uxapps.vocup.databinding.DialogTransBinding
 
 class AddTransDialog : DialogFragment() {
 
@@ -18,18 +18,18 @@ class AddTransDialog : DialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val binding = DialogAddTransBinding.inflate(LayoutInflater.from(context))
+        val binding = DialogTransBinding.inflate(LayoutInflater.from(context))
         val dialog = MaterialAlertDialogBuilder(context)
             .setView(binding.root)
             .setTitle(R.string.add_translation)
-            .setPositiveButton(R.string.save) { _, _ ->
-                (parentFragment as Host).onAddTrans(binding.addTransInput.text.toString())
+            .setPositiveButton(R.string.add) { _, _ ->
+                (parentFragment as Host).onAddTrans(binding.transInput.text.toString())
             }
             .create()
         dialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
         dialog.setOnShowListener {
             val addBtn = dialog.getButton(DialogInterface.BUTTON_POSITIVE)
-            binding.addTransInput.apply {
+            binding.transInput.apply {
                 doAfterTextChanged { addBtn.isEnabled = !it.isNullOrBlank() }
                 text = text // trigger initial validation
             }
