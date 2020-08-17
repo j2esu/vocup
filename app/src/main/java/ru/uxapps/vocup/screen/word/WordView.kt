@@ -14,6 +14,7 @@ class WordView(
         fun onUp()
         fun onDelete()
         fun onReorderTrans(newTrans: List<String>)
+        fun onAddTrans()
     }
 
     private val transAdapter = TransListAdapter(callback::onReorderTrans)
@@ -31,6 +32,7 @@ class WordView(
                 adapter = transAdapter
                 layoutManager = LinearLayoutManager(context)
             }
+            wordAddTrans.setOnClickListener { callback.onAddTrans() }
         }
     }
 

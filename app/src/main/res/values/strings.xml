@@ -19,4 +19,7 @@
     <string name="delete_word">Delete word</string>
     <string name="edit">Edit</string>
     <string name="add">Add</string>
+    <string name="add_translation">Add translation</string>
+    <string name="enter_text">Enter text</string>
+    <string name="save">Save</string>
 </resources>

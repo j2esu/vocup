@@ -33,10 +33,11 @@ object InMemoryRepo : Repo {
 
     override fun getAllWords() = words.filterNotNull().map { it.sortedBy(Word::created).reversed() }
 
-    override suspend fun getWord(text: String): Word? {
-        delay(1000)
-        return words.value?.find { it.text == text }
-    }
+    override fun getWord(text: String): Flow<Word?> =
+        getAllWords()
+            .map { words ->
+                words.find { it.text == text }
+            }
 
     override fun getTargetLang(): Flow<Language> = targetLang
 
@@ -96,11 +97,28 @@ object InMemoryRepo : Repo {
     }
 
     override suspend fun setTranslations(word: String, trans: List<String>) {
-        val currentWords = words.value!!
-        val wordIndex = currentWords.indexOfFirst { it.text == word }
-        if (wordIndex != -1) {
+        withWord(word) { currentWords, wordIndex ->
             words.value = currentWords.toMutableList().apply {
                 set(wordIndex, get(wordIndex).copy(translations = trans))
+            }
+        }
+    }
+
+    override suspend fun addTranslation(word: String, trans: String) {
+        withWord(word) { currentWords, wordIndex ->
+            words.value = currentWords.toMutableList().apply {
+                val newTrans = listOf(trans) + get(wordIndex).translations
+                set(wordIndex, get(wordIndex).copy(translations = newTrans))
+            }
+        }
+    }
+
+    private fun withWord(word: String, action: (List<Word>, Int) -> Unit) {
+        val currentWords = words.value
+        if (currentWords != null) {
+            val wordIndex = currentWords.indexOfFirst { it.text == word }
+            if (wordIndex != -1) {
+                action(currentWords, wordIndex)
             }
         }
     }

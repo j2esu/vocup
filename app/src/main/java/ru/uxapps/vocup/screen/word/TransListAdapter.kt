@@ -76,13 +76,15 @@ class TransListAdapter(
         ) {
             super.onChildDraw(c, recyclerView, viewHolder, dx, dy, actionState, isCurrentlyActive)
             // don't go outside rv
-            viewHolder.itemView.apply {
-                val topLimit = 0f
-                val bottomLimit = (recyclerView.height - height).toFloat()
-                if (!recyclerView.canScrollVertically(-1) && y < topLimit) {
-                    y = topLimit
-                } else if (!recyclerView.canScrollVertically(1) && y > bottomLimit) {
-                    y = bottomLimit
+            if (actionState == ItemTouchHelper.ACTION_STATE_DRAG) {
+                viewHolder.itemView.apply {
+                    val topLimit = 0f
+                    val bottomLimit = (recyclerView.height - height).toFloat()
+                    if (!recyclerView.canScrollVertically(-1) && y < topLimit) {
+                        y = topLimit
+                    } else if (!recyclerView.canScrollVertically(1) && y > bottomLimit) {
+                        y = bottomLimit
+                    }
                 }
             }
         }

@@ -12,7 +12,7 @@ import ru.uxapps.vocup.databinding.FragmentWordBinding
 import ru.uxapps.vocup.nav
 import ru.uxapps.vocup.util.consume
 
-class WordFragment : Fragment(R.layout.fragment_word) {
+class WordFragment : Fragment(R.layout.fragment_word), AddTransDialog.Host {
 
     interface Host {
         fun onDeleteWord(text: String)
@@ -23,14 +23,17 @@ class WordFragment : Fragment(R.layout.fragment_word) {
         private val WordFragment.wordText get() = requireArguments()["word"] as String
     }
 
+    private val vm by viewModels<WordViewModel>()
+    private val wordDetails by lazy { vm.wordDetails(wordText) }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val vm by viewModels<WordViewModel>()
-        val wordDetails = vm.wordDetails(wordText)
         val v = WordView(FragmentWordBinding.bind(view), object : WordView.Callback {
             override fun onUp() = nav.up()
             override fun onDelete() = (activity as Host).onDeleteWord(wordText)
             override fun onReorderTrans(newTrans: List<String>) =
                 wordDetails.onReorderTrans(newTrans)
+
+            override fun onAddTrans() = AddTransDialog().show(childFragmentManager, null)
         })
         with(wordDetails) {
             translations.observe(viewLifecycleOwner, v::setTranslations)
@@ -38,4 +41,6 @@ class WordFragment : Fragment(R.layout.fragment_word) {
             onWordNotFound.consume(viewLifecycleOwner, nav::up)
         }
     }
+
+    override fun onAddTrans(text: String) = wordDetails.onAddTrans(text)
 }

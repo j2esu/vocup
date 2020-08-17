@@ -3,10 +3,7 @@ package ru.uxapps.vocup.component
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.mapNotNull
-import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import ru.uxapps.vocup.data.Repo
 import ru.uxapps.vocup.util.LiveEvent
@@ -19,6 +16,7 @@ interface WordDetails {
     val translations: LiveData<List<String>?>
     val onWordNotFound: LiveEvent<Unit>
     fun onReorderTrans(newTrans: List<String>)
+    fun onAddTrans(text: String)
 }
 
 class WordDetailsImp(
@@ -29,13 +27,14 @@ class WordDetailsImp(
 
     override val onWordNotFound = MutableLiveEvent<Unit>()
 
-    private val word = flow {
-        val word = repo.getWord(wordText)
-        if (word == null) {
-            onWordNotFound.send()
+    private val word = repo.getWord(wordText)
+        .onEach {
+            if (it == null) {
+                onWordNotFound.send()
+            }
         }
-        emit(word)
-    }.asStateFlow(scope)
+        .filterNotNull()
+        .asStateFlow(scope)
 
     override val text = word.mapNotNull { it?.text }.onStart { emit(wordText) }.asLiveData()
     override val translations = word.map { it?.translations }.onStart { emit(null) }.asLiveData()
@@ -43,6 +42,12 @@ class WordDetailsImp(
     override fun onReorderTrans(newTrans: List<String>) {
         scope.launch {
             repo.setTranslations(wordText, newTrans)
+        }
+    }
+
+    override fun onAddTrans(text: String) {
+        scope.launch {
+            repo.addTranslation(wordText, text)
         }
     }
 }
