@@ -2,6 +2,7 @@ package ru.uxapps.vocup.screen.word
 
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import ru.uxapps.vocup.R
 import ru.uxapps.vocup.databinding.FragmentWordBinding
 import ru.uxapps.vocup.screen.SwipeDismissDecor
@@ -52,5 +53,11 @@ class WordView(
 
     fun setWordText(text: String) = with(binding) {
         wordText.text = text
+    }
+
+    fun showDeleteTransUndo(undo: Runnable) = with(binding) {
+        Snackbar.make(root, R.string.translation_deleted, Snackbar.LENGTH_LONG)
+            .setAction(R.string.undo) { undo.run() }
+            .show()
     }
 }

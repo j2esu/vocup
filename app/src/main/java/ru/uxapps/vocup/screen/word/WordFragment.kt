@@ -10,6 +10,7 @@ import ru.uxapps.vocup.R
 import ru.uxapps.vocup.data.Word
 import ru.uxapps.vocup.databinding.FragmentWordBinding
 import ru.uxapps.vocup.nav
+import ru.uxapps.vocup.util.consume
 
 class WordFragment : Fragment(R.layout.fragment_word), AddTransDialog.Host, EditTransDialog.Host {
 
@@ -23,30 +24,28 @@ class WordFragment : Fragment(R.layout.fragment_word), AddTransDialog.Host, Edit
     }
 
     private val vm by viewModels<WordViewModel>()
-    private val wordDetails by lazy { vm.wordDetails(wordText) }
+    private val details by lazy { vm.wordDetails(wordText) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val v = WordView(FragmentWordBinding.bind(view), object : WordView.Callback {
             override fun onUp() = nav.up()
             override fun onDelete() = (activity as Host).onDeleteWord(wordText)
             override fun onAddTrans() = AddTransDialog().show(childFragmentManager, null)
-            override fun onDeleteTrans(trans: String) = wordDetails.onEditTrans(trans, "")
-
-            override fun onReorderTrans(newTrans: List<String>) =
-                wordDetails.onReorderTrans(newTrans)
-
+            override fun onDeleteTrans(trans: String) = details.onDeleteTrans(trans)
+            override fun onReorderTrans(newTrans: List<String>) = details.onReorderTrans(newTrans)
             override fun onEditTrans(trans: String) {
                 EditTransDialog().apply { arguments = EditTransDialog.argsOf(trans) }
                     .show(childFragmentManager, null)
             }
         })
-        with(wordDetails) {
+        with(details) {
             translations.observe(viewLifecycleOwner, v::setTranslations)
             text.observe(viewLifecycleOwner, v::setWordText)
+            onTransDeleted.consume(viewLifecycleOwner, v::showDeleteTransUndo)
         }
     }
 
-    override fun onAddTrans(text: String) = wordDetails.onAddTrans(text)
-    override fun onEditTrans(trans: String, newText: String) =
-        wordDetails.onEditTrans(trans, newText)
+    override fun onAddTrans(text: String) = details.onAddTrans(text)
+    override fun onEditTrans(trans: String, newText: String) = details.onEditTrans(trans, newText)
+    override fun onDeleteTrans(trans: String) = details.onDeleteTrans(trans)
 }

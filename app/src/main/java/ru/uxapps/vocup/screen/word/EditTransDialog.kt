@@ -1,10 +1,12 @@
 package ru.uxapps.vocup.screen.word
 
 import android.app.Dialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.WindowManager
 import androidx.core.os.bundleOf
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import ru.uxapps.vocup.R
@@ -14,6 +16,7 @@ class EditTransDialog : DialogFragment() {
 
     interface Host {
         fun onEditTrans(trans: String, newText: String)
+        fun onDeleteTrans(trans: String)
     }
 
     companion object {
@@ -33,12 +36,18 @@ class EditTransDialog : DialogFragment() {
                 }
             }
             .setNeutralButton(R.string.delete) { _, _ ->
-                (parentFragment as Host).onEditTrans(trans, "")
+                (parentFragment as Host).onDeleteTrans(trans)
             }
             .create()
         dialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
-        binding.transInput.setText(trans)
-        binding.transInput.selectAll()
+        dialog.setOnShowListener {
+            val saveBtn = dialog.getButton(DialogInterface.BUTTON_POSITIVE)
+            binding.transInput.apply {
+                doAfterTextChanged { saveBtn.isEnabled = !it.isNullOrBlank() }
+                setText(trans)
+                selectAll()
+            }
+        }
         return dialog
     }
 }
