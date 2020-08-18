@@ -24,4 +24,5 @@
     <string name="edit_translation">Edit translation</string>
     <string name="delete">Delete</string>
     <string name="translation_deleted">Translation was deleted</string>
+    <string name="listen_pron">Listen</string>
 </resources>

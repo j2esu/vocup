@@ -20,15 +20,27 @@
         android:id="@+id/word_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="16dp"
+        android:layout_marginTop="16dp"
+        android:paddingHorizontal="16dp"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+        tools:text="@tools:sample/cities"
+        />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/word_pron"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+        app:icon="@drawable/ic_sound"
         tools:text="@tools:sample/cities"
         />
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         >
 
         <TextView

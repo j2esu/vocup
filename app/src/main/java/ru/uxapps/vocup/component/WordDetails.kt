@@ -16,6 +16,7 @@ import ru.uxapps.vocup.util.send
 
 interface WordDetails {
     val text: LiveData<String>
+    val pron: LiveData<String>
     val translations: LiveData<List<String>?>
     val onTransDeleted: LiveEvent<() -> Unit>
     fun onReorderTrans(newTrans: List<String>)
@@ -33,6 +34,7 @@ class WordDetailsImp(
     private val word = repo.getWord(wordText).filterNotNull().asStateFlow(scope)
 
     override val text = word.mapNotNull { it?.text }.onStart { emit(wordText) }.asLiveData()
+    override val pron = word.map { it?.pron ?: "" }.asLiveData()
     override val translations = word.map { it?.translations }.onStart { emit(null) }.asLiveData()
     override val onTransDeleted = MutableLiveEvent<() -> Unit>()
 

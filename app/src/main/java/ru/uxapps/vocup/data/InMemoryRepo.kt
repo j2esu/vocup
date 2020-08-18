@@ -21,16 +21,17 @@ object InMemoryRepo : Repo {
             delay(1000)
             words.value = listOf(
                 Word(
-                    "Vocup!",
-                    listOf("Приложение", "Для запоминания", "Новых", "Слов"),
-                    System.nanoTime()
+                    "Vocup!", listOf("Приложение", "Для запоминания", "Новых", "Слов"),
+                    System.nanoTime(), null
                 ),
                 Word(
-                    "World",
-                    listOf("Мир", "Вселенная", "Общество", "Свет"),
-                    System.nanoTime() + 1
+                    "World", listOf("Мир", "Вселенная", "Общество", "Свет"),
+                    System.nanoTime() + 1, "wərld"
                 ),
-                Word("Hello", listOf("Привет", "Здравствуй", "Алло"), System.nanoTime() + 2)
+                Word(
+                    "Hello", listOf("Привет", "Здравствуй", "Алло"),
+                    System.nanoTime() + 2, "həˈlō"
+                )
             )
         }
         GlobalScope.launch {
@@ -89,13 +90,18 @@ object InMemoryRepo : Repo {
     }
 
     override suspend fun addWord(def: Def) =
-        addWordInner(def.text, def.translations, System.nanoTime())
+        addWordInner(def.text, def.translations, System.nanoTime(), loadPron(def.text))
+
+    private suspend fun loadPron(word: String): String? =
+        if (Random.nextBoolean()) word else null
 
     override suspend fun addWord(word: Word) =
-        addWordInner(word.text, word.translations, word.created)
+        addWordInner(word.text, word.translations, word.created, word.pron)
 
-    private fun addWordInner(text: String, translations: List<String>, created: Long) {
-        words.value = words.value?.let { listOf(Word(text, translations, created)) + it }
+    private fun addWordInner(
+        text: String, translations: List<String>, created: Long, pron: String?
+    ) {
+        words.value = words.value?.let { listOf(Word(text, translations, created, pron)) + it }
     }
 
     override suspend fun removeWord(def: Def) = removeWordInner(def.text)

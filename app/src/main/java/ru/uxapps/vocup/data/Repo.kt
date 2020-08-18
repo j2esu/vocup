@@ -15,7 +15,7 @@ interface Repo {
     suspend fun setTranslations(word: String, trans: List<String>)
 }
 
-data class Word(val text: String, val translations: List<String>, val created: Long)
+data class Word(val text: String, val translations: List<String>, val created: Long, val pron: String?)
 data class Def(val text: String, val translations: List<String>)
 
 enum class Language(val code: String, val nativeName: String) {

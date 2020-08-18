@@ -1,5 +1,6 @@
 package ru.uxapps.vocup.screen.word
 
+import android.annotation.SuppressLint
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
@@ -19,29 +20,30 @@ class WordView(
         fun onAddTrans()
         fun onEditTrans(trans: String)
         fun onDeleteTrans(trans: String)
+        fun onListen()
     }
 
     private val transAdapter = TransListAdapter(callback::onReorderTrans, callback::onEditTrans)
 
     init {
-        with(binding) {
-            wordToolbar.apply {
-                setNavigationOnClickListener { callback.onUp() }
-                menu.findItem(R.id.menu_word_del).setOnMenuItemClickListener {
-                    callback.onDelete()
-                    true
-                }
+        binding.wordToolbar.apply {
+            setNavigationOnClickListener { callback.onUp() }
+            menu.findItem(R.id.menu_word_del).setOnMenuItemClickListener {
+                callback.onDelete()
+                true
             }
-            wordTransList.apply {
-                adapter = transAdapter
-                layoutManager = LinearLayoutManager(context)
-                val swipeDecor = SwipeDismissDecor(
-                    root.context.getDrawable(R.drawable.delete_item_hint_bg)!!
-                ) { callback.onDeleteTrans(transAdapter.currentList[it.adapterPosition]) }
-                addItemDecoration(swipeDecor.also { it.attachToRecyclerView(this) })
-            }
-            wordAddTrans.setOnClickListener { callback.onAddTrans() }
         }
+        binding.wordTransList.apply {
+            adapter = transAdapter
+            layoutManager = LinearLayoutManager(context)
+            val swipeDecor =
+                SwipeDismissDecor(context.getDrawable(R.drawable.delete_item_hint_bg)!!) {
+                    callback.onDeleteTrans(transAdapter.currentList[it.adapterPosition])
+                }
+            addItemDecoration(swipeDecor.also { it.attachToRecyclerView(this) })
+        }
+        binding.wordAddTrans.setOnClickListener { callback.onAddTrans() }
+        binding.wordPron.setOnClickListener { callback.onListen() }
     }
 
     fun setTranslations(trans: List<String>?) = with(binding) {
@@ -53,6 +55,15 @@ class WordView(
 
     fun setWordText(text: String) = with(binding) {
         wordText.text = text
+    }
+
+    @SuppressLint("SetTextI18n")
+    fun setPronText(text: String) = with(binding) {
+        if (text.isNotBlank()) {
+            wordPron.text = "/$text/"
+        } else {
+            wordPron.setText(R.string.listen_pron)
+        }
     }
 
     fun showDeleteTransUndo(undo: () -> Unit) = with(binding) {
