@@ -28,9 +28,10 @@ class DictView(
             adapter = listAdapter
             layoutManager = LinearLayoutManager(context)
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
-            val swipeDecor = SwipeDismissDecor(context.getDrawable(R.drawable.delete_item_hint_bg)!!) {
-                callback.onSwipe(listAdapter.currentList[it.adapterPosition])
-            }
+            val swipeDecor =
+                SwipeDismissDecor(context.getDrawable(R.drawable.delete_item_hint_bg)!!) {
+                    callback.onSwipe(listAdapter.currentList[it.adapterPosition])
+                }
             addItemDecoration(swipeDecor.also { it.attachToRecyclerView(this) })
         }
     }
@@ -44,9 +45,9 @@ class DictView(
         dictProgress.isVisible = loading
     }
 
-    fun showRemoveWordUndo(undo: () -> Unit) = with(binding) {
+    fun showRemoveWordUndo(undo: Runnable) = with(binding) {
         Snackbar.make(root, R.string.word_removed, Snackbar.LENGTH_LONG)
-            .setAction(R.string.undo) { undo() }
+            .setAction(R.string.undo) { undo.run() }
             .show()
     }
 }
