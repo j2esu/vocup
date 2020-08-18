@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_activated="true">
+        <set android:ordering="sequentially">
+            <objectAnimator
+                android:duration="0"
+                android:propertyName="backgroundColor"
+                android:valueTo="?android:colorBackground"
+                />
+            <objectAnimator
+                android:propertyName="translationZ"
+                android:valueTo="8dp"
+                />
+        </set>
+    </item>
+    <item>
+        <set android:ordering="sequentially">
+            <objectAnimator
+                android:propertyName="translationZ"
+                android:valueTo="0dp"
+                />
+            <objectAnimator
+                android:duration="0"
+                android:propertyName="backgroundColor"
+                android:valueTo="@android:color/transparent"
+                />
+        </set>
+    </item>
+</selector>

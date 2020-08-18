@@ -4,6 +4,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import ru.uxapps.vocup.R
 import ru.uxapps.vocup.databinding.FragmentWordBinding
+import ru.uxapps.vocup.screen.SwipeDismissDecor
 
 class WordView(
     private val binding: FragmentWordBinding,
@@ -16,6 +17,7 @@ class WordView(
         fun onReorderTrans(newTrans: List<String>)
         fun onAddTrans()
         fun onEditTrans(trans: String)
+        fun onDeleteTrans(trans: String)
     }
 
     private val transAdapter = TransListAdapter(callback::onReorderTrans, callback::onEditTrans)
@@ -32,6 +34,10 @@ class WordView(
             wordTransList.apply {
                 adapter = transAdapter
                 layoutManager = LinearLayoutManager(context)
+                val swipeDecor = SwipeDismissDecor(
+                    root.context.getDrawable(R.drawable.delete_item_hint_bg)!!
+                ) { callback.onDeleteTrans(transAdapter.currentList[it.adapterPosition]) }
+                addItemDecoration(swipeDecor.also { it.attachToRecyclerView(this) })
             }
             wordAddTrans.setOnClickListener { callback.onAddTrans() }
         }
