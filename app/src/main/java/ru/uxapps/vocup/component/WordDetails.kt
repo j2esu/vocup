@@ -45,7 +45,7 @@ class WordDetailsImp(
     override fun onAddTrans(text: String) {
         scope.launch {
             translations.value?.let {
-                repo.setTranslations(wordText, listOf(text) + it)
+                repo.setTranslations(wordText, it + text)
             }
         }
     }

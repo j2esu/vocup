@@ -14,12 +14,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:drawableStart="@drawable/ic_label"
         android:drawablePadding="16dp"
         android:gravity="start|center_vertical"
         android:minHeight="?listPreferredItemHeight"
         android:padding="16dp"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+        app:drawableStartCompat="@drawable/ic_label_important"
         app:drawableTint="?colorSecondary"
         tools:text="@tools:sample/lorem"
         />

@@ -12,7 +12,6 @@
     <string name="title_dict">Dictionary</string>
     <string name="title_learn">Learn</string>
     <string name="title_explore">Explore</string>
-    <string name="trans_count_pattern">%d translations</string>
     <string name="translations">Translations</string>
     <string name="word_removed">Word was removed</string>
     <string name="undo">Undo</string>

@@ -20,8 +20,17 @@ object InMemoryRepo : Repo {
         GlobalScope.launch {
             delay(1000)
             words.value = listOf(
-                Word("World", listOf("Мир", "Вселенная", "Общество", "Свет"), System.nanoTime()),
-                Word("Hello", listOf("Привет", "Здравствуй", "Алло"), System.nanoTime() + 1)
+                Word(
+                    "Vocup!",
+                    listOf("Приложение", "Для запоминания", "Новых", "Слов"),
+                    System.nanoTime()
+                ),
+                Word(
+                    "World",
+                    listOf("Мир", "Вселенная", "Общество", "Свет"),
+                    System.nanoTime() + 1
+                ),
+                Word("Hello", listOf("Привет", "Здравствуй", "Алло"), System.nanoTime() + 2)
             )
         }
         GlobalScope.launch {
@@ -72,7 +81,7 @@ object InMemoryRepo : Repo {
         }
         return List(Random.nextInt(1, 5)) { defIndex ->
             Def("$word $defIndex (${lang.code})",
-                List(Random.nextInt(1, 30)) { transIndex ->
+                List(Random.nextInt(1, 10)) { transIndex ->
                     "Translation $transIndex"
                 }
             )

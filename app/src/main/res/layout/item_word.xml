@@ -1,34 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/Vocup.InteractiveItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center_vertical"
-    android:minHeight="80dp"
-    android:orientation="vertical"
-    android:paddingHorizontal="16dp"
-    android:paddingVertical="8dp"
     >
 
-    <TextView
-        android:id="@+id/word_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:layout_width="56dp"
+        android:layout_height="56dp"
         android:layout_gravity="center_vertical"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-        tools:text="@tools:sample/cities"
+        android:layout_marginStart="16dp"
+        app:srcCompat="@drawable/word_progress_bg"
+        app:tint="?colorPrimary"
+        tools:ignore="ContentDescription"
         />
 
     <TextView
-        android:id="@+id/word_trans_count"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:id="@+id/word_progress"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
         android:layout_gravity="center_vertical"
-        android:layout_marginTop="8dp"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-        tools:text="4 translations"
+        android:layout_marginStart="16dp"
+        android:fontFamily="sans-serif-light"
+        android:gravity="center"
+        android:textSize="24dp"
+        tools:ignore="SpUsage"
+        tools:text="47"
         />
 
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="72dp"
+        android:gravity="center_vertical"
+        android:minHeight="80dp"
+        android:orientation="vertical"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="8dp"
+        >
+
+        <TextView
+            android:id="@+id/word_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:ellipsize="end"
+            android:lines="1"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+            tools:text="@tools:sample/cities"
+            />
+
+        <TextView
+            android:id="@+id/word_trans"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:lines="1"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+            tools:text="4 translations"
+            />
+
+    </LinearLayout>
+
+</FrameLayout>
