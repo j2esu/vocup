@@ -45,9 +45,9 @@ class DictView(
         dictProgress.isVisible = loading
     }
 
-    fun showRemoveWordUndo(undo: Runnable) = with(binding) {
+    fun showRemoveWordUndo(undo: () -> Unit) = with(binding) {
         Snackbar.make(root, R.string.word_removed, Snackbar.LENGTH_LONG)
-            .setAction(R.string.undo) { undo.run() }
+            .setAction(R.string.undo) { undo() }
             .show()
     }
 }

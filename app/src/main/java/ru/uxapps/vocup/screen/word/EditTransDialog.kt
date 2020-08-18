@@ -26,7 +26,7 @@ class EditTransDialog : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val binding = DialogTransBinding.inflate(LayoutInflater.from(context))
-        val dialog = MaterialAlertDialogBuilder(context)
+        val dialog = MaterialAlertDialogBuilder(requireContext())
             .setView(binding.root)
             .setTitle(R.string.edit_translation)
             .setPositiveButton(R.string.save) { _, _ ->

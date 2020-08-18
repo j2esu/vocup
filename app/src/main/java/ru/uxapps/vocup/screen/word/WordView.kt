@@ -55,9 +55,9 @@ class WordView(
         wordText.text = text
     }
 
-    fun showDeleteTransUndo(undo: Runnable) = with(binding) {
+    fun showDeleteTransUndo(undo: () -> Unit) = with(binding) {
         Snackbar.make(root, R.string.translation_deleted, Snackbar.LENGTH_LONG)
-            .setAction(R.string.undo) { undo.run() }
+            .setAction(R.string.undo) { undo() }
             .show()
     }
 }
