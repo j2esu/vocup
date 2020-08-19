@@ -22,6 +22,7 @@
             <objectAnimator
                 android:duration="0"
                 android:propertyName="backgroundColor"
+                android:valueFrom="?android:colorBackground"
                 android:valueTo="@android:color/transparent"
                 />
         </set>

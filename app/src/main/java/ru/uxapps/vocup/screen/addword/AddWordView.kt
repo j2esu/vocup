@@ -12,7 +12,8 @@ import com.google.android.material.snackbar.Snackbar
 import ru.uxapps.vocup.R
 import ru.uxapps.vocup.component.AddWord
 import ru.uxapps.vocup.component.AddWord.DefItem
-import ru.uxapps.vocup.component.AddWord.DefState.*
+import ru.uxapps.vocup.component.AddWord.DefState.Data
+import ru.uxapps.vocup.component.AddWord.DefState.Loading
 import ru.uxapps.vocup.data.Language
 import ru.uxapps.vocup.databinding.FragmentAddWordBinding
 
@@ -22,15 +23,21 @@ class AddWordView(
 ) {
 
     interface Callback {
+        fun onOpen(item: DefItem)
         fun onSave(item: DefItem)
-        fun onRemove(item: DefItem)
         fun onInput(input: String)
         fun onLangClick(lang: Language)
         fun onUp()
         fun onRetry()
     }
 
-    private val listAdapter = DefListAdapter(callback::onSave, callback::onRemove)
+    private val listAdapter = DefListAdapter { item ->
+        if (!item.saved || item.trans?.any { !it.second } == true) {
+            callback.onSave(item)
+        } else {
+            callback.onOpen(item)
+        }
+    }
     private val errorSnack = Snackbar.make(bind.root, R.string.cant_load_translations, Snackbar.LENGTH_INDEFINITE)
         .setAction(R.string.retry) { callback.onRetry() }
         .also {
@@ -63,11 +70,7 @@ class AddWordView(
             } else {
                 errorSnack.dismiss()
             }
-            when (state) {
-                is Data -> submitList(state.items)
-                is Error -> submitList(state.items)
-                else -> submitList(emptyList())
-            }
+            submitList(if (state is Data) state.items else emptyList())
         }
     }
 

@@ -9,7 +9,8 @@
     <string name="save_to_dict">Save to dictionary</string>
     <string name="loading_details">Loading details</string>
     <string name="translation_language">Translation language</string>
-    <string name="trans_pattern"> • %s</string>
+    <string name="trans_pattern">✓ %s</string>
+    <string name="new_trans_pattern">● %s</string>
     <string name="title_dict">Dictionary</string>
     <string name="title_learn">Learn</string>
     <string name="title_explore">Explore</string>

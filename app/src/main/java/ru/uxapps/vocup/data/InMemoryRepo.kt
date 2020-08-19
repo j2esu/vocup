@@ -89,11 +89,13 @@ object InMemoryRepo : Repo {
         }
     }
 
-    override suspend fun addWord(def: Def) =
-        addWordInner(def.text, def.translations, System.nanoTime(), loadPron(def.text))
+    override suspend fun addWord(text: String, trans: List<String>) =
+        addWordInner(text, trans, System.nanoTime(), loadPron(text))
 
-    private suspend fun loadPron(word: String): String? =
-        if (Random.nextBoolean()) word else null
+    private suspend fun loadPron(word: String): String? {
+        delay(100)
+        return if (Random.nextBoolean()) word else null
+    }
 
     override suspend fun addWord(word: Word) =
         addWordInner(word.text, word.translations, word.created, word.pron)
@@ -104,11 +106,8 @@ object InMemoryRepo : Repo {
         words.value = words.value?.let { listOf(Word(text, translations, created, pron)) + it }
     }
 
-    override suspend fun removeWord(def: Def) = removeWordInner(def.text)
-    override suspend fun removeWord(word: Word) = removeWordInner(word.text)
-
-    private fun removeWordInner(text: String) {
-        words.value = words.value?.filter { it.text != text }
+    override suspend fun removeWord(word: Word) {
+        words.value = words.value?.filter { it.text != word.text }
     }
 
     override suspend fun setTranslations(word: String, trans: List<String>) {

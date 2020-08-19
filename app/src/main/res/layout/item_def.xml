@@ -34,8 +34,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:lineSpacingExtra="4dp"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-            tools:text="@tools:sample/lorem"
+            tools:lines="3"
+            tools:text="@tools:sample/lorem/random"
             />
 
     </LinearLayout>
@@ -47,8 +49,8 @@
         android:layout_gravity="end"
         android:contentDescription="@string/save_to_dict"
         android:padding="16dp"
-        android:tint="?colorPrimary"
         app:srcCompat="@drawable/word_saved"
+        app:tint="?colorPrimary"
         />
 
 </com.google.android.material.card.MaterialCardView>

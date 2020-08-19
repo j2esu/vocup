@@ -5,9 +5,8 @@ import kotlinx.coroutines.flow.Flow
 interface Repo {
     fun getAllWords(): Flow<List<Word>>
     fun getWord(text: String): Flow<Word?>
-    suspend fun addWord(def: Def)
+    suspend fun addWord(text: String, trans: List<String>)
     suspend fun addWord(word: Word)
-    suspend fun removeWord(def: Def)
     suspend fun removeWord(word: Word)
     fun getTargetLang(): Flow<Language>
     suspend fun setTargetLang(lang: Language)

@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.commit
-import ru.uxapps.vocup.data.Word
 import ru.uxapps.vocup.screen.Navigation
 import ru.uxapps.vocup.screen.addword.AddWordFragment
 import ru.uxapps.vocup.screen.nav.NavFragment
@@ -44,7 +43,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), Navigation, Word
         )
     }
 
-    override fun openWord(word: Word) {
+    override fun openWord(word: String) {
         supportFragmentManager.commit {
             supportFragmentManager.findFragmentById(R.id.main_container)?.let(::hide)
             add(R.id.main_container, WordFragment::class.java, WordFragment.argsOf(word))

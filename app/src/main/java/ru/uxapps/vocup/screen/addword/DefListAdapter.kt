@@ -11,13 +11,12 @@ import ru.uxapps.vocup.databinding.ItemDefBinding
 import ru.uxapps.vocup.util.inflateBind
 
 class DefListAdapter(
-    private val onSave: (DefItem) -> Unit,
-    private val onRemove: (DefItem) -> Unit
+    private val onClick: (DefItem) -> Unit
 ) :
     ListAdapter<DefItem, DefListAdapter.DefVh>(
         object : DiffUtil.ItemCallback<DefItem>() {
             override fun areItemsTheSame(oldItem: DefItem, newItem: DefItem) =
-                oldItem.def == newItem.def
+                oldItem.text == newItem.text
 
             override fun areContentsTheSame(oldItem: DefItem, newItem: DefItem) = oldItem == newItem
         }
@@ -31,29 +30,34 @@ class DefListAdapter(
     inner class DefVh(private val bind: ItemDefBinding) : ViewHolder(bind.root) {
 
         init {
-            bind.defBg.setOnClickListener {
-                if (!bind.defSaved.isActivated) {
-                    onSave(getItem(adapterPosition))
-                } else {
-                    onRemove(getItem(adapterPosition))
-                }
-            }
+            bind.defBg.setOnClickListener { onClick(getItem(adapterPosition)) }
         }
 
-        fun bind(item: DefItem) = with(bind) {
-            defText.text = item.def.text
-            defTrans.apply {
-                text = if (item.def.translations.isNotEmpty()) {
-                    item.def.translations.joinToString(separator = "\n") {
-                        context.getString(R.string.trans_pattern, it)
+        fun bind(item: DefItem) {
+            bind.defText.text = item.text
+            bind.defTrans.apply {
+                val trans = item.trans
+                when {
+                    trans == null -> isVisible = false
+                    trans.isEmpty() -> {
+                        isVisible = true
+                        isEnabled = false
+                        setText(R.string.no_translations_found)
                     }
-                } else {
-                    context.getString(R.string.no_translations_found)
+                    else -> {
+                        isVisible = true
+                        isEnabled = true
+                        text = trans.joinToString(separator = "\n") {
+                            val pattern = if (it.second) R.string.trans_pattern else R.string.new_trans_pattern
+                            context.getString(pattern, it.first)
+                        }
+                    }
                 }
-                isVisible = !item.error
-                isEnabled = item.def.translations.isNotEmpty()
             }
-            defSaved.isActivated = item.saved
+            bind.defSaved.apply {
+                isVisible = item.saved
+                isActivated = item.trans?.all { it.second } == true
+            }
         }
     }
 }

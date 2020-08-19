@@ -18,7 +18,7 @@ class DictFragment : Fragment(R.layout.fragment_dict) {
         val v = DictView(FragmentDictBinding.bind(view), object : DictView.Callback {
             override fun onAdd() = nav.openAddWord()
             override fun onSwipe(word: Word) = vm.dictionary.onRemove(word)
-            override fun onClick(word: Word) = nav.openWord(word)
+            override fun onClick(word: Word) = nav.openWord(word.text)
         })
         with(vm.dictionary) {
             words.observe(viewLifecycleOwner, v::setWords)
