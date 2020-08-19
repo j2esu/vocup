@@ -63,44 +63,6 @@
             android:layout_gravity="center"
             />
 
-        <TextView
-            android:id="@+id/add_word_empty_list"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="@string/no_translations"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-            />
-
-        <LinearLayout
-            android:id="@+id/add_word_load_error"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:orientation="vertical"
-            >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="@string/cant_load_translations"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-                />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/add_word_retry"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/retry"
-                />
-
-        </LinearLayout>
-
     </FrameLayout>
 
 </LinearLayout>

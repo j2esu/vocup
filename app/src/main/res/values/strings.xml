@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">Voc Up</string>
     <string name="cant_load_translations">"Can't load translations"</string>
-    <string name="no_translations">No translations found</string>
+    <string name="no_translations">No translations</string>
+    <string name="no_translations_found">No translations found</string>
     <string name="no_words">No words yet</string>
     <string name="add_word">Add word</string>
     <string name="add_word_hint">Search words</string>

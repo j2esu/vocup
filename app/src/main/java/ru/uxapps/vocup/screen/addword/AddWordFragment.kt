@@ -24,7 +24,7 @@ class AddWordFragment : Fragment(R.layout.fragment_add_word) {
             override fun onRetry() = vm.addWord.onRetry()
         })
         with(vm.addWord) {
-            definitions.observe(viewLifecycleOwner, v::setDefState)
+            definitions.observe(viewLifecycleOwner) { v.setDefState(it) }
             v.setMaxWordLength(maxWordLength)
             languages.observe(viewLifecycleOwner, v::setLanguages)
         }

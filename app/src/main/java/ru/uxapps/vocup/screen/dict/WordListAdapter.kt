@@ -6,6 +6,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import ru.uxapps.vocup.R
 import ru.uxapps.vocup.data.Word
 import ru.uxapps.vocup.databinding.ItemWordBinding
 import ru.uxapps.vocup.util.inflateBind
@@ -32,10 +33,19 @@ class WordListAdapter(
         @SuppressLint("SetTextI18n")
         fun bind(word: Word) = with(bind) {
             wordText.text = word.text
-            wordTrans.text = word.translations.joinToString(separator = ", ")
+            wordTrans.apply {
+                text = if (word.translations.isNotEmpty()) {
+                    word.translations.joinToString(separator = ", ")
+                } else {
+                    context.getString(R.string.no_translations)
+                }
+                isEnabled = word.translations.isNotEmpty()
+            }
+            wordPron.apply {
+                isVisible = word.pron != null
+                text = "/${word.pron}/"
+            }
             wordProgress.text = Random.nextInt(1, 100).toString()
-            wordPron.isVisible = word.pron != null
-            wordPron.text = "/${word.pron}/"
         }
     }
 }
