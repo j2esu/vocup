@@ -1,7 +1,10 @@
 package ru.uxapps.vocup
 
 import android.os.Bundle
+import android.view.WindowManager.LayoutParams
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.commit
 import ru.uxapps.vocup.data.Word
@@ -23,6 +26,22 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), Navigation, Word
                 add(R.id.main_container, NavFragment())
             }
         }
+        // set soft input mode for different fragments
+        supportFragmentManager.registerFragmentLifecycleCallbacks(
+            object : FragmentManager.FragmentLifecycleCallbacks() {
+                override fun onFragmentStopped(fm: FragmentManager, f: Fragment) {
+                    if (f is AddWordFragment) {
+                        window.setSoftInputMode(LayoutParams.SOFT_INPUT_ADJUST_PAN)
+                    }
+                }
+
+                override fun onFragmentStarted(fm: FragmentManager, f: Fragment) {
+                    if (f is AddWordFragment) {
+                        window.setSoftInputMode(LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+                    }
+                }
+            }, false
+        )
     }
 
     override fun openWord(word: Word) {
