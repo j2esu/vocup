@@ -65,7 +65,7 @@ class AddWordView(
     fun setDefState(state: AddWord.DefState) = with(bind) {
         addWordProgress.isVisible = state is Loading
         listAdapter.apply {
-            if (state is Error) {
+            if ((state as? Data)?.error == true) {
                 errorSnack.show()
             } else {
                 errorSnack.dismiss()

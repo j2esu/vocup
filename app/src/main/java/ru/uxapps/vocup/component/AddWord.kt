@@ -54,7 +54,7 @@ class AddWordImp(
             .map { normalizeInput(it) }
             .distinctUntilChanged()
             .combine(repo.getTargetLang())
-            .repeatWhen(retry.consumeAsFlow())
+            .repeatWhen(retry.receiveAsFlow())
             .transformLatest { (input, lang) ->
                 if (input.length in WORD_RANGE) {
                     emit(DefState.Loading)
@@ -68,12 +68,16 @@ class AddWordImp(
                         val defs = if (result?.isNotEmpty() == true) result else listOf(Def(input, emptyList()))
                         val items = defs.map { def ->
                             val savedWord = words.find { it.text == def.text }
-                            if (savedWord != null) {
-                                DefItem(def.text, true, def.translations.map {
-                                    it to savedWord.translations.contains(it)
-                                })
+                            if (result != null) {
+                                if (savedWord != null) {
+                                    DefItem(def.text, true, def.translations.map {
+                                        it to savedWord.translations.contains(it)
+                                    })
+                                } else {
+                                    DefItem(def.text, false, def.translations.map { it to false })
+                                }
                             } else {
-                                DefItem(def.text, false, def.translations.map { it to false })
+                                DefItem(def.text, savedWord != null, null)
                             }
                         }
                         DefState.Data(items, result == null)
