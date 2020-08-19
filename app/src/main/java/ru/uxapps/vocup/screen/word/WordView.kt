@@ -9,7 +9,7 @@ import ru.uxapps.vocup.databinding.FragmentWordBinding
 import ru.uxapps.vocup.screen.SwipeDismissDecor
 
 class WordView(
-    private val binding: FragmentWordBinding,
+    private val bind: FragmentWordBinding,
     private val callback: Callback
 ) {
 
@@ -26,14 +26,14 @@ class WordView(
     private val transAdapter = TransListAdapter(callback::onReorderTrans, callback::onEditTrans)
 
     init {
-        binding.wordToolbar.apply {
+        bind.wordToolbar.apply {
             setNavigationOnClickListener { callback.onUp() }
             menu.findItem(R.id.menu_word_del).setOnMenuItemClickListener {
                 callback.onDelete()
                 true
             }
         }
-        binding.wordTransList.apply {
+        bind.wordTransList.apply {
             adapter = transAdapter
             layoutManager = LinearLayoutManager(context)
             val swipeDecor =
@@ -42,23 +42,23 @@ class WordView(
                 }
             addItemDecoration(swipeDecor.also { it.attachToRecyclerView(this) })
         }
-        binding.wordAddTrans.setOnClickListener { callback.onAddTrans() }
-        binding.wordPron.setOnClickListener { callback.onListen() }
+        bind.wordAddTrans.setOnClickListener { callback.onAddTrans() }
+        bind.wordPron.setOnClickListener { callback.onListen() }
     }
 
-    fun setTranslations(trans: List<String>?) = with(binding) {
+    fun setTranslations(trans: List<String>?) = with(bind) {
         wordTransProgress.isVisible = trans == null
         if (trans != null) {
             transAdapter.submitList(trans)
         }
     }
 
-    fun setWordText(text: String) = with(binding) {
+    fun setWordText(text: String) = with(bind) {
         wordText.text = text
     }
 
     @SuppressLint("SetTextI18n")
-    fun setPronText(text: String) = with(binding) {
+    fun setPronText(text: String) = with(bind) {
         if (text.isNotBlank()) {
             wordPron.text = "/$text/"
         } else {
@@ -66,7 +66,7 @@ class WordView(
         }
     }
 
-    fun showDeleteTransUndo(undo: () -> Unit) = with(binding) {
+    fun showDeleteTransUndo(undo: () -> Unit) = with(bind) {
         Snackbar.make(root, R.string.translation_deleted, Snackbar.LENGTH_LONG)
             .setAction(R.string.undo) { undo() }
             .show()

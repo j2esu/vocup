@@ -10,7 +10,7 @@ import ru.uxapps.vocup.databinding.FragmentDictBinding
 import ru.uxapps.vocup.screen.SwipeDismissDecor
 
 class DictView(
-    private val binding: FragmentDictBinding,
+    private val bind: FragmentDictBinding,
     private val callback: Callback
 ) {
 
@@ -23,8 +23,8 @@ class DictView(
     private val listAdapter = WordListAdapter(callback::onClick)
 
     init {
-        binding.dictAdd.setOnClickListener { callback.onAdd() }
-        binding.dictList.apply {
+        bind.dictAdd.setOnClickListener { callback.onAdd() }
+        bind.dictList.apply {
             adapter = listAdapter
             layoutManager = LinearLayoutManager(context)
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
@@ -36,16 +36,16 @@ class DictView(
         }
     }
 
-    fun setWords(words: List<Word>) = with(binding) {
+    fun setWords(words: List<Word>) = with(bind) {
         listAdapter.submitList(words)
         dictEmpty.isVisible = words.isEmpty()
     }
 
-    fun setLoading(loading: Boolean) = with(binding) {
+    fun setLoading(loading: Boolean) = with(bind) {
         dictProgress.isVisible = loading
     }
 
-    fun showRemoveWordUndo(undo: () -> Unit) = with(binding) {
+    fun showRemoveWordUndo(undo: () -> Unit) = with(bind) {
         Snackbar.make(root, R.string.word_removed, Snackbar.LENGTH_LONG)
             .setAction(R.string.undo) { undo() }
             .show()

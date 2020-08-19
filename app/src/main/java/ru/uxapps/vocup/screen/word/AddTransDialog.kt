@@ -18,18 +18,18 @@ class AddTransDialog : DialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val binding = DialogTransBinding.inflate(LayoutInflater.from(context))
+        val bind = DialogTransBinding.inflate(LayoutInflater.from(context))
         val dialog = MaterialAlertDialogBuilder(requireContext())
-            .setView(binding.root)
+            .setView(bind.root)
             .setTitle(R.string.add_translation)
             .setPositiveButton(R.string.add) { _, _ ->
-                (parentFragment as Host).onAddTrans(binding.transInput.text.toString())
+                (parentFragment as Host).onAddTrans(bind.transInput.text.toString())
             }
             .create()
         dialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
         dialog.setOnShowListener {
             val addBtn = dialog.getButton(DialogInterface.BUTTON_POSITIVE)
-            binding.transInput.apply {
+            bind.transInput.apply {
                 doAfterTextChanged { addBtn.isEnabled = !it.isNullOrBlank() }
                 text = text // trigger initial validation
             }

@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import ru.uxapps.vocup.data.Word
 import ru.uxapps.vocup.databinding.ItemWordBinding
-import ru.uxapps.vocup.util.inflateBinding
+import ru.uxapps.vocup.util.inflateBind
 import kotlin.random.Random
 
 class WordListAdapter(
@@ -19,18 +19,18 @@ class WordListAdapter(
 }) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        WordVh(parent.inflateBinding(ItemWordBinding::inflate))
+        WordVh(parent.inflateBind(ItemWordBinding::inflate))
 
     override fun onBindViewHolder(holder: WordVh, position: Int) = holder.bind(getItem(position))
 
-    inner class WordVh(private val binding: ItemWordBinding) : ViewHolder(binding.root) {
+    inner class WordVh(private val bind: ItemWordBinding) : ViewHolder(bind.root) {
 
         init {
-            binding.root.setOnClickListener { onWordClick(getItem(adapterPosition)) }
+            bind.root.setOnClickListener { onWordClick(getItem(adapterPosition)) }
         }
 
         @SuppressLint("SetTextI18n")
-        fun bind(word: Word) = with(binding) {
+        fun bind(word: Word) = with(bind) {
             wordText.text = word.text
             wordTrans.text = word.translations.joinToString(separator = ", ")
             wordProgress.text = Random.nextInt(1, 100).toString()

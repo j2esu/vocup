@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import ru.uxapps.vocup.databinding.ItemTransBinding
-import ru.uxapps.vocup.util.inflateBinding
+import ru.uxapps.vocup.util.inflateBind
 import java.util.*
 
 
@@ -89,31 +89,31 @@ class TransListAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        TransVh(parent.inflateBinding(ItemTransBinding::inflate))
+        TransVh(parent.inflateBind(ItemTransBinding::inflate))
 
     override fun onBindViewHolder(holder: TransVh, position: Int) = holder.bind(getItem(position))
 
     @SuppressLint("ClickableViewAccessibility")
-    inner class TransVh(private val binding: ItemTransBinding) : ViewHolder(binding.root) {
+    inner class TransVh(private val bind: ItemTransBinding) : ViewHolder(bind.root) {
 
         init {
-            binding.transDrag.setOnTouchListener { _, event ->
+            bind.transDrag.setOnTouchListener { _, event ->
                 if (event.actionMasked == MotionEvent.ACTION_DOWN) {
                     dragDecor.startDrag(this)
                 }
                 false
             }
-            binding.root.setOnClickListener {
+            bind.root.setOnClickListener {
                 onClick(getItem(adapterPosition))
             }
             // same functionality on long press
-            binding.root.setOnLongClickListener {
+            bind.root.setOnLongClickListener {
                 onClick(getItem(adapterPosition))
                 true
             }
         }
 
-        fun bind(trans: String) = with(binding) {
+        fun bind(trans: String) = with(bind) {
             transText.text = trans
         }
     }
