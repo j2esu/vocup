@@ -15,7 +15,7 @@ import ru.uxapps.vocup.data.Language
 import ru.uxapps.vocup.databinding.FragmentAddWordBinding
 
 class AddWordView(
-    private val binding: FragmentAddWordBinding,
+    private val bind: FragmentAddWordBinding,
     private val callback: Callback
 ) {
 
@@ -25,33 +25,37 @@ class AddWordView(
         fun onInput(input: String)
         fun onLangClick(lang: Language)
         fun onUp()
+        fun onRetry()
     }
 
-    private val adapter = DefListAdapter(callback::onSave, callback::onRemove)
+    private val listAdapter = DefListAdapter(callback::onSave, callback::onRemove)
 
     init {
-        with(binding) {
-            addWordInput.doAfterTextChanged { callback.onInput(it.toString()) }
-            addWordTransList.adapter = adapter
-            addWordTransList.layoutManager = LinearLayoutManager(root.context)
-            addWordToolbar.setNavigationOnClickListener { callback.onUp() }
-            val imm = root.context.getSystemService<InputMethodManager>()
-            imm?.showSoftInput(addWordInput, InputMethodManager.SHOW_IMPLICIT)
+        bind.addWordInput.apply {
+            doAfterTextChanged { callback.onInput(it.toString()) }
+            val imm = context.getSystemService<InputMethodManager>()
+            imm?.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
         }
+        bind.addWordTransList.apply {
+            adapter = listAdapter
+            layoutManager = LinearLayoutManager(context)
+        }
+        bind.addWordToolbar.setNavigationOnClickListener { callback.onUp() }
+        bind.addWordRetry.setOnClickListener { callback.onRetry() }
     }
 
-    fun setDefState(state: AddWord.DefState) = with(binding) {
+    fun setDefState(state: AddWord.DefState) = with(bind) {
         addWordProgress.isVisible = state is Loading
         addWordLoadError.isVisible = state is Error
         addWordEmptyList.isVisible = state is Data && state.items.isEmpty()
-        adapter.submitList(if (state is Data) state.items else emptyList())
+        listAdapter.submitList(if (state is Data) state.items else emptyList())
     }
 
-    fun setMaxWordLength(length: Int) = with(binding) {
+    fun setMaxWordLength(length: Int) = with(bind) {
         addWordInput.filters = arrayOf(InputFilter.LengthFilter(length))
     }
 
-    fun setLanguages(languages: List<Language>) = with(binding) {
+    fun setLanguages(languages: List<Language>) = with(bind) {
         val langItem = addWordToolbar.menu.findItem(R.id.menu_lang)
         langItem.subMenu.clear()
         languages.forEachIndexed { i, lang ->

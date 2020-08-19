@@ -3,6 +3,7 @@ package ru.uxapps.vocup.component
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -11,7 +12,9 @@ import ru.uxapps.vocup.component.AddWord.DefState
 import ru.uxapps.vocup.data.Def
 import ru.uxapps.vocup.data.Language
 import ru.uxapps.vocup.data.Repo
-import ru.uxapps.vocup.util.asStateFlow
+import ru.uxapps.vocup.util.combine
+import ru.uxapps.vocup.util.repeatWhen
+import ru.uxapps.vocup.util.toStateFlow
 import java.io.IOException
 
 interface AddWord {
@@ -23,6 +26,7 @@ interface AddWord {
     fun onSave(item: DefItem)
     fun onRemove(item: DefItem)
     fun onChooseLang(lang: Language)
+    fun onRetry()
 
     sealed class DefState {
         object Idle : DefState()
@@ -44,13 +48,15 @@ class AddWordImp(
     }
 
     private val wordInput = MutableStateFlow("")
-    private val allWords = repo.getAllWords().asStateFlow(scope)
+    private val allWords = repo.getAllWords().toStateFlow(scope)
+    private val retry = Channel<Unit>()
 
     override val definitions: LiveData<DefState> =
         wordInput
             .map { normalizeInput(it) }
             .distinctUntilChanged()
-            .combine(repo.getTargetLang()) { input, lang -> input to lang }
+            .combine(repo.getTargetLang())
+            .repeatWhen(retry.consumeAsFlow())
             .transformLatest { (input, lang) ->
                 if (input.length in WORD_RANGE) {
                     emit(DefState.Loading)
@@ -105,5 +111,9 @@ class AddWordImp(
         scope.launch {
             repo.setTargetLang(lang)
         }
+    }
+
+    override fun onRetry() {
+        retry.offer(Unit)
     }
 }

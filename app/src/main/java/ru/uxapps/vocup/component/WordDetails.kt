@@ -11,8 +11,8 @@ import kotlinx.coroutines.launch
 import ru.uxapps.vocup.data.Repo
 import ru.uxapps.vocup.util.LiveEvent
 import ru.uxapps.vocup.util.MutableLiveEvent
-import ru.uxapps.vocup.util.asStateFlow
 import ru.uxapps.vocup.util.send
+import ru.uxapps.vocup.util.toStateFlow
 
 interface WordDetails {
     val text: LiveData<String>
@@ -31,7 +31,7 @@ class WordDetailsImp(
     private val scope: CoroutineScope
 ) : WordDetails {
 
-    private val word = repo.getWord(wordText).filterNotNull().asStateFlow(scope)
+    private val word = repo.getWord(wordText).filterNotNull().toStateFlow(scope)
 
     override val text = word.mapNotNull { it?.text }.onStart { emit(wordText) }.asLiveData()
     override val pron = word.map { it?.pron ?: "" }.asLiveData()

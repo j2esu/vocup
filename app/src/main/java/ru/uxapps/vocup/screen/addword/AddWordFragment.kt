@@ -21,6 +21,7 @@ class AddWordFragment : Fragment(R.layout.fragment_add_word) {
             override fun onInput(input: String) = vm.addWord.onInput(input)
             override fun onLangClick(lang: Language) = vm.addWord.onChooseLang(lang)
             override fun onUp() = nav.up()
+            override fun onRetry() = vm.addWord.onRetry()
         })
         with(vm.addWord) {
             definitions.observe(viewLifecycleOwner, v::setDefState)

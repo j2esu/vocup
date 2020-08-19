@@ -1,13 +1,10 @@
 package ru.uxapps.vocup.util
 
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
-fun <T> Flow<T>.asStateFlow(scope: CoroutineScope): StateFlow<T?> {
+fun <T> Flow<T>.toStateFlow(scope: CoroutineScope): StateFlow<T?> {
     val stateFlow = MutableStateFlow<T?>(null)
     scope.launch {
         collect {
@@ -16,3 +13,7 @@ fun <T> Flow<T>.asStateFlow(scope: CoroutineScope): StateFlow<T?> {
     }
     return stateFlow
 }
+
+fun <T, S> Flow<T>.combine(other: Flow<S>): Flow<Pair<T, S>> = combine(other) { a, b -> a to b }
+fun <T> Flow<T>.repeatWhen(other: Flow<*>): Flow<T> =
+    combine(other.onStart { emit(null) }) { a, _ -> a }
