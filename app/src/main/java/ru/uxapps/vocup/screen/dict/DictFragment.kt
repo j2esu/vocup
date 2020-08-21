@@ -33,7 +33,9 @@ class DictFragment : Fragment(R.layout.fragment_dict), WordFragment.Target {
         with(dictModel) {
             words.observe(viewLifecycleOwner, dictView::setWords)
             loading.observe(viewLifecycleOwner, dictView::setLoading)
-            onUndoRemoved.consume(viewLifecycleOwner, dictView::showRemoveWordUndo)
+            onWordRemoved.consume(viewLifecycleOwner) {
+                dictView.showRemoveWordUndo { dictModel.restoreWord(it) }
+            }
         }
     }
 

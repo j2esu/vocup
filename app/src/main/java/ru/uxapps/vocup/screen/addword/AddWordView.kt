@@ -10,8 +10,8 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import ru.uxapps.vocup.R
-import ru.uxapps.vocup.component.AddWord
 import ru.uxapps.vocup.component.AddWord.DefItem
+import ru.uxapps.vocup.component.AddWord.DefState
 import ru.uxapps.vocup.component.AddWord.DefState.Data
 import ru.uxapps.vocup.component.AddWord.DefState.Loading
 import ru.uxapps.vocup.data.Language
@@ -62,8 +62,8 @@ class AddWordView(
         bind.addWordToolbar.setNavAsBack()
     }
 
-    fun setDefState(state: AddWord.DefState) = with(bind) {
-        addWordProgress.isVisible = state is Loading
+    fun setDefState(state: DefState) {
+        bind.addWordProgress.isVisible = state is Loading
         listAdapter.apply {
             if ((state as? Data)?.error == true) {
                 errorSnack.show()
