@@ -16,6 +16,7 @@ import ru.uxapps.vocup.component.AddWord.DefState.Data
 import ru.uxapps.vocup.component.AddWord.DefState.Loading
 import ru.uxapps.vocup.data.Language
 import ru.uxapps.vocup.databinding.FragmentAddWordBinding
+import ru.uxapps.vocup.util.setNavAsBack
 
 class AddWordView(
     private val bind: FragmentAddWordBinding,
@@ -27,7 +28,6 @@ class AddWordView(
         fun onSave(item: DefItem)
         fun onInput(input: String)
         fun onLangClick(lang: Language)
-        fun onUp()
         fun onRetry()
     }
 
@@ -59,7 +59,7 @@ class AddWordView(
             adapter = listAdapter
             layoutManager = LinearLayoutManager(context)
         }
-        bind.addWordToolbar.setNavigationOnClickListener { callback.onUp() }
+        bind.addWordToolbar.setNavAsBack()
     }
 
     fun setDefState(state: AddWord.DefState) = with(bind) {
@@ -94,5 +94,11 @@ class AddWordView(
                 }
             }
         }
+    }
+
+    fun showUndoDeleteWord(undo: () -> Unit) {
+        Snackbar.make(bind.root, R.string.word_removed, Snackbar.LENGTH_LONG)
+            .setAction(R.string.undo) { undo() }
+            .show()
     }
 }

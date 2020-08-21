@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import ru.uxapps.vocup.data.Repo
+import ru.uxapps.vocup.data.Word
 import ru.uxapps.vocup.util.LiveEvent
 import ru.uxapps.vocup.util.MutableLiveEvent
 import ru.uxapps.vocup.util.send
@@ -19,10 +20,12 @@ interface WordDetails {
     val pron: LiveData<String>
     val translations: LiveData<List<String>?>
     val onTransDeleted: LiveEvent<() -> Unit>
+    val onWordDeleted: LiveEvent<Word>
     fun onReorderTrans(newTrans: List<String>)
     fun onAddTrans(text: String)
     fun onEditTrans(trans: String, newText: String)
     fun onDeleteTrans(trans: String)
+    fun onDeleteWord()
 }
 
 class WordDetailsImp(
@@ -37,6 +40,7 @@ class WordDetailsImp(
     override val pron = word.map { it?.pron ?: "" }.asLiveData()
     override val translations = word.map { it?.translations }.onStart { emit(null) }.asLiveData()
     override val onTransDeleted = MutableLiveEvent<() -> Unit>()
+    override val onWordDeleted = MutableLiveEvent<Word>()
 
     override fun onReorderTrans(newTrans: List<String>) {
         scope.launch {
@@ -61,6 +65,15 @@ class WordDetailsImp(
                 scope.launch {
                     repo.setTranslations(wordText, currentTrans)
                 }
+            }
+        }
+    }
+
+    override fun onDeleteWord() {
+        word.value?.let { word ->
+            scope.launch {
+                repo.removeWord(word)
+                onWordDeleted.send(word)
             }
         }
     }

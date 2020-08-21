@@ -7,6 +7,7 @@ import com.google.android.material.snackbar.Snackbar
 import ru.uxapps.vocup.R
 import ru.uxapps.vocup.databinding.FragmentWordBinding
 import ru.uxapps.vocup.screen.SwipeDismissDecor
+import ru.uxapps.vocup.util.setNavAsBack
 
 class WordView(
     private val bind: FragmentWordBinding,
@@ -14,7 +15,6 @@ class WordView(
 ) {
 
     interface Callback {
-        fun onUp()
         fun onDelete()
         fun onReorderTrans(newTrans: List<String>)
         fun onAddTrans()
@@ -27,7 +27,7 @@ class WordView(
 
     init {
         bind.wordToolbar.apply {
-            setNavigationOnClickListener { callback.onUp() }
+            setNavAsBack()
             menu.findItem(R.id.menu_word_del).setOnMenuItemClickListener {
                 callback.onDelete()
                 true

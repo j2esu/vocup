@@ -12,10 +12,12 @@ import ru.uxapps.vocup.component.AddWord.DefState
 import ru.uxapps.vocup.data.Def
 import ru.uxapps.vocup.data.Language
 import ru.uxapps.vocup.data.Repo
+import ru.uxapps.vocup.data.Word
 import ru.uxapps.vocup.util.combine
 import ru.uxapps.vocup.util.repeatWhen
 import ru.uxapps.vocup.util.toStateFlow
 import java.io.IOException
+import java.util.concurrent.TimeUnit
 
 interface AddWord {
 
@@ -26,6 +28,7 @@ interface AddWord {
     fun onSave(item: DefItem)
     fun onChooseLang(lang: Language)
     fun onRetry()
+    fun onRestoreWord(word: Word)
 
     sealed class DefState {
         object Idle : DefState()
@@ -86,7 +89,7 @@ class AddWordImp(
                     emit(DefState.Idle)
                 }
             }
-            .asLiveData()
+            .asLiveData(timeoutInMs = TimeUnit.MINUTES.toMillis(5))
 
     private fun normalizeInput(input: String) =
         input.trim().replace(Regex("\\s+"), " ")
@@ -116,5 +119,11 @@ class AddWordImp(
 
     override fun onRetry() {
         retry.offer(Unit)
+    }
+
+    override fun onRestoreWord(word: Word) {
+        scope.launch {
+            repo.addWord(word)
+        }
     }
 }

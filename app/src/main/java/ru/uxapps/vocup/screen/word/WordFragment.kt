@@ -8,51 +8,56 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import ru.uxapps.vocup.R
+import ru.uxapps.vocup.data.Word
 import ru.uxapps.vocup.databinding.FragmentWordBinding
-import ru.uxapps.vocup.nav
+import ru.uxapps.vocup.util.back
 import ru.uxapps.vocup.util.consume
+import ru.uxapps.vocup.util.target
 
 class WordFragment : Fragment(R.layout.fragment_word), AddTransDialog.Host, EditTransDialog.Host {
 
-    interface Host {
-        fun onDeleteWord(text: String)
+    interface Target {
+        fun onWordDeleted(word: Word)
     }
 
     companion object {
         fun argsOf(word: String) = bundleOf("word" to word)
-        private val WordFragment.wordText get() = requireArguments()["word"] as String
+        private val WordFragment.word get() = requireArguments()["word"] as String
     }
 
     private val vm by viewModels<WordViewModel>()
-    private val details by lazy { vm.wordDetails(wordText) }
+    private val detailsModel by lazy { vm.wordDetails(word) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val v = WordView(FragmentWordBinding.bind(view), object : WordView.Callback {
-            override fun onUp() = nav.up()
-            override fun onDelete() = (activity as Host).onDeleteWord(wordText)
+            override fun onDelete() = detailsModel.onDeleteWord()
             override fun onAddTrans() = AddTransDialog().show(childFragmentManager, null)
-            override fun onDeleteTrans(trans: String) = details.onDeleteTrans(trans)
+            override fun onDeleteTrans(trans: String) = detailsModel.onDeleteTrans(trans)
+            override fun onReorderTrans(newTrans: List<String>) = detailsModel.onReorderTrans(newTrans)
+
             override fun onListen() {
-                Toast.makeText(
-                    context, "You're listening ${details.text.value}", Toast.LENGTH_SHORT
-                ).show()
+                Toast.makeText(context, "You're listening ${detailsModel.text.value}", Toast.LENGTH_SHORT)
+                    .show()
             }
 
-            override fun onReorderTrans(newTrans: List<String>) = details.onReorderTrans(newTrans)
             override fun onEditTrans(trans: String) {
                 EditTransDialog().apply { arguments = EditTransDialog.argsOf(trans) }
                     .show(childFragmentManager, null)
             }
         })
-        with(details) {
+        with(detailsModel) {
             translations.observe(viewLifecycleOwner, v::setTranslations)
             text.observe(viewLifecycleOwner, v::setWordText)
             pron.observe(viewLifecycleOwner, v::setPronText)
             onTransDeleted.consume(viewLifecycleOwner, v::showDeleteTransUndo)
+            onWordDeleted.consume(viewLifecycleOwner) {
+                target<Target>().onWordDeleted(it)
+                back()
+            }
         }
     }
 
-    override fun onAddTrans(text: String) = details.onAddTrans(text)
-    override fun onEditTrans(trans: String, newText: String) = details.onEditTrans(trans, newText)
-    override fun onDeleteTrans(trans: String) = details.onDeleteTrans(trans)
+    override fun onAddTrans(text: String) = detailsModel.onAddTrans(text)
+    override fun onEditTrans(trans: String, newText: String) = detailsModel.onEditTrans(trans, newText)
+    override fun onDeleteTrans(trans: String) = detailsModel.onDeleteTrans(trans)
 }
