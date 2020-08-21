@@ -1,9 +1,10 @@
 package ru.uxapps.vocup
 
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentTransaction
-import androidx.fragment.app.commit
+import androidx.fragment.app.*
+import ru.uxapps.vocup.screen.word.WordFragment
 import ru.uxapps.vocup.workflow.AddWordWorkflow
 import ru.uxapps.vocup.workflow.NavWorkflow
 
@@ -16,6 +17,21 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), NavWorkflow.Rout
                 add(R.id.main_container, NavWorkflow().also { setPrimaryNavigationFragment(it) })
             }
         }
+        // configure input mode
+        supportFragmentManager.registerFragmentLifecycleCallbacks(
+            object : FragmentManager.FragmentLifecycleCallbacks() {
+                override fun onFragmentStarted(fm: FragmentManager, f: Fragment) {
+                    window.setSoftInputMode(
+                        when (f) {
+                            is WordFragment -> WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN
+                            is DialogFragment -> window.attributes.softInputMode
+                            else -> WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
+                        }
+                    )
+                }
+            },
+            true
+        )
     }
 
     override fun openAddWord() {
