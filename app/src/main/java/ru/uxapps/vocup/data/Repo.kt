@@ -13,6 +13,7 @@ interface Repo {
     suspend fun getDefinitions(word: String, lang: Language): List<Def>
     suspend fun setTranslations(word: String, trans: List<String>)
     suspend fun addTranslations(word: String, trans: List<String>)
+    suspend fun getWordCompletions(input: String): List<String>
 }
 
 data class Word(val text: String, val translations: List<String>, val created: Long, val pron: String?)

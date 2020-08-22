@@ -21,11 +21,12 @@
             app:navigationIcon="?homeAsUpIndicator"
             >
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/add_word_input"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent"
+                android:completionThreshold="2"
                 android:hint="@string/add_word_hint"
                 android:inputType="textCapSentences"
                 android:lines="1"
@@ -35,7 +36,7 @@
 
                 <requestFocus />
 
-            </EditText>
+            </AutoCompleteTextView>
 
         </com.google.android.material.appbar.MaterialToolbar>
 
@@ -46,15 +47,41 @@
         android:layout_height="match_parent"
         >
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/add_word_trans_list"
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:paddingHorizontal="16dp"
-            android:paddingTop="8dp"
-            tools:listitem="@layout/item_def"
-            />
+            android:overScrollMode="ifContentScrolls"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/add_word_comp_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:overScrollMode="never"
+                    tools:itemCount="2"
+                    tools:listitem="@layout/item_completion"
+                    />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/add_word_trans_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:overScrollMode="never"
+                    android:paddingHorizontal="16dp"
+                    android:paddingTop="8dp"
+                    tools:listitem="@layout/item_def"
+                    />
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
 
         <ProgressBar
             android:id="@+id/add_word_progress"

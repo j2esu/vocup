@@ -134,4 +134,8 @@ object InMemoryRepo : Repo {
             }
         }
     }
+
+    override suspend fun getWordCompletions(input: String): List<String> {
+        return List(Random.nextInt(2)) { "$input completion $it" }
+    }
 }
