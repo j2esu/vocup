@@ -63,7 +63,7 @@ class AddWordImp(
                     emit(DefState.Loading)
                     delay(400)
                     val result = try {
-                        repo.getTranslations(input, lang)
+                        repo.getDefinitions(input, lang)
                     } catch (e: IOException) {
                         null
                     }
@@ -107,7 +107,11 @@ class AddWordImp(
 
     override fun onSave(item: DefItem) {
         scope.launch {
-            repo.addWord(item.text, item.trans?.map { it.first } ?: emptyList())
+            if (!item.saved) {
+                repo.addWord(item.text, item.trans?.map { it.first } ?: emptyList())
+            } else {
+                repo.addTranslations(item.text, (item.trans ?: emptyList()).filter { !it.second }.map { it.first })
+            }
         }
     }
 

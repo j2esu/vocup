@@ -10,8 +10,9 @@ interface Repo {
     suspend fun removeWord(word: Word)
     fun getTargetLang(): Flow<Language>
     suspend fun setTargetLang(lang: Language)
-    suspend fun getTranslations(word: String, lang: Language): List<Def>
+    suspend fun getDefinitions(word: String, lang: Language): List<Def>
     suspend fun setTranslations(word: String, trans: List<String>)
+    suspend fun addTranslations(word: String, trans: List<String>)
 }
 
 data class Word(val text: String, val translations: List<String>, val created: Long, val pron: String?)

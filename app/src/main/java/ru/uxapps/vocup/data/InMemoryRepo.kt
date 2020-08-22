@@ -71,7 +71,7 @@ object InMemoryRepo : Repo {
         targetLang.value = lang
     }
 
-    override suspend fun getTranslations(word: String, lang: Language): List<Def> {
+    override suspend fun getDefinitions(word: String, lang: Language): List<Def> {
         delay(1000)
         if (Random.nextInt() % 4 == 0) {
             if (Random.nextBoolean()) {
@@ -100,9 +100,7 @@ object InMemoryRepo : Repo {
     override suspend fun addWord(word: Word) =
         addWordInner(word.text, word.translations, word.created, word.pron)
 
-    private fun addWordInner(
-        text: String, translations: List<String>, created: Long, pron: String?
-    ) {
+    private fun addWordInner(text: String, translations: List<String>, created: Long, pron: String?) {
         words.value = words.value?.let { listOf(Word(text, translations, created, pron)) + it }
     }
 
@@ -114,6 +112,15 @@ object InMemoryRepo : Repo {
         withWord(word) { currentWords, wordIndex ->
             words.value = currentWords.toMutableList().apply {
                 set(wordIndex, get(wordIndex).copy(translations = trans))
+            }
+        }
+    }
+
+    override suspend fun addTranslations(word: String, trans: List<String>) {
+        withWord(word) { currentWords, wordIndex ->
+            words.value = currentWords.toMutableList().apply {
+                val currentWord = get(wordIndex)
+                set(wordIndex, currentWord.copy(translations = currentWord.translations + trans))
             }
         }
     }
