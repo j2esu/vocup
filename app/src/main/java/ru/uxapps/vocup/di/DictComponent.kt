@@ -21,7 +21,10 @@ interface DictComponent {
 
     @Component.Factory
     interface Factory {
-        fun create(@BindsInstance f: DictFragment, appComponent: AppComponent): DictComponent
+        fun create(
+            @BindsInstance f: DictFragment,
+            appComponent: AppComponent
+        ): DictComponent
     }
 }
 
@@ -29,17 +32,14 @@ interface DictComponent {
 class DictModule {
 
     @Provides
-    fun provideDict(vm: DictViewModel): Dictionary = vm.dictionary!!
+    fun provideDict(f: DictFragment, repo: Repo): Dictionary {
+        val vm = ViewModelProvider(f)[DictViewModel::class.java]
+        return vm.dictionary ?: DictionaryImp(repo, vm.viewModelScope).also { vm.dictionary = it }
+    }
 
     @Provides
     fun provideRouter(f: DictFragment): DictFragment.Router = f.router()
 
-    @Provides
-    fun provideViewModel(f: DictFragment, repo: Repo) = ViewModelProvider(f)[DictViewModel::class.java].apply {
-        if (dictionary == null) {
-            dictionary = DictionaryImp(repo, viewModelScope)
-        }
-    }
 }
 
 class DictViewModel : ViewModel() {
