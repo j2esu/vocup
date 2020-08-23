@@ -2,16 +2,19 @@ package ru.uxapps.vocup.screen.addword
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
+import ru.uxapps.vocup.App
 import ru.uxapps.vocup.R
+import ru.uxapps.vocup.component.AddWord
 import ru.uxapps.vocup.component.AddWord.DefItem
 import ru.uxapps.vocup.data.Language
 import ru.uxapps.vocup.data.Word
 import ru.uxapps.vocup.databinding.FragmentAddWordBinding
+import ru.uxapps.vocup.di.DaggerAddWordComponent
 import ru.uxapps.vocup.screen.word.WordFragment
 import ru.uxapps.vocup.util.router
+import javax.inject.Inject
 
 class AddWordFragment : Fragment(R.layout.fragment_add_word), WordFragment.Target {
 
@@ -19,12 +22,15 @@ class AddWordFragment : Fragment(R.layout.fragment_add_word), WordFragment.Targe
         fun openWord(text: String, target: Fragment)
     }
 
-    private val vm by viewModels<AddWordViewModel>()
-    private val addWordModel by lazy { vm.addWord }
+    @Inject lateinit var addWordModel: AddWord
     private lateinit var addWordView: AddWordView
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
         super.onViewStateRestored(savedInstanceState)
+        DaggerAddWordComponent.factory()
+            .create(this, (requireActivity().application as App).appComponent)
+            .inject(this)
+
         addWordView = AddWordView(FragmentAddWordBinding.bind(requireView()), object : AddWordView.Callback {
             override fun onOpen(item: DefItem) = router<Router>().openWord(item.text, this@AddWordFragment)
             override fun onSave(item: DefItem) = addWordModel.onSave(item)

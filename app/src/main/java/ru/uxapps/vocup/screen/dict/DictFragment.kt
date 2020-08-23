@@ -23,8 +23,6 @@ class DictFragment : Fragment(R.layout.fragment_dict), WordFragment.Target {
     }
 
     @Inject lateinit var dictModel: Dictionary
-    @Inject lateinit var router: Router
-
     private lateinit var dictView: DictView
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
@@ -36,7 +34,7 @@ class DictFragment : Fragment(R.layout.fragment_dict), WordFragment.Target {
         dictView = DictView(FragmentDictBinding.bind(requireView()), object : DictView.Callback {
             override fun onAdd() = router<Router>().openAddWord()
             override fun onSwipe(word: Word) = dictModel.onRemove(word)
-            override fun onClick(word: Word) = router.openWord(word.text, this@DictFragment)
+            override fun onClick(word: Word) = router<Router>().openWord(word.text, this@DictFragment)
         })
         with(dictModel) {
             words.observe(viewLifecycleOwner, dictView::setWords)

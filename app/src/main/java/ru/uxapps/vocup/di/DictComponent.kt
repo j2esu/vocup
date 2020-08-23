@@ -11,7 +11,6 @@ import ru.uxapps.vocup.component.Dictionary
 import ru.uxapps.vocup.component.DictionaryImp
 import ru.uxapps.vocup.data.Repo
 import ru.uxapps.vocup.screen.dict.DictFragment
-import ru.uxapps.vocup.util.router
 
 @FragmentScope
 @Component(dependencies = [AppComponent::class], modules = [DictModule::class])
@@ -36,10 +35,6 @@ class DictModule {
         val vm = ViewModelProvider(f)[DictViewModel::class.java]
         return vm.dictionary ?: DictionaryImp(repo, vm.viewModelScope).also { vm.dictionary = it }
     }
-
-    @Provides
-    fun provideRouter(f: DictFragment): DictFragment.Router = f.router()
-
 }
 
 class DictViewModel : ViewModel() {
