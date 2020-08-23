@@ -1,7 +1,6 @@
 package ru.uxapps.vocup.screen.dict
 
 import android.os.Bundle
-import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -24,8 +23,9 @@ class DictFragment : Fragment(R.layout.fragment_dict), WordFragment.Target {
     private val dictModel by lazy { vm.dictionary }
     private lateinit var dictView: DictView
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        dictView = DictView(FragmentDictBinding.bind(view), object : DictView.Callback {
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        dictView = DictView(FragmentDictBinding.bind(requireView()), object : DictView.Callback {
             override fun onAdd() = router<Router>().openAddWord()
             override fun onSwipe(word: Word) = dictModel.onRemove(word)
             override fun onClick(word: Word) = router<Router>().openWord(word.text, this@DictFragment)

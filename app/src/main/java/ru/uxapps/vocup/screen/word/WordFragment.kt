@@ -1,7 +1,6 @@
 package ru.uxapps.vocup.screen.word
 
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
@@ -28,8 +27,9 @@ class WordFragment : Fragment(R.layout.fragment_word), AddTransDialog.Host, Edit
     private val vm by viewModels<WordViewModel>()
     private val detailsModel by lazy { vm.wordDetails(word) }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val v = WordView(FragmentWordBinding.bind(view), object : WordView.Callback {
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        val v = WordView(FragmentWordBinding.bind(requireView()), object : WordView.Callback {
             override fun onDelete() = detailsModel.onDeleteWord()
             override fun onAddTrans() = AddTransDialog().show(childFragmentManager, null)
             override fun onDeleteTrans(trans: String) = detailsModel.onDeleteTrans(trans)

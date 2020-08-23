@@ -1,7 +1,6 @@
 package ru.uxapps.vocup.workflow
 
 import android.os.Bundle
-import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -27,8 +26,9 @@ class NavWorkflow : Fragment(R.layout.workflow_nav), DictWorkflow.Router {
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val bind = WorkflowNavBinding.bind(view)
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        val bind = WorkflowNavBinding.bind(requireView())
         bind.navPager.apply {
             setOnNavigationItemSelectedListener {
                 if (selectedItemId != it.itemId) {
