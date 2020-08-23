@@ -4,14 +4,17 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
+import ru.uxapps.vocup.App
 import ru.uxapps.vocup.R
+import ru.uxapps.vocup.component.WordDetails
 import ru.uxapps.vocup.data.Word
 import ru.uxapps.vocup.databinding.FragmentWordBinding
+import ru.uxapps.vocup.di.DaggerWordComponent
 import ru.uxapps.vocup.util.back
 import ru.uxapps.vocup.util.consume
 import ru.uxapps.vocup.util.target
+import javax.inject.Inject
 
 class WordFragment : Fragment(R.layout.fragment_word), AddTransDialog.Host, EditTransDialog.Host {
 
@@ -24,11 +27,14 @@ class WordFragment : Fragment(R.layout.fragment_word), AddTransDialog.Host, Edit
         private val WordFragment.word get() = requireArguments()["word"] as String
     }
 
-    private val vm by viewModels<WordViewModel>()
-    private val detailsModel by lazy { vm.wordDetails(word) }
+    @Inject lateinit var detailsModel: WordDetails
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
         super.onViewStateRestored(savedInstanceState)
+        DaggerWordComponent.factory()
+            .create(this, word, (requireActivity().application as App).appComponent)
+            .inject(this)
+
         val v = WordView(FragmentWordBinding.bind(requireView()), object : WordView.Callback {
             override fun onDelete() = detailsModel.onDeleteWord()
             override fun onAddTrans() = AddTransDialog().show(childFragmentManager, null)
