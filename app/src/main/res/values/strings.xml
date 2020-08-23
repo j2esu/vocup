@@ -28,4 +28,5 @@
     <string name="translation_deleted">Translation was deleted</string>
     <string name="listen_pron">Listen</string>
     <string name="retry">Retry</string>
+    <string name="pron_pattern">"/%s/"</string>
 </resources>

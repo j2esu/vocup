@@ -1,6 +1,5 @@
 package ru.uxapps.vocup.screen.dict
 
-import android.annotation.SuppressLint
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
@@ -10,7 +9,6 @@ import ru.uxapps.vocup.R
 import ru.uxapps.vocup.data.Word
 import ru.uxapps.vocup.databinding.ItemWordBinding
 import ru.uxapps.vocup.util.inflateBind
-import kotlin.random.Random
 
 class WordListAdapter(
     private val onWordClick: (Word) -> Unit
@@ -30,7 +28,6 @@ class WordListAdapter(
             bind.root.setOnClickListener { onWordClick(getItem(adapterPosition)) }
         }
 
-        @SuppressLint("SetTextI18n")
         fun bind(word: Word) = with(bind) {
             wordText.text = word.text
             wordTrans.apply {
@@ -43,9 +40,9 @@ class WordListAdapter(
             }
             wordPron.apply {
                 isVisible = word.pron != null
-                text = "/${word.pron}/"
+                text = context.getString(R.string.pron_pattern, word.pron)
             }
-            wordProgress.text = Random.nextInt(1, 100).toString()
+            wordProgress.text = word.progress.toString()
         }
     }
 }

@@ -16,18 +16,9 @@ object FakeDb : Db {
         GlobalScope.launch {
             delay(1000)
             words.value = listOf(
-                Word(
-                    "Vocup!", listOf("Приложение", "Для запоминания", "Новых", "Слов"),
-                    System.nanoTime(), null
-                ),
-                Word(
-                    "World", listOf("Мир", "Вселенная", "Общество", "Свет"),
-                    System.nanoTime() + 1, "wərld"
-                ),
-                Word(
-                    "Hello", listOf("Привет", "Здравствуй", "Алло"),
-                    System.nanoTime() + 2, "həˈlō"
-                )
+                Word("Vocup!", listOf("Приложение", "Для запоминания", "Новых", "Слов"), null),
+                Word("World", listOf("Мир", "Вселенная", "Общество", "Свет"), "wərld"),
+                Word("Hello", listOf("Привет", "Здравствуй", "Алло"), "həˈlō")
             )
         }
     }
@@ -40,15 +31,14 @@ object FakeDb : Db {
             words.find { it.text == text }
         }
 
-    override suspend fun restoreWord(word: Word) =
-        addWordInner(word.text, word.translations, word.created, word.pron)
+    override suspend fun restoreWord(word: Word) = addWordInner(word)
 
-    private fun addWordInner(text: String, translations: List<String>, created: Long, pron: String?) {
-        words.value = words.value?.let { listOf(Word(text, translations, created, pron)) + it }
+    private fun addWordInner(word: Word) {
+        words.value = words.value?.let { listOf(word) + it }
     }
 
     override suspend fun addWord(text: String, trans: List<String>, pron: String?) =
-        addWordInner(text, trans, System.nanoTime(), pron)
+        addWordInner(Word(text, trans, pron))
 
     override suspend fun deleteWord(text: String) {
         words.value = words.value?.filter { it.text != text }
