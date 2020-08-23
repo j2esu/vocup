@@ -21,13 +21,13 @@
             app:navigationIcon="?homeAsUpIndicator"
             >
 
-            <AutoCompleteTextView
+            <EditText
                 android:id="@+id/add_word_input"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent"
-                android:completionThreshold="2"
                 android:hint="@string/add_word_hint"
+                android:imeOptions="actionSearch"
                 android:inputType="textCapSentences"
                 android:lines="1"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
@@ -36,7 +36,7 @@
 
                 <requestFocus />
 
-            </AutoCompleteTextView>
+            </EditText>
 
         </com.google.android.material.appbar.MaterialToolbar>
 
@@ -47,41 +47,26 @@
         android:layout_height="match_parent"
         >
 
-        <androidx.core.widget.NestedScrollView
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/add_word_def_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:overScrollMode="ifContentScrolls"
-            >
+            android:clipToPadding="false"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="8dp"
+            android:visibility="invisible"
+            tools:listitem="@layout/item_def"
+            tools:visibility="visible"
+            />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                >
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/add_word_comp_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:overScrollMode="never"
-                    tools:itemCount="2"
-                    tools:listitem="@layout/item_completion"
-                    />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/add_word_trans_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clipToPadding="false"
-                    android:overScrollMode="never"
-                    android:paddingHorizontal="16dp"
-                    android:paddingTop="8dp"
-                    tools:listitem="@layout/item_def"
-                    />
-
-            </LinearLayout>
-
-        </androidx.core.widget.NestedScrollView>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/add_word_comp_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="invisible"
+            tools:itemCount="2"
+            tools:listitem="@layout/item_completion"
+            />
 
         <ProgressBar
             android:id="@+id/add_word_progress"

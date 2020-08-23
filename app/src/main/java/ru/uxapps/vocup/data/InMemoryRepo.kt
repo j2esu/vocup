@@ -81,7 +81,7 @@ object InMemoryRepo : Repo {
             }
         }
         return List(Random.nextInt(1, 5)) { defIndex ->
-            Def("$word $defIndex (${lang.code})",
+            Def("$word (d$defIndex-${lang.code})",
                 List(Random.nextInt(1, 10)) { transIndex ->
                     "Translation $transIndex"
                 }
@@ -136,6 +136,7 @@ object InMemoryRepo : Repo {
     }
 
     override suspend fun getWordCompletions(input: String): List<String> {
-        return List(Random.nextInt(2)) { "$input completion $it" }
+        delay(100)
+        return List(Random.nextInt(10)) { "$input (c$it)" }
     }
 }

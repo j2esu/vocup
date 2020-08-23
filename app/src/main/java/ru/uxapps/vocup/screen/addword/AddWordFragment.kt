@@ -1,7 +1,6 @@
 package ru.uxapps.vocup.screen.addword
 
 import android.os.Bundle
-import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -24,19 +23,21 @@ class AddWordFragment : Fragment(R.layout.fragment_add_word), WordFragment.Targe
     private val addWordModel by lazy { vm.addWord }
     private lateinit var addWordView: AddWordView
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        addWordView = AddWordView(FragmentAddWordBinding.bind(view), object : AddWordView.Callback {
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        addWordView = AddWordView(FragmentAddWordBinding.bind(requireView()), object : AddWordView.Callback {
             override fun onOpen(item: DefItem) = router<Router>().openWord(item.text, this@AddWordFragment)
             override fun onSave(item: DefItem) = addWordModel.onSave(item)
             override fun onInput(input: String) = addWordModel.onInput(input)
             override fun onLangClick(lang: Language) = addWordModel.onChooseLang(lang)
             override fun onRetry() = addWordModel.onRetry()
+            override fun onInputDone(text: String) = addWordModel.onSearch(text)
+            override fun onCompClick(text: String) = addWordModel.onSearch(text)
         })
         with(addWordModel) {
             addWordView.setMaxWordLength(maxWordLength)
             languages.observe(viewLifecycleOwner, addWordView::setLanguages)
-            definitions.observe(viewLifecycleOwner, addWordView::setDefState)
-            completions.observe(viewLifecycleOwner, addWordView::setInputCompletions)
+            state.observe(viewLifecycleOwner, addWordView::setState)
         }
     }
 

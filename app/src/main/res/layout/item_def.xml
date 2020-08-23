@@ -6,8 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginVertical="8dp"
-    android:checkable="true"
-    android:orientation="vertical"
     app:cardElevation="2dp"
     >
 
@@ -23,8 +21,9 @@
 
         <TextView
             android:id="@+id/def_text"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="40dp"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
             tools:text="@tools:sample/cities"
             />

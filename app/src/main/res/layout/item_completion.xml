@@ -11,6 +11,7 @@
     android:ellipsize="end"
     android:gravity="center_vertical"
     android:lines="1"
+    android:minHeight="56dp"
     android:paddingHorizontal="16dp"
     android:paddingVertical="12dp"
     android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
