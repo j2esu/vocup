@@ -1,11 +1,12 @@
 package ru.uxapps.vocup.screen.addword
 
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import ru.uxapps.vocup.component.AddWord
 import ru.uxapps.vocup.component.AddWordImp
 import ru.uxapps.vocup.repo
 
-class AddWordViewModel : ViewModel() {
+class AddWordViewModel(app: Application) : AndroidViewModel(app) {
     val addWord: AddWord = AddWordImp(repo, viewModelScope)
 }

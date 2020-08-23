@@ -1,12 +1,13 @@
 package ru.uxapps.vocup.screen.word
 
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import ru.uxapps.vocup.component.WordDetails
 import ru.uxapps.vocup.component.WordDetailsImp
 import ru.uxapps.vocup.repo
 
-class WordViewModel : ViewModel() {
+class WordViewModel(app: Application) : AndroidViewModel(app) {
 
     private var wordDetails: WordDetails? = null
 
