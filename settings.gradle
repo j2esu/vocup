@@ -1,2 +1,5 @@
+include ':core'
+include ':core_imp'
+include ':core_api'
 include ':app'
 rootProject.name = "VocUp"
