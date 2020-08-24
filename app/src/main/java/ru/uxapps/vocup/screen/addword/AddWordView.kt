@@ -15,7 +15,6 @@ import ru.uxapps.vocup.R
 import ru.uxapps.vocup.component.AddWord.DefItem
 import ru.uxapps.vocup.component.AddWord.State
 import ru.uxapps.vocup.component.AddWord.State.*
-import ru.uxapps.vocup.core.data.Language
 import ru.uxapps.vocup.databinding.FragmentAddWordBinding
 import ru.uxapps.vocup.util.setNavAsBack
 
@@ -28,7 +27,7 @@ class AddWordView(
         fun onOpen(item: DefItem)
         fun onSave(item: DefItem)
         fun onInput(input: String)
-        fun onLangClick(lang: Language)
+        fun onLangClick(lang: ru.uxapps.vocup.data.Language)
         fun onRetry()
         fun onInputDone(text: String)
         fun onCompClick(text: String)
@@ -113,7 +112,7 @@ class AddWordView(
         addWordInput.filters = arrayOf(InputFilter.LengthFilter(length))
     }
 
-    fun setLanguages(languages: List<Language>) = with(bind) {
+    fun setLanguages(languages: List<ru.uxapps.vocup.data.Language>) = with(bind) {
         val langItem = addWordToolbar.menu.findItem(R.id.menu_lang)
         langItem.subMenu.clear()
         languages.forEachIndexed { i, lang ->

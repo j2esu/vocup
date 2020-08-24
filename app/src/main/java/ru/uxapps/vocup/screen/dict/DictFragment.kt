@@ -7,7 +7,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import ru.uxapps.vocup.R
 import ru.uxapps.vocup.component.Dictionary
-import ru.uxapps.vocup.core.data.Word
 import ru.uxapps.vocup.databinding.FragmentDictBinding
 import ru.uxapps.vocup.screen.word.WordFragment
 import ru.uxapps.vocup.util.consume
@@ -31,8 +30,8 @@ class DictFragment : Fragment(R.layout.fragment_dict), WordFragment.Target {
         vm.dictComponent.inject(this)
         dictView = DictView(FragmentDictBinding.bind(requireView()), object : DictView.Callback {
             override fun onAdd() = router<Router>().openAddWord()
-            override fun onSwipe(word: Word) = dictModel.onRemove(word)
-            override fun onClick(word: Word) = router<Router>().openWord(word.text, this@DictFragment)
+            override fun onSwipe(word: ru.uxapps.vocup.data.Word) = dictModel.onRemove(word)
+            override fun onClick(word: ru.uxapps.vocup.data.Word) = router<Router>().openWord(word.text, this@DictFragment)
         })
         with(dictModel) {
             words.observe(viewLifecycleOwner, dictView::setWords)
@@ -43,7 +42,7 @@ class DictFragment : Fragment(R.layout.fragment_dict), WordFragment.Target {
         }
     }
 
-    override fun onWordDeleted(word: Word) {
+    override fun onWordDeleted(word: ru.uxapps.vocup.data.Word) {
         lifecycleScope.launchWhenStarted {
             dictView.showRemoveWordUndo { dictModel.restoreWord(word) }
         }

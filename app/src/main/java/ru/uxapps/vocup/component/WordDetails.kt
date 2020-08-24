@@ -8,12 +8,12 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
-import ru.uxapps.vocup.core.data.Repo
-import ru.uxapps.vocup.core.data.Word
-import ru.uxapps.vocup.core.util.toStateFlow
+import ru.uxapps.vocup.data.Repo
+import ru.uxapps.vocup.data.Word
 import ru.uxapps.vocup.util.LiveEvent
 import ru.uxapps.vocup.util.MutableLiveEvent
 import ru.uxapps.vocup.util.send
+import ru.uxapps.vocup.util.toStateFlow
 
 interface WordDetails {
     val text: LiveData<String>

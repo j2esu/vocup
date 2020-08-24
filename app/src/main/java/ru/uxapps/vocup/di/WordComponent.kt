@@ -8,7 +8,7 @@ import dagger.Module
 import dagger.Provides
 import ru.uxapps.vocup.component.WordDetails
 import ru.uxapps.vocup.component.WordDetailsImp
-import ru.uxapps.vocup.core.data.Repo
+import ru.uxapps.vocup.data.Repo
 import ru.uxapps.vocup.screen.word.WordFragment
 
 @ViewModelScope
@@ -30,6 +30,6 @@ class WordModule {
 
     @ViewModelScope
     @Provides
-    fun provideDetails(vm: ViewModel, word: String, repo: Repo): WordDetails =
+    fun provideDetails(vm: ViewModel, word: String, repo: ru.uxapps.vocup.data.Repo): WordDetails =
         WordDetailsImp(word, repo, vm.viewModelScope)
 }

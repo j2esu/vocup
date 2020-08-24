@@ -8,7 +8,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import ru.uxapps.vocup.R
 import ru.uxapps.vocup.component.WordDetails
-import ru.uxapps.vocup.core.data.Word
 import ru.uxapps.vocup.databinding.FragmentWordBinding
 import ru.uxapps.vocup.util.back
 import ru.uxapps.vocup.util.consume
@@ -18,7 +17,7 @@ import javax.inject.Inject
 class WordFragment : Fragment(R.layout.fragment_word), AddTransDialog.Host, EditTransDialog.Host {
 
     interface Target {
-        fun onWordDeleted(word: Word)
+        fun onWordDeleted(word: ru.uxapps.vocup.data.Word)
     }
 
     companion object {

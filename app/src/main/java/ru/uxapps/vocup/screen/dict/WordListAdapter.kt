@@ -6,15 +6,15 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import ru.uxapps.vocup.R
-import ru.uxapps.vocup.core.data.Word
+import ru.uxapps.vocup.data.Word
 import ru.uxapps.vocup.databinding.ItemWordBinding
 import ru.uxapps.vocup.util.inflateBind
 
 class WordListAdapter(
-    private val onWordClick: (Word) -> Unit
-) : ListAdapter<Word, WordListAdapter.WordVh>(object : DiffUtil.ItemCallback<Word>() {
-    override fun areItemsTheSame(oldItem: Word, newItem: Word) = oldItem.text == newItem.text
-    override fun areContentsTheSame(oldItem: Word, newItem: Word) = oldItem == newItem
+    private val onWordClick: (ru.uxapps.vocup.data.Word) -> Unit
+) : ListAdapter<ru.uxapps.vocup.data.Word, WordListAdapter.WordVh>(object : DiffUtil.ItemCallback<ru.uxapps.vocup.data.Word>() {
+    override fun areItemsTheSame(oldItem: ru.uxapps.vocup.data.Word, newItem: ru.uxapps.vocup.data.Word) = oldItem.text == newItem.text
+    override fun areContentsTheSame(oldItem: ru.uxapps.vocup.data.Word, newItem: ru.uxapps.vocup.data.Word) = oldItem == newItem
 }) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
@@ -28,7 +28,7 @@ class WordListAdapter(
             bind.root.setOnClickListener { onWordClick(getItem(adapterPosition)) }
         }
 
-        fun bind(word: Word) = with(bind) {
+        fun bind(word: ru.uxapps.vocup.data.Word) = with(bind) {
             wordText.text = word.text
             wordTrans.apply {
                 text = if (word.translations.isNotEmpty()) {

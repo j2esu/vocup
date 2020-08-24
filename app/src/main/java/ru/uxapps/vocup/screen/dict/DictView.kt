@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import ru.uxapps.vocup.R
-import ru.uxapps.vocup.core.data.Word
+import ru.uxapps.vocup.data.Word
 import ru.uxapps.vocup.databinding.FragmentDictBinding
 import ru.uxapps.vocup.screen.SwipeDismissDecor
 
@@ -16,8 +16,8 @@ class DictView(
 
     interface Callback {
         fun onAdd()
-        fun onSwipe(word: Word)
-        fun onClick(word: Word)
+        fun onSwipe(word: ru.uxapps.vocup.data.Word)
+        fun onClick(word: ru.uxapps.vocup.data.Word)
     }
 
     private val listAdapter = WordListAdapter(callback::onClick)
@@ -36,7 +36,7 @@ class DictView(
         }
     }
 
-    fun setWords(words: List<Word>) = with(bind) {
+    fun setWords(words: List<ru.uxapps.vocup.data.Word>) = with(bind) {
         listAdapter.submitList(words)
         dictEmpty.isVisible = words.isEmpty()
     }

@@ -8,8 +8,8 @@ import androidx.lifecycle.observe
 import ru.uxapps.vocup.R
 import ru.uxapps.vocup.component.AddWord
 import ru.uxapps.vocup.component.AddWord.DefItem
-import ru.uxapps.vocup.core.data.Language
-import ru.uxapps.vocup.core.data.Word
+import ru.uxapps.vocup.data.Language
+import ru.uxapps.vocup.data.Word
 import ru.uxapps.vocup.databinding.FragmentAddWordBinding
 import ru.uxapps.vocup.screen.word.WordFragment
 import ru.uxapps.vocup.util.router
@@ -33,7 +33,7 @@ class AddWordFragment : Fragment(R.layout.fragment_add_word), WordFragment.Targe
             override fun onOpen(item: DefItem) = router<Router>().openWord(item.text, this@AddWordFragment)
             override fun onSave(item: DefItem) = addWordModel.onSave(item)
             override fun onInput(input: String) = addWordModel.onInput(input)
-            override fun onLangClick(lang: Language) = addWordModel.onChooseLang(lang)
+            override fun onLangClick(lang: ru.uxapps.vocup.data.Language) = addWordModel.onChooseLang(lang)
             override fun onRetry() = addWordModel.onRetry()
             override fun onInputDone(text: String) = addWordModel.onSearch(text)
             override fun onCompClick(text: String) = addWordModel.onSearch(text)
@@ -45,7 +45,7 @@ class AddWordFragment : Fragment(R.layout.fragment_add_word), WordFragment.Targe
         }
     }
 
-    override fun onWordDeleted(word: Word) {
+    override fun onWordDeleted(word: ru.uxapps.vocup.data.Word) {
         lifecycleScope.launchWhenStarted {
             addWordView.showUndoDeleteWord { addWordModel.onRestoreWord(word) }
         }
