@@ -7,7 +7,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import ru.uxapps.vocup.R
 import ru.uxapps.vocup.component.Dictionary
-import ru.uxapps.vocup.data.Word
+import ru.uxapps.vocup.core.data.Word
 import ru.uxapps.vocup.databinding.FragmentDictBinding
 import ru.uxapps.vocup.screen.word.WordFragment
 import ru.uxapps.vocup.util.consume

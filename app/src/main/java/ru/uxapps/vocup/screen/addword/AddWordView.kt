@@ -15,7 +15,7 @@ import ru.uxapps.vocup.R
 import ru.uxapps.vocup.component.AddWord.DefItem
 import ru.uxapps.vocup.component.AddWord.State
 import ru.uxapps.vocup.component.AddWord.State.*
-import ru.uxapps.vocup.data.Language
+import ru.uxapps.vocup.core.data.Language
 import ru.uxapps.vocup.databinding.FragmentAddWordBinding
 import ru.uxapps.vocup.util.setNavAsBack
 

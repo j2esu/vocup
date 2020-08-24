@@ -5,10 +5,7 @@ import dagger.BindsInstance
 import dagger.Component
 import dagger.Module
 import dagger.Provides
-import ru.uxapps.vocup.core.data.FakeApi
-import ru.uxapps.vocup.core.data.FakeDb
-import ru.uxapps.vocup.core.data.Repo
-import ru.uxapps.vocup.core.data.RepoImp
+import ru.uxapps.vocup.core.data.*
 import javax.inject.Singleton
 
 @Singleton

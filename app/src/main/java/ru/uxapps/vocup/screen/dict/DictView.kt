@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import ru.uxapps.vocup.R
-import ru.uxapps.vocup.data.Word
+import ru.uxapps.vocup.core.data.Word
 import ru.uxapps.vocup.databinding.FragmentDictBinding
 import ru.uxapps.vocup.screen.SwipeDismissDecor
 

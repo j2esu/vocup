@@ -1,33 +1,15 @@
 package ru.uxapps.vocup.di
 
-import android.content.Context
-import dagger.BindsInstance
 import dagger.Component
-import dagger.Module
-import dagger.Provides
-import ru.uxapps.vocup.data.FakeApi
-import ru.uxapps.vocup.data.FakeDb
-import ru.uxapps.vocup.data.Repo
-import ru.uxapps.vocup.data.RepoImp
+import ru.uxapps.vocup.core.data.RepoProvider
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [DataModule::class])
-interface AppComponent {
-
-    fun provideRepo(): Repo
+@Component(dependencies = [RepoProvider::class])
+interface AppComponent : RepoProvider {
 
     @Component.Factory
     interface Factory {
-        fun create(@BindsInstance context: Context): AppComponent
+        fun create(repoProvider: RepoProvider): AppComponent
     }
-}
-
-@Module
-class DataModule {
-
-    @Singleton
-    @Provides
-    fun provideRepo(context: Context): Repo = RepoImp(context, FakeDb, FakeApi)
-
 }

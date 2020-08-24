@@ -8,7 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import ru.uxapps.vocup.R
 import ru.uxapps.vocup.component.WordDetails
-import ru.uxapps.vocup.data.Word
+import ru.uxapps.vocup.core.data.Word
 import ru.uxapps.vocup.databinding.FragmentWordBinding
 import ru.uxapps.vocup.util.back
 import ru.uxapps.vocup.util.consume

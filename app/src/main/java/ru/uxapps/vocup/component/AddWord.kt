@@ -9,12 +9,12 @@ import kotlinx.coroutines.launch
 import ru.uxapps.vocup.component.AddWord.DefItem
 import ru.uxapps.vocup.component.AddWord.State
 import ru.uxapps.vocup.component.AddWord.State.*
-import ru.uxapps.vocup.data.Def
-import ru.uxapps.vocup.data.Language
-import ru.uxapps.vocup.data.Repo
-import ru.uxapps.vocup.data.Word
-import ru.uxapps.vocup.util.repeatWhen
-import ru.uxapps.vocup.util.toStateFlow
+import ru.uxapps.vocup.core.data.Def
+import ru.uxapps.vocup.core.data.Language
+import ru.uxapps.vocup.core.data.Repo
+import ru.uxapps.vocup.core.data.Word
+import ru.uxapps.vocup.core.util.repeatWhen
+import ru.uxapps.vocup.core.util.toStateFlow
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 
