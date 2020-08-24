@@ -12,4 +12,10 @@
         <item name="appBarLayoutStyle">@style/Vocup.AppBar</item>
     </style>
 
+    <style name="Vocup" />
+
+    <style name="Vocup.AppBar" parent="@style/Widget.MaterialComponents.AppBarLayout.Primary">
+        <item name="android:background">?colorPrimarySurface</item>
+    </style>
+
 </resources>
