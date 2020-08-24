@@ -1,7 +1,6 @@
 package ru.uxapps.vocup.di
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import dagger.BindsInstance
 import dagger.Component
@@ -12,7 +11,7 @@ import ru.uxapps.vocup.component.AddWordImp
 import ru.uxapps.vocup.data.Repo
 import ru.uxapps.vocup.screen.addword.AddWordFragment
 
-@FragmentScope
+@ViewModelScope
 @Component(dependencies = [AppComponent::class], modules = [AddWordModule::class])
 interface AddWordComponent {
 
@@ -20,23 +19,14 @@ interface AddWordComponent {
 
     @Component.Factory
     interface Factory {
-        fun create(
-            @BindsInstance f: AddWordFragment,
-            appComponent: AppComponent
-        ): AddWordComponent
+        fun create(@BindsInstance vm: ViewModel, appComponent: AppComponent): AddWordComponent
     }
 }
 
 @Module
 class AddWordModule {
 
+    @ViewModelScope
     @Provides
-    fun provideAddWord(f: AddWordFragment, repo: Repo): AddWord {
-        val vm = ViewModelProvider(f)[AddWordViewModel::class.java]
-        return vm.addWord ?: AddWordImp(repo, vm.viewModelScope).also { vm.addWord = it }
-    }
-}
-
-class AddWordViewModel : ViewModel() {
-    var addWord: AddWord? = null
+    fun provideAddWord(vm: ViewModel, repo: Repo): AddWord = AddWordImp(repo, vm.viewModelScope)
 }

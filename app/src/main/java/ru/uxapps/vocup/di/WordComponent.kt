@@ -1,7 +1,6 @@
 package ru.uxapps.vocup.di
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import dagger.BindsInstance
 import dagger.Component
@@ -12,7 +11,7 @@ import ru.uxapps.vocup.component.WordDetailsImp
 import ru.uxapps.vocup.data.Repo
 import ru.uxapps.vocup.screen.word.WordFragment
 
-@FragmentScope
+@ViewModelScope
 @Component(dependencies = [AppComponent::class], modules = [WordModule::class])
 interface WordComponent {
 
@@ -21,9 +20,7 @@ interface WordComponent {
     @Component.Factory
     interface Factory {
         fun create(
-            @BindsInstance f: WordFragment,
-            @BindsInstance word: String,
-            appComponent: AppComponent
+            @BindsInstance vm: ViewModel, @BindsInstance word: String, appComponent: AppComponent
         ): WordComponent
     }
 }
@@ -31,13 +28,8 @@ interface WordComponent {
 @Module
 class WordModule {
 
+    @ViewModelScope
     @Provides
-    fun provideDetails(f: WordFragment, word: String, repo: Repo): WordDetails {
-        val vm = ViewModelProvider(f)[WordViewModel::class.java]
-        return vm.wordDetails ?: WordDetailsImp(word, repo, vm.viewModelScope).also { vm.wordDetails = it }
-    }
-}
-
-class WordViewModel : ViewModel() {
-    var wordDetails: WordDetails? = null
+    fun provideDetails(vm: ViewModel, word: String, repo: Repo): WordDetails =
+        WordDetailsImp(word, repo, vm.viewModelScope)
 }

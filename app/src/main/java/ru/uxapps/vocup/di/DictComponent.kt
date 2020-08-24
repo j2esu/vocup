@@ -1,7 +1,6 @@
 package ru.uxapps.vocup.di
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import dagger.BindsInstance
 import dagger.Component
@@ -12,7 +11,7 @@ import ru.uxapps.vocup.component.DictionaryImp
 import ru.uxapps.vocup.data.Repo
 import ru.uxapps.vocup.screen.dict.DictFragment
 
-@FragmentScope
+@ViewModelScope
 @Component(dependencies = [AppComponent::class], modules = [DictModule::class])
 interface DictComponent {
 
@@ -20,23 +19,14 @@ interface DictComponent {
 
     @Component.Factory
     interface Factory {
-        fun create(
-            @BindsInstance f: DictFragment,
-            appComponent: AppComponent
-        ): DictComponent
+        fun create(@BindsInstance vm: ViewModel, appComponent: AppComponent): DictComponent
     }
 }
 
 @Module
 class DictModule {
 
+    @ViewModelScope
     @Provides
-    fun provideDict(f: DictFragment, repo: Repo): Dictionary {
-        val vm = ViewModelProvider(f)[DictViewModel::class.java]
-        return vm.dictionary ?: DictionaryImp(repo, vm.viewModelScope).also { vm.dictionary = it }
-    }
-}
-
-class DictViewModel : ViewModel() {
-    var dictionary: Dictionary? = null
+    fun provideDict(vm: ViewModel, repo: Repo): Dictionary = DictionaryImp(repo, vm.viewModelScope)
 }
