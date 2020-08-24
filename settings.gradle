@@ -1,4 +1,5 @@
-include ':base_feature'
+include ':feature_dictionary'
+include ':feature'
 include ':util'
 include ':data'
 include ':data_imp'

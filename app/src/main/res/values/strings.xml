@@ -1,32 +1,5 @@
 <resources>
     <string name="app_name">Voc Up</string>
-    <string name="cant_load_translations">"Can't load translations"</string>
-    <string name="no_translations">No translations</string>
-    <string name="no_translations_found">No translations found</string>
-    <string name="no_words">No words yet</string>
-    <string name="add_word">Add word</string>
-    <string name="add_word_hint">Search words</string>
-    <string name="save_to_dict">Save to dictionary</string>
-    <string name="loading_details">Loading details</string>
-    <string name="translation_language">Translation language</string>
-    <string name="trans_pattern">✓ %s</string>
-    <string name="new_trans_pattern">● %s</string>
-    <string name="title_dict">Dictionary</string>
     <string name="title_learn">Learn</string>
     <string name="title_explore">Explore</string>
-    <string name="translations">Translations</string>
-    <string name="word_removed">Word was removed</string>
-    <string name="undo">Undo</string>
-    <string name="delete_word">Delete word</string>
-    <string name="edit">Edit</string>
-    <string name="add">Add</string>
-    <string name="add_translation">Add translation</string>
-    <string name="enter_text">Enter text</string>
-    <string name="save">Save</string>
-    <string name="edit_translation">Edit translation</string>
-    <string name="delete">Delete</string>
-    <string name="translation_deleted">Translation was deleted</string>
-    <string name="listen_pron">Listen</string>
-    <string name="retry">Retry</string>
-    <string name="pron_pattern">"/%s/"</string>
 </resources>

@@ -1,0 +1,7 @@
+<resources>
+
+    <style name="Vocup.InteractiveItem">
+        <item name="android:background">?selectableItemBackground</item>
+    </style>
+
+</resources>
