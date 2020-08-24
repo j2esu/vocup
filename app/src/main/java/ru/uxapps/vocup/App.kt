@@ -5,6 +5,7 @@ import ru.uxapps.vocup.data.DaggerRepoComponent
 import ru.uxapps.vocup.data.RepoProvider
 import ru.uxapps.vocup.di.DaggerAppComponent
 
+@Suppress("unused")
 class App : Application(), RepoProvider {
 
     private val appComponent by lazy {

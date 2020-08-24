@@ -1,18 +1,17 @@
-package ru.uxapps.vocup.workflow
+package ru.uxapps.vocup
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.commit
-import ru.uxapps.vocup.R
-import ru.uxapps.vocup.databinding.WorkflowNavBinding
+import ru.uxapps.vocup.databinding.FragmentNavBinding
 import ru.uxapps.vocup.feature.dictionary.DictWorkflow
 import ru.uxapps.vocup.feature.router
 import ru.uxapps.vocup.screen.explore.ExploreFragment
 import ru.uxapps.vocup.screen.learn.LearnFragment
 
-class NavWorkflow : Fragment(R.layout.workflow_nav), DictWorkflow.Router {
+class NavFragment : Fragment(R.layout.fragment_nav), DictWorkflow.Router {
 
     interface Router {
         fun openAddWord()
@@ -29,7 +28,7 @@ class NavWorkflow : Fragment(R.layout.workflow_nav), DictWorkflow.Router {
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
         super.onViewStateRestored(savedInstanceState)
-        val bind = WorkflowNavBinding.bind(requireView())
+        val bind = FragmentNavBinding.bind(requireView())
         bind.navPager.apply {
             setOnNavigationItemSelectedListener {
                 if (selectedItemId != it.itemId) {

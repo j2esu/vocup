@@ -6,15 +6,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.*
 import ru.uxapps.vocup.feature.dictionary.AddWordWorkflow
 import ru.uxapps.vocup.feature.dictionary.screen.word.WordFragment
-import ru.uxapps.vocup.workflow.NavWorkflow
 
-class MainActivity : AppCompatActivity(R.layout.activity_main), NavWorkflow.Router {
+class MainActivity : AppCompatActivity(R.layout.activity_main), NavFragment.Router {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (savedInstanceState == null) {
             supportFragmentManager.commit {
-                add(R.id.main_container, NavWorkflow().also { setPrimaryNavigationFragment(it) })
+                add(R.id.main_container, NavFragment().also { setPrimaryNavigationFragment(it) })
             }
         }
         // configure input mode
