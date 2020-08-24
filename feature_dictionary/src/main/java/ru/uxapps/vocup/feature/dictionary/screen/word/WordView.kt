@@ -1,11 +1,11 @@
-package ru.uxapps.vocup.feature.dictionary.worddetails
+package ru.uxapps.vocup.feature.dictionary.screen.word
 
 import android.annotation.SuppressLint
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import ru.uxapps.vocup.feature.dictionary.R
-import ru.uxapps.vocup.feature.dictionary.SwipeDismissDecor
+import ru.uxapps.vocup.feature.dictionary.screen.common.SwipeDismissDecor
 import ru.uxapps.vocup.feature.dictionary.databinding.FragmentWordBinding
 import ru.uxapps.vocup.feature.setNavAsBack
 

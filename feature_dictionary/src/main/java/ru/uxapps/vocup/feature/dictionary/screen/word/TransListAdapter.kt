@@ -1,4 +1,4 @@
-package ru.uxapps.vocup.feature.dictionary.worddetails
+package ru.uxapps.vocup.feature.dictionary.screen.word
 
 import android.annotation.SuppressLint
 import android.graphics.Canvas

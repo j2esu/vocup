@@ -1,4 +1,4 @@
-package ru.uxapps.vocup.feature.dictionary.addword
+package ru.uxapps.vocup.feature.dictionary.screen.addword
 
 import android.view.ViewGroup
 import androidx.core.view.isVisible
@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import ru.uxapps.vocup.feature.dictionary.R
 import ru.uxapps.vocup.feature.dictionary.databinding.ItemDefBinding
-import ru.uxapps.vocup.feature.dictionary.model.AddWord.DefItem
+import ru.uxapps.vocup.feature.dictionary.component.AddWord.DefItem
 import ru.uxapps.vocup.feature.inflateBind
 
 class DefListAdapter(

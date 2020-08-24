@@ -4,8 +4,8 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.commit
-import ru.uxapps.vocup.feature.dictionary.dict.DictFragment
-import ru.uxapps.vocup.feature.dictionary.worddetails.WordFragment
+import ru.uxapps.vocup.feature.dictionary.screen.dict.DictFragment
+import ru.uxapps.vocup.feature.dictionary.screen.word.WordFragment
 import ru.uxapps.vocup.feature.router
 
 class DictWorkflow : Fragment(R.layout.workflow_dict), DictFragment.Router {

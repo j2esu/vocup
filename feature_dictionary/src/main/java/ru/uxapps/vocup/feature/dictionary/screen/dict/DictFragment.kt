@@ -1,4 +1,4 @@
-package ru.uxapps.vocup.feature.dictionary.dict
+package ru.uxapps.vocup.feature.dictionary.screen.dict
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,8 +8,8 @@ import androidx.lifecycle.observe
 import ru.uxapps.vocup.data.Word
 import ru.uxapps.vocup.feature.dictionary.R
 import ru.uxapps.vocup.feature.dictionary.databinding.FragmentDictBinding
-import ru.uxapps.vocup.feature.dictionary.model.Dictionary
-import ru.uxapps.vocup.feature.dictionary.worddetails.WordFragment
+import ru.uxapps.vocup.feature.dictionary.component.Dictionary
+import ru.uxapps.vocup.feature.dictionary.screen.word.WordFragment
 import ru.uxapps.vocup.feature.router
 import ru.uxapps.vocup.util.consume
 import javax.inject.Inject

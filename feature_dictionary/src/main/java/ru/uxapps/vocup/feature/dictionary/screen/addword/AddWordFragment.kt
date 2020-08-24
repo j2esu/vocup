@@ -1,4 +1,4 @@
-package ru.uxapps.vocup.feature.dictionary.addword
+package ru.uxapps.vocup.feature.dictionary.screen.addword
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,9 +8,9 @@ import androidx.lifecycle.observe
 import ru.uxapps.vocup.data.Language
 import ru.uxapps.vocup.feature.dictionary.R
 import ru.uxapps.vocup.feature.dictionary.databinding.FragmentAddWordBinding
-import ru.uxapps.vocup.feature.dictionary.model.AddWord
-import ru.uxapps.vocup.feature.dictionary.model.AddWord.DefItem
-import ru.uxapps.vocup.feature.dictionary.worddetails.WordFragment
+import ru.uxapps.vocup.feature.dictionary.component.AddWord
+import ru.uxapps.vocup.feature.dictionary.component.AddWord.DefItem
+import ru.uxapps.vocup.feature.dictionary.screen.word.WordFragment
 import ru.uxapps.vocup.feature.router
 import javax.inject.Inject
 

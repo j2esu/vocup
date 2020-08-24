@@ -9,9 +9,9 @@ import dagger.Provides
 import ru.uxapps.vocup.data.Repo
 import ru.uxapps.vocup.data.RepoProvider
 import ru.uxapps.vocup.feature.ViewModelScope
-import ru.uxapps.vocup.feature.dictionary.model.WordDetails
-import ru.uxapps.vocup.feature.dictionary.model.WordDetailsImp
-import ru.uxapps.vocup.feature.dictionary.worddetails.WordFragment
+import ru.uxapps.vocup.feature.dictionary.component.WordDetails
+import ru.uxapps.vocup.feature.dictionary.component.WordDetailsImp
+import ru.uxapps.vocup.feature.dictionary.screen.word.WordFragment
 
 @ViewModelScope
 @Component(dependencies = [RepoProvider::class], modules = [WordModule::class])

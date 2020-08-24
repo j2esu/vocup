@@ -1,4 +1,4 @@
-package ru.uxapps.vocup.feature.dictionary.dict
+package ru.uxapps.vocup.feature.dictionary.screen.dict
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

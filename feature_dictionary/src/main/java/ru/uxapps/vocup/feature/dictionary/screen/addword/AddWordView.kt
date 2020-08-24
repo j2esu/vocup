@@ -1,4 +1,4 @@
-package ru.uxapps.vocup.feature.dictionary.addword
+package ru.uxapps.vocup.feature.dictionary.screen.addword
 
 import android.text.InputFilter
 import android.view.View
@@ -13,9 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import ru.uxapps.vocup.feature.dictionary.R
 import ru.uxapps.vocup.feature.dictionary.databinding.FragmentAddWordBinding
-import ru.uxapps.vocup.feature.dictionary.model.AddWord.DefItem
-import ru.uxapps.vocup.feature.dictionary.model.AddWord.State
-import ru.uxapps.vocup.feature.dictionary.model.AddWord.State.*
+import ru.uxapps.vocup.feature.dictionary.component.AddWord.DefItem
+import ru.uxapps.vocup.feature.dictionary.component.AddWord.State
+import ru.uxapps.vocup.feature.dictionary.component.AddWord.State.*
 import ru.uxapps.vocup.feature.setNavAsBack
 
 class AddWordView(

@@ -4,8 +4,8 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.commit
-import ru.uxapps.vocup.feature.dictionary.addword.AddWordFragment
-import ru.uxapps.vocup.feature.dictionary.worddetails.WordFragment
+import ru.uxapps.vocup.feature.dictionary.screen.addword.AddWordFragment
+import ru.uxapps.vocup.feature.dictionary.screen.word.WordFragment
 
 class AddWordWorkflow : Fragment(R.layout.workflow_add_word), AddWordFragment.Router {
 

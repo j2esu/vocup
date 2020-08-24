@@ -1,11 +1,11 @@
-package ru.uxapps.vocup.feature.dictionary.dict
+package ru.uxapps.vocup.feature.dictionary.screen.dict
 
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import ru.uxapps.vocup.feature.dictionary.R
-import ru.uxapps.vocup.feature.dictionary.SwipeDismissDecor
+import ru.uxapps.vocup.feature.dictionary.screen.common.SwipeDismissDecor
 import ru.uxapps.vocup.feature.dictionary.databinding.FragmentDictBinding
 
 class DictView(

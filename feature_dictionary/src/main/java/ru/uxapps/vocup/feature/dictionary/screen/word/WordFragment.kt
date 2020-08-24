@@ -1,4 +1,4 @@
-package ru.uxapps.vocup.feature.dictionary.worddetails
+package ru.uxapps.vocup.feature.dictionary.screen.word
 
 import android.os.Bundle
 import android.widget.Toast
@@ -9,7 +9,7 @@ import androidx.lifecycle.observe
 import ru.uxapps.vocup.feature.back
 import ru.uxapps.vocup.feature.dictionary.R
 import ru.uxapps.vocup.feature.dictionary.databinding.FragmentWordBinding
-import ru.uxapps.vocup.feature.dictionary.model.WordDetails
+import ru.uxapps.vocup.feature.dictionary.component.WordDetails
 import ru.uxapps.vocup.feature.target
 import ru.uxapps.vocup.util.consume
 import javax.inject.Inject

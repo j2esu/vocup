@@ -1,4 +1,4 @@
-package ru.uxapps.vocup.feature.dictionary.model
+package ru.uxapps.vocup.feature.dictionary.component
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
@@ -6,9 +6,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import ru.uxapps.vocup.feature.dictionary.model.AddWord.DefItem
-import ru.uxapps.vocup.feature.dictionary.model.AddWord.State
-import ru.uxapps.vocup.feature.dictionary.model.AddWord.State.*
+import ru.uxapps.vocup.feature.dictionary.component.AddWord.DefItem
+import ru.uxapps.vocup.feature.dictionary.component.AddWord.State
+import ru.uxapps.vocup.feature.dictionary.component.AddWord.State.*
 import ru.uxapps.vocup.util.repeatWhen
 import ru.uxapps.vocup.util.toStateFlow
 import java.io.IOException
