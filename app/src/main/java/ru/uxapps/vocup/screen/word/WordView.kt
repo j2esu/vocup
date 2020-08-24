@@ -7,7 +7,7 @@ import com.google.android.material.snackbar.Snackbar
 import ru.uxapps.vocup.R
 import ru.uxapps.vocup.databinding.FragmentWordBinding
 import ru.uxapps.vocup.screen.SwipeDismissDecor
-import ru.uxapps.vocup.util.setNavAsBack
+import ru.uxapps.vocup.feature.setNavAsBack
 
 class WordView(
     private val bind: FragmentWordBinding,

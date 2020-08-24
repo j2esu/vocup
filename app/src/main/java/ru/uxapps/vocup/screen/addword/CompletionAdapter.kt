@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import ru.uxapps.vocup.databinding.ItemCompletionBinding
-import ru.uxapps.vocup.util.inflateBind
+import ru.uxapps.vocup.feature.inflateBind
 
 class CompletionAdapter(
     private val onClick: (String) -> Unit

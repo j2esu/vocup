@@ -7,9 +7,9 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.commit
 import ru.uxapps.vocup.R
 import ru.uxapps.vocup.databinding.WorkflowNavBinding
+import ru.uxapps.vocup.feature.router
 import ru.uxapps.vocup.screen.explore.ExploreFragment
 import ru.uxapps.vocup.screen.learn.LearnFragment
-import ru.uxapps.vocup.util.router
 
 class NavWorkflow : Fragment(R.layout.workflow_nav), DictWorkflow.Router {
 

@@ -9,9 +9,9 @@ import androidx.lifecycle.observe
 import ru.uxapps.vocup.R
 import ru.uxapps.vocup.component.WordDetails
 import ru.uxapps.vocup.databinding.FragmentWordBinding
-import ru.uxapps.vocup.util.back
+import ru.uxapps.vocup.feature.back
 import ru.uxapps.vocup.util.consume
-import ru.uxapps.vocup.util.target
+import ru.uxapps.vocup.feature.target
 import javax.inject.Inject
 
 class WordFragment : Fragment(R.layout.fragment_word), AddTransDialog.Host, EditTransDialog.Host {

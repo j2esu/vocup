@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import ru.uxapps.vocup.R
 import ru.uxapps.vocup.component.AddWord.DefItem
 import ru.uxapps.vocup.databinding.ItemDefBinding
-import ru.uxapps.vocup.util.inflateBind
+import ru.uxapps.vocup.feature.inflateBind
 
 class DefListAdapter(
     private val onClick: (DefItem) -> Unit

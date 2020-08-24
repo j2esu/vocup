@@ -1,4 +1,4 @@
-package ru.uxapps.vocup.util
+package ru.uxapps.vocup.feature
 
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment

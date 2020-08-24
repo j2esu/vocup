@@ -1,4 +1,4 @@
-package ru.uxapps.vocup.di
+package ru.uxapps.vocup.feature
 
 import javax.inject.Scope
 

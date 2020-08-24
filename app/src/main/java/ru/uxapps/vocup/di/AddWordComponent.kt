@@ -9,6 +9,7 @@ import dagger.Provides
 import ru.uxapps.vocup.component.AddWord
 import ru.uxapps.vocup.component.AddWordImp
 import ru.uxapps.vocup.data.Repo
+import ru.uxapps.vocup.feature.ViewModelScope
 import ru.uxapps.vocup.screen.addword.AddWordFragment
 
 @ViewModelScope

@@ -8,11 +8,9 @@ import androidx.lifecycle.observe
 import ru.uxapps.vocup.R
 import ru.uxapps.vocup.component.AddWord
 import ru.uxapps.vocup.component.AddWord.DefItem
-import ru.uxapps.vocup.data.Language
-import ru.uxapps.vocup.data.Word
 import ru.uxapps.vocup.databinding.FragmentAddWordBinding
 import ru.uxapps.vocup.screen.word.WordFragment
-import ru.uxapps.vocup.util.router
+import ru.uxapps.vocup.feature.router
 import javax.inject.Inject
 
 class AddWordFragment : Fragment(R.layout.fragment_add_word), WordFragment.Target {

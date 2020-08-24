@@ -10,7 +10,7 @@ import ru.uxapps.vocup.component.Dictionary
 import ru.uxapps.vocup.databinding.FragmentDictBinding
 import ru.uxapps.vocup.screen.word.WordFragment
 import ru.uxapps.vocup.util.consume
-import ru.uxapps.vocup.util.router
+import ru.uxapps.vocup.feature.router
 import javax.inject.Inject
 
 class DictFragment : Fragment(R.layout.fragment_dict), WordFragment.Target {

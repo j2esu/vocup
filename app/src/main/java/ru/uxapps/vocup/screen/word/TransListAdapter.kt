@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import ru.uxapps.vocup.databinding.ItemTransBinding
-import ru.uxapps.vocup.util.inflateBind
+import ru.uxapps.vocup.feature.inflateBind
 import java.util.*
 
 

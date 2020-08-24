@@ -16,7 +16,7 @@ import ru.uxapps.vocup.component.AddWord.DefItem
 import ru.uxapps.vocup.component.AddWord.State
 import ru.uxapps.vocup.component.AddWord.State.*
 import ru.uxapps.vocup.databinding.FragmentAddWordBinding
-import ru.uxapps.vocup.util.setNavAsBack
+import ru.uxapps.vocup.feature.setNavAsBack
 
 class AddWordView(
     private val bind: FragmentAddWordBinding,

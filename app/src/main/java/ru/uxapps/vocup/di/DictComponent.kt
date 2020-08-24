@@ -8,7 +8,7 @@ import dagger.Module
 import dagger.Provides
 import ru.uxapps.vocup.component.Dictionary
 import ru.uxapps.vocup.component.DictionaryImp
-import ru.uxapps.vocup.data.Repo
+import ru.uxapps.vocup.feature.ViewModelScope
 import ru.uxapps.vocup.screen.dict.DictFragment
 
 @ViewModelScope

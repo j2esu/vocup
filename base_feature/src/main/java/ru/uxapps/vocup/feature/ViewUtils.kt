@@ -1,4 +1,4 @@
-package ru.uxapps.vocup.util
+package ru.uxapps.vocup.feature
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

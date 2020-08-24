@@ -6,9 +6,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import ru.uxapps.vocup.R
-import ru.uxapps.vocup.data.Word
 import ru.uxapps.vocup.databinding.ItemWordBinding
-import ru.uxapps.vocup.util.inflateBind
+import ru.uxapps.vocup.feature.inflateBind
 
 class WordListAdapter(
     private val onWordClick: (ru.uxapps.vocup.data.Word) -> Unit
