@@ -1,4 +1,4 @@
-package ru.uxapps.vocup.feature.dictionary.screen.common
+package ru.uxapps.vocup.feature
 
 import android.graphics.Canvas
 import android.graphics.drawable.Drawable

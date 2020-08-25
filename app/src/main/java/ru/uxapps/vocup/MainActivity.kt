@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.*
-import ru.uxapps.vocup.feature.dictionary.AddWordWorkflow
+import ru.uxapps.vocup.workflow.AddWordWorkflow
 import ru.uxapps.vocup.feature.dictionary.screen.word.WordFragment
 
 class MainActivity : AppCompatActivity(R.layout.activity_main), NavFragment.Router {

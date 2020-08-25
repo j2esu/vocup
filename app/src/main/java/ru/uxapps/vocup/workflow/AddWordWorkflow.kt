@@ -1,4 +1,4 @@
-package ru.uxapps.vocup.feature.dictionary
+package ru.uxapps.vocup.workflow
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,6 +7,7 @@ import androidx.fragment.app.commit
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
+import ru.uxapps.vocup.feature.dictionary.R
 import ru.uxapps.vocup.feature.dictionary.screen.addword.AddWordFragment
 import ru.uxapps.vocup.feature.dictionary.screen.word.WordFragment
 

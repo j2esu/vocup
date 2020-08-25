@@ -7,7 +7,7 @@ import com.google.android.material.snackbar.Snackbar
 import ru.uxapps.vocup.data.Word
 import ru.uxapps.vocup.feature.dictionary.R
 import ru.uxapps.vocup.feature.dictionary.databinding.FragmentDictBinding
-import ru.uxapps.vocup.feature.dictionary.screen.common.SwipeDismissDecor
+import ru.uxapps.vocup.feature.SwipeDismissDecor
 
 class DictView(
     private val bind: FragmentDictBinding,
