@@ -1,3 +1,4 @@
+include ':feature_word_details'
 include ':feature_add_word'
 include ':ui'
 include ':feature_dictionary'

@@ -5,7 +5,6 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.*
 import ru.uxapps.vocup.workflow.AddWordWorkflow
-import ru.uxapps.vocup.feature.dictionary.screen.word.WordFragment
 
 class MainActivity : AppCompatActivity(R.layout.activity_main), NavFragment.Router {
 
@@ -22,7 +21,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), NavFragment.Rout
                 override fun onFragmentStarted(fm: FragmentManager, f: Fragment) {
                     window.setSoftInputMode(
                         when (f) {
-                            is WordFragment -> WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN
+                            is ru.uxapps.vocup.feature.worddetails.WordFragment -> WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN
                             is DialogFragment -> window.attributes.softInputMode
                             else -> WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
                         }

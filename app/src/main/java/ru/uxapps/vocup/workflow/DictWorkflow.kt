@@ -9,10 +9,10 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 import ru.uxapps.vocup.R
 import ru.uxapps.vocup.feature.dictionary.screen.dict.DictFragment
-import ru.uxapps.vocup.feature.dictionary.screen.word.WordFragment
 import ru.uxapps.vocup.feature.router
+import ru.uxapps.vocup.feature.worddetails.WordFragment
 
-class DictWorkflow : Fragment(R.layout.workflow_dict), DictFragment.Router, WordFragment.Router {
+class DictWorkflow : Fragment(R.layout.workflow_dict), DictFragment.Router, ru.uxapps.vocup.feature.worddetails.WordFragment.Router {
 
     interface Router {
         fun openAddWord()
@@ -29,7 +29,7 @@ class DictWorkflow : Fragment(R.layout.workflow_dict), DictFragment.Router, Word
 
     override fun openWord(text: String, target: Fragment) {
         childFragmentManager.commit {
-            replace(R.id.dict_container, WordFragment::class.java, WordFragment.argsOf(text))
+            replace(R.id.dict_container, ru.uxapps.vocup.feature.worddetails.WordFragment::class.java, ru.uxapps.vocup.feature.worddetails.WordFragment.argsOf(text))
             setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
             addToBackStack(null)
         }

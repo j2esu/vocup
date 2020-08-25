@@ -1,4 +1,4 @@
-package ru.uxapps.vocup.feature.dictionary.screen.word
+package ru.uxapps.vocup.feature.worddetails
 
 import android.app.Dialog
 import android.content.DialogInterface
@@ -8,8 +8,7 @@ import android.view.WindowManager
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import ru.uxapps.vocup.feature.dictionary.R
-import ru.uxapps.vocup.feature.dictionary.databinding.DialogTransBinding
+import ru.uxapps.vocup.feature.worddetails.databinding.DialogTransBinding
 
 class AddTransDialog : DialogFragment() {
 

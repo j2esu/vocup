@@ -1,4 +1,4 @@
-package ru.uxapps.vocup.feature.dictionary.screen.word
+package ru.uxapps.vocup.feature.worddetails
 
 import android.annotation.SuppressLint
 import android.graphics.Canvas
@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import ru.uxapps.vocup.feature.dictionary.databinding.ItemTransBinding
 import ru.uxapps.vocup.feature.inflateBind
+import ru.uxapps.vocup.feature.worddetails.databinding.ItemTransBinding
 import java.util.*
 
 

@@ -1,13 +1,12 @@
-package ru.uxapps.vocup.feature.dictionary.screen.word
+package ru.uxapps.vocup.feature.worddetails
 
 import android.annotation.SuppressLint
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
-import ru.uxapps.vocup.feature.dictionary.R
 import ru.uxapps.vocup.feature.SwipeDismissDecor
-import ru.uxapps.vocup.feature.dictionary.databinding.FragmentWordBinding
 import ru.uxapps.vocup.feature.setNavAsBack
+import ru.uxapps.vocup.feature.worddetails.databinding.FragmentWordBinding
 
 class WordView(
     private val bind: FragmentWordBinding,

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="translations">Translations</string>
+    <string name="delete_word">Delete word</string>
+    <string name="add_translation">Add translation</string>
+    <string name="enter_text">Enter text</string>
+    <string name="edit_translation">Edit translation</string>
+    <string name="translation_deleted">Translation was deleted</string>
+    <string name="listen_pron">Listen</string>
+</resources>

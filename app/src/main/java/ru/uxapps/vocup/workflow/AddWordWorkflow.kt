@@ -9,7 +9,7 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 import ru.uxapps.vocup.R
 import ru.uxapps.vocup.feature.addword.AddWordFragment
-import ru.uxapps.vocup.feature.dictionary.screen.word.WordFragment
+import ru.uxapps.vocup.feature.worddetails.WordFragment
 
 class AddWordWorkflow : Fragment(R.layout.workflow_add_word), AddWordFragment.Router, WordFragment.Router {
 

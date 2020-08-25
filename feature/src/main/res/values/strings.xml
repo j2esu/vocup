@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="pron_pattern">"/%s/"</string>
+    <string name="undo">Undo</string>
+    <string name="edit">Edit</string>
+    <string name="add">Add</string>
+    <string name="save">Save</string>
+    <string name="delete">Delete</string>
+    <string name="word_removed">Word was removed</string>
+</resources>
