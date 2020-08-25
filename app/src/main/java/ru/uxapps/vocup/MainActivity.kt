@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.*
+import ru.uxapps.vocup.feature.worddetails.WordFragment
 import ru.uxapps.vocup.workflow.AddWordWorkflow
 
 class MainActivity : AppCompatActivity(R.layout.activity_main), NavFragment.Router {
@@ -19,9 +20,10 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), NavFragment.Rout
         supportFragmentManager.registerFragmentLifecycleCallbacks(
             object : FragmentManager.FragmentLifecycleCallbacks() {
                 override fun onFragmentStarted(fm: FragmentManager, f: Fragment) {
+                    @Suppress("DEPRECATION")
                     window.setSoftInputMode(
                         when (f) {
-                            is ru.uxapps.vocup.feature.worddetails.WordFragment -> WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN
+                            is WordFragment -> WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN
                             is DialogFragment -> window.attributes.softInputMode
                             else -> WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
                         }

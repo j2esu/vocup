@@ -1,4 +1,4 @@
-package ru.uxapps.vocup.feature.dictionary.screen.dict
+package ru.uxapps.vocup.feature.dictionary
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,10 +7,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import kotlinx.coroutines.launch
 import ru.uxapps.vocup.data.Word
-import ru.uxapps.vocup.feature.dictionary.R
-import ru.uxapps.vocup.feature.dictionary.component.Dictionary
 import ru.uxapps.vocup.feature.dictionary.databinding.FragmentDictBinding
-import ru.uxapps.vocup.feature.router
+import ru.uxapps.vocup.util.host
 import ru.uxapps.vocup.util.consume
 import javax.inject.Inject
 
@@ -29,9 +27,9 @@ class DictFragment : Fragment(R.layout.fragment_dict) {
         super.onViewStateRestored(savedInstanceState)
         vm.dictComponent.inject(this)
         val v = DictView(FragmentDictBinding.bind(requireView()), object : DictView.Callback {
-            override fun onAdd() = router<Router>().openAddWord()
+            override fun onAdd() = host<Router>().openAddWord()
             override fun onSwipe(word: Word) = dictModel.onRemove(word)
-            override fun onClick(word: Word) = router<Router>().openWord(word.text, this@DictFragment)
+            override fun onClick(word: Word) = host<Router>().openWord(word.text, this@DictFragment)
         })
         with(dictModel) {
             words.observe(viewLifecycleOwner, v::setWords)

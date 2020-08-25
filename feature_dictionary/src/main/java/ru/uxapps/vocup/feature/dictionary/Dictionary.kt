@@ -1,4 +1,4 @@
-package ru.uxapps.vocup.feature.dictionary.component
+package ru.uxapps.vocup.feature.dictionary
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData

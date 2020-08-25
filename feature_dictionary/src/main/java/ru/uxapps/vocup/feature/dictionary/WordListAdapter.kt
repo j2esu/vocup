@@ -1,4 +1,4 @@
-package ru.uxapps.vocup.feature.dictionary.screen.dict
+package ru.uxapps.vocup.feature.dictionary
 
 import android.view.ViewGroup
 import androidx.core.view.isVisible
@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import ru.uxapps.vocup.data.Word
-import ru.uxapps.vocup.feature.dictionary.R
 import ru.uxapps.vocup.feature.dictionary.databinding.ItemWordBinding
 import ru.uxapps.vocup.feature.inflateBind
 

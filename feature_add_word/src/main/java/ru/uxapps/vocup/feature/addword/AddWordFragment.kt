@@ -7,7 +7,7 @@ import androidx.lifecycle.observe
 import ru.uxapps.vocup.data.Language
 import ru.uxapps.vocup.feature.addword.AddWord.DefItem
 import ru.uxapps.vocup.feature.addword.databinding.FragmentAddWordBinding
-import ru.uxapps.vocup.feature.router
+import ru.uxapps.vocup.util.host
 import javax.inject.Inject
 
 class AddWordFragment : Fragment(R.layout.fragment_add_word) {
@@ -24,7 +24,7 @@ class AddWordFragment : Fragment(R.layout.fragment_add_word) {
         super.onViewStateRestored(savedInstanceState)
         vm.addWordComponent.inject(this)
         val v = AddWordView(FragmentAddWordBinding.bind(requireView()), object : AddWordView.Callback {
-            override fun onOpen(item: DefItem) = router<Router>().openWord(item.text)
+            override fun onOpen(item: DefItem) = host<Router>().openWord(item.text)
             override fun onSave(item: DefItem) = addWordModel.onSave(item)
             override fun onInput(input: String) = addWordModel.onInput(input)
             override fun onLangClick(lang: Language) = addWordModel.onChooseLang(lang)

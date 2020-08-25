@@ -9,9 +9,9 @@ import dagger.Provides
 import ru.uxapps.vocup.data.Repo
 import ru.uxapps.vocup.data.RepoProvider
 import ru.uxapps.vocup.feature.ViewModelScope
-import ru.uxapps.vocup.feature.dictionary.component.Dictionary
-import ru.uxapps.vocup.feature.dictionary.component.DictionaryImp
-import ru.uxapps.vocup.feature.dictionary.screen.dict.DictFragment
+import ru.uxapps.vocup.feature.dictionary.DictFragment
+import ru.uxapps.vocup.feature.dictionary.Dictionary
+import ru.uxapps.vocup.feature.dictionary.DictionaryImp
 
 @ViewModelScope
 @Component(dependencies = [RepoProvider::class], modules = [DictModule::class])

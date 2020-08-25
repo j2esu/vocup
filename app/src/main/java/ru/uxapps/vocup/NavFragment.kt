@@ -6,9 +6,9 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.commit
 import ru.uxapps.vocup.databinding.FragmentNavBinding
-import ru.uxapps.vocup.feature.router
 import ru.uxapps.vocup.screen.explore.ExploreFragment
 import ru.uxapps.vocup.screen.learn.LearnFragment
+import ru.uxapps.vocup.util.host
 import ru.uxapps.vocup.workflow.DictWorkflow
 
 class NavFragment : Fragment(R.layout.fragment_nav), DictWorkflow.Router {
@@ -51,5 +51,5 @@ class NavFragment : Fragment(R.layout.fragment_nav), DictWorkflow.Router {
         }
     }
 
-    override fun openAddWord() = router<Router>().openAddWord()
+    override fun openAddWord() = host<Router>().openAddWord()
 }

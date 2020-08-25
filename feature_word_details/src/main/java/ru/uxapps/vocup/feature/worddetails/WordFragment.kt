@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
-import ru.uxapps.vocup.feature.router
+import ru.uxapps.vocup.util.host
 import ru.uxapps.vocup.feature.worddetails.databinding.FragmentWordBinding
 import ru.uxapps.vocup.util.consume
 import javax.inject.Inject
@@ -54,7 +54,7 @@ class WordFragment : Fragment(R.layout.fragment_word), AddTransDialog.Host, Edit
                 v.showDeleteTransUndo { lifecycleScope.launchWhenStarted { it() } }
             }
             onWordDeleted.consume(viewLifecycleOwner) {
-                router<Router>().onWordDeleted(it)
+                host<Router>().onWordDeleted(it)
             }
         }
     }
