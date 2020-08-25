@@ -1,0 +1,6 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="ru.uxapps.vocup.feature.learn">
+
+    <application android:theme="@style/Vocup" />
+
+</manifest>

@@ -1,3 +1,5 @@
+include ':feature_explore'
+include ':feature_learn'
 include ':feature_word_details'
 include ':feature_add_word'
 include ':base_ui'

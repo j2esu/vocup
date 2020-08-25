@@ -1,12 +1,11 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 30
+    buildToolsVersion "30.0.2"
 
     defaultConfig {
-        applicationId "ru.uxapps.vocup"
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
@@ -18,7 +17,7 @@ android {
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt')
         }
     }
 
@@ -41,13 +40,6 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
-    implementation project(path: ':feature_dictionary')
-    implementation project(path: ':feature_add_word')
-    implementation project(path: ':feature_word_details')
-    implementation project(path: ':feature_learn')
-    implementation project(path: ':feature_explore')
-
-    kapt 'com.google.dagger:dagger-compiler:2.28.3'
+    api project(path: ':base_feature')
 }

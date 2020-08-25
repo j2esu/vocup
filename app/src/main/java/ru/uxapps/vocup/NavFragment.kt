@@ -6,8 +6,8 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.commit
 import ru.uxapps.vocup.databinding.FragmentNavBinding
-import ru.uxapps.vocup.screen.explore.ExploreFragment
-import ru.uxapps.vocup.screen.learn.LearnFragment
+import ru.uxapps.vocup.feature.explore.ExploreFragment
+import ru.uxapps.vocup.feature.learn.LearnFragment
 import ru.uxapps.vocup.util.host
 import ru.uxapps.vocup.workflow.DictWorkflow
 

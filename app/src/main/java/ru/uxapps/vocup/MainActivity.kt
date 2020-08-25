@@ -1,9 +1,13 @@
 package ru.uxapps.vocup
 
 import android.os.Bundle
-import android.view.WindowManager
+import android.view.WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN
+import android.view.WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.*
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.commit
 import ru.uxapps.vocup.feature.worddetails.WordFragment
 import ru.uxapps.vocup.workflow.AddWordWorkflow
 
@@ -16,18 +20,14 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), NavFragment.Rout
                 add(R.id.main_container, NavFragment().also { setPrimaryNavigationFragment(it) })
             }
         }
-        // configure input mode
+        // configure input mode (need custom settings in some fragments for better ui)
         supportFragmentManager.registerFragmentLifecycleCallbacks(
             object : FragmentManager.FragmentLifecycleCallbacks() {
                 override fun onFragmentStarted(fm: FragmentManager, f: Fragment) {
-                    @Suppress("DEPRECATION")
-                    window.setSoftInputMode(
-                        when (f) {
-                            is WordFragment -> WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN
-                            is DialogFragment -> window.attributes.softInputMode
-                            else -> WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
-                        }
-                    )
+                    when (f) {
+                        is WordFragment -> window.setSoftInputMode(SOFT_INPUT_ADJUST_PAN)
+                        else -> window.setSoftInputMode(SOFT_INPUT_ADJUST_RESIZE)
+                    }
                 }
             },
             true
