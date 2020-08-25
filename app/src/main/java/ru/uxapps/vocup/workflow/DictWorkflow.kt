@@ -7,7 +7,7 @@ import androidx.fragment.app.commit
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
-import ru.uxapps.vocup.feature.dictionary.R
+import ru.uxapps.vocup.R
 import ru.uxapps.vocup.feature.dictionary.screen.dict.DictFragment
 import ru.uxapps.vocup.feature.dictionary.screen.word.WordFragment
 import ru.uxapps.vocup.feature.router

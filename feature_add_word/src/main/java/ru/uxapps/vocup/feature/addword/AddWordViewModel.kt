@@ -1,9 +1,8 @@
-package ru.uxapps.vocup.feature.dictionary.screen.addword
+package ru.uxapps.vocup.feature.addword
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import ru.uxapps.vocup.data.RepoProvider
-import ru.uxapps.vocup.feature.dictionary.di.DaggerAddWordComponent
 
 class AddWordViewModel(app: Application) : AndroidViewModel(app) {
 

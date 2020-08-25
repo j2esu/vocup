@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="retry">Retry</string>
+    <string name="cant_load_translations">"Can't load translations"</string>
+    <string name="trans_pattern">✓ %s</string>
+    <string name="new_trans_pattern">● %s</string>
+    <string name="no_translations_found">No translations found</string>
+    <string name="translation_language">Translation language</string>
+    <string name="add_word_hint">Search words</string>
+    <string name="save_to_dict">Save to dictionary</string>
+</resources>

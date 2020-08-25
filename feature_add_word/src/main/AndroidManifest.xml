@@ -1,0 +1,6 @@
+<manifest package="ru.uxapps.vocup.feature.addword"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application android:theme="@style/Vocup" />
+
+</manifest>

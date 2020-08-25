@@ -1,10 +1,10 @@
-package ru.uxapps.vocup.feature.dictionary.screen.addword
+package ru.uxapps.vocup.feature.addword
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import ru.uxapps.vocup.feature.dictionary.databinding.ItemCompletionBinding
+import ru.uxapps.vocup.feature.addword.databinding.ItemCompletionBinding
 import ru.uxapps.vocup.feature.inflateBind
 
 class CompletionAdapter(

@@ -46,10 +46,10 @@
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:layout_gravity="end"
-        android:contentDescription="@string/save_to_dict"
         android:padding="16dp"
         app:srcCompat="@drawable/word_saved"
         app:tint="?colorPrimary"
+        tools:ignore="ContentDescription"
         />
 
 </com.google.android.material.card.MaterialCardView>
