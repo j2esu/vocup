@@ -7,8 +7,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import ru.uxapps.vocup.data.Word
 import ru.uxapps.vocup.feature.dictionary.R
-import ru.uxapps.vocup.feature.dictionary.databinding.FragmentDictBinding
 import ru.uxapps.vocup.feature.dictionary.component.Dictionary
+import ru.uxapps.vocup.feature.dictionary.databinding.FragmentDictBinding
 import ru.uxapps.vocup.feature.dictionary.screen.word.WordFragment
 import ru.uxapps.vocup.feature.router
 import ru.uxapps.vocup.util.consume
@@ -43,7 +43,7 @@ class DictFragment : Fragment(R.layout.fragment_dict), WordFragment.Target {
         }
     }
 
-    override fun onWordDeleted(word: ru.uxapps.vocup.data.Word) {
+    override fun onWordDeleted(word: Word) {
         lifecycleScope.launchWhenStarted {
             dictView.showRemoveWordUndo { dictModel.restoreWord(word) }
         }

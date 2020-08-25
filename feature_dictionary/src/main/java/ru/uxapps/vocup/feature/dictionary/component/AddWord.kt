@@ -6,6 +6,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import ru.uxapps.vocup.data.Def
+import ru.uxapps.vocup.data.Language
+import ru.uxapps.vocup.data.Repo
+import ru.uxapps.vocup.data.Word
 import ru.uxapps.vocup.feature.dictionary.component.AddWord.DefItem
 import ru.uxapps.vocup.feature.dictionary.component.AddWord.State
 import ru.uxapps.vocup.feature.dictionary.component.AddWord.State.*
@@ -18,12 +22,12 @@ interface AddWord {
 
     val state: LiveData<State>
     val maxWordLength: Int
-    val languages: LiveData<List<ru.uxapps.vocup.data.Language>>
+    val languages: LiveData<List<Language>>
     fun onInput(text: String)
     fun onSave(item: DefItem)
-    fun onChooseLang(lang: ru.uxapps.vocup.data.Language)
+    fun onChooseLang(lang: Language)
     fun onRetry()
-    fun onRestoreWord(word: ru.uxapps.vocup.data.Word)
+    fun onRestoreWord(word: Word)
     fun onSearch(text: String)
 
     sealed class State {
@@ -37,7 +41,7 @@ interface AddWord {
 }
 
 class AddWordImp(
-    private val repo: ru.uxapps.vocup.data.Repo,
+    private val repo: Repo,
     private val scope: CoroutineScope
 ) : AddWord {
 
@@ -81,16 +85,11 @@ class AddWordImp(
         }
     }
 
-    private fun defItemsFlow(input: String, loadDefResult: List<ru.uxapps.vocup.data.Def>?): Flow<List<DefItem>> =
+    private fun defItemsFlow(input: String, loadDefResult: List<Def>?): Flow<List<DefItem>> =
         allWords
             .filterNotNull()
             .map { words ->
-                val defs = if (!loadDefResult.isNullOrEmpty()) loadDefResult else listOf(
-                    ru.uxapps.vocup.data.Def(
-                        input,
-                        emptyList()
-                    )
-                )
+                val defs = if (!loadDefResult.isNullOrEmpty()) loadDefResult else listOf(Def(input, emptyList()))
                 defs.map { def ->
                     val savedWord = words.find { it.text == def.text }
                     if (loadDefResult != null) {
@@ -126,9 +125,9 @@ class AddWordImp(
 
     override val maxWordLength = WORD_RANGE.last
 
-    override val languages: LiveData<List<ru.uxapps.vocup.data.Language>> =
+    override val languages: LiveData<List<Language>> =
         repo.getTargetLanguage().map {
-            listOf(it) + (ru.uxapps.vocup.data.Language.values().toList() - it)
+            listOf(it) + (Language.values().toList() - it)
         }.asLiveData()
 
     override fun onInput(text: String) {
@@ -147,7 +146,7 @@ class AddWordImp(
         }
     }
 
-    override fun onChooseLang(lang: ru.uxapps.vocup.data.Language) {
+    override fun onChooseLang(lang: Language) {
         scope.launch {
             repo.setTargetLanguage(lang)
         }
@@ -157,7 +156,7 @@ class AddWordImp(
         retry.offer(Unit)
     }
 
-    override fun onRestoreWord(word: ru.uxapps.vocup.data.Word) {
+    override fun onRestoreWord(word: Word) {
         scope.launch {
             repo.restoreWord(word)
         }

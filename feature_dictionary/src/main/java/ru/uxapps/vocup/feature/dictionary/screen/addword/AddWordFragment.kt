@@ -6,10 +6,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import ru.uxapps.vocup.data.Language
+import ru.uxapps.vocup.data.Word
 import ru.uxapps.vocup.feature.dictionary.R
-import ru.uxapps.vocup.feature.dictionary.databinding.FragmentAddWordBinding
 import ru.uxapps.vocup.feature.dictionary.component.AddWord
 import ru.uxapps.vocup.feature.dictionary.component.AddWord.DefItem
+import ru.uxapps.vocup.feature.dictionary.databinding.FragmentAddWordBinding
 import ru.uxapps.vocup.feature.dictionary.screen.word.WordFragment
 import ru.uxapps.vocup.feature.router
 import javax.inject.Inject
@@ -44,7 +45,7 @@ class AddWordFragment : Fragment(R.layout.fragment_add_word), WordFragment.Targe
         }
     }
 
-    override fun onWordDeleted(word: ru.uxapps.vocup.data.Word) {
+    override fun onWordDeleted(word: Word) {
         lifecycleScope.launchWhenStarted {
             addWordView.showUndoDeleteWord { addWordModel.onRestoreWord(word) }
         }
