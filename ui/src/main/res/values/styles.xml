@@ -1,6 +1,6 @@
 <resources>
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="BaseAppTheme.v27.DayNight" />
+
+    <style name="Vocup" parent="BaseAppTheme.DayNight" />
 
     <style name="BaseAppTheme.DayNight" />
 
@@ -11,8 +11,6 @@
         <item name="android:statusBarColor">#222</item>
         <item name="appBarLayoutStyle">@style/Vocup.AppBar</item>
     </style>
-
-    <style name="Vocup" />
 
     <style name="Vocup.AppBar" parent="@style/Widget.MaterialComponents.AppBarLayout.Primary">
         <item name="android:background">?colorPrimarySurface</item>
