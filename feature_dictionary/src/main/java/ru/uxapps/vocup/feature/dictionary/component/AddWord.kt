@@ -9,7 +9,6 @@ import kotlinx.coroutines.launch
 import ru.uxapps.vocup.data.Def
 import ru.uxapps.vocup.data.Language
 import ru.uxapps.vocup.data.Repo
-import ru.uxapps.vocup.data.Word
 import ru.uxapps.vocup.feature.dictionary.component.AddWord.DefItem
 import ru.uxapps.vocup.feature.dictionary.component.AddWord.State
 import ru.uxapps.vocup.feature.dictionary.component.AddWord.State.*
@@ -27,7 +26,6 @@ interface AddWord {
     fun onSave(item: DefItem)
     fun onChooseLang(lang: Language)
     fun onRetry()
-    fun onRestoreWord(word: Word)
     fun onSearch(text: String)
 
     sealed class State {
@@ -154,12 +152,6 @@ class AddWordImp(
 
     override fun onRetry() {
         retry.offer(Unit)
-    }
-
-    override fun onRestoreWord(word: Word) {
-        scope.launch {
-            repo.restoreWord(word)
-        }
     }
 
     override fun onSearch(text: String) {

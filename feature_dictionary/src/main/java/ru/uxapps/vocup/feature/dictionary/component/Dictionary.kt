@@ -16,11 +16,9 @@ interface Dictionary {
 
     val words: LiveData<List<Word>>
     val loading: LiveData<Boolean>
-    val onWordRemoved: LiveEvent<Word>
+    val onWordRemoved: LiveEvent<suspend () -> Unit>
 
     fun onRemove(word: Word)
-    fun onRemove(wordText: String)
-    fun restoreWord(word: Word)
 }
 
 class DictionaryImp(
@@ -28,7 +26,7 @@ class DictionaryImp(
     private val scope: CoroutineScope
 ) : Dictionary {
 
-    override val onWordRemoved = MutableLiveEvent<Word>()
+    override val onWordRemoved = MutableLiveEvent<suspend () -> Unit>()
     override val words: LiveData<List<Word>> = repo.getAllWords().asLiveData()
     override val loading: LiveData<Boolean> =
         repo.getAllWords()
@@ -40,17 +38,7 @@ class DictionaryImp(
     override fun onRemove(word: Word) {
         scope.launch {
             repo.deleteWord(word.text)
-            onWordRemoved.send(word)
-        }
-    }
-
-    override fun onRemove(wordText: String) {
-        words.value?.find { it.text == wordText }?.let { onRemove(it) }
-    }
-
-    override fun restoreWord(word: Word) {
-        scope.launch {
-            repo.restoreWord(word)
+            onWordRemoved.send { repo.restoreWord(word) }
         }
     }
 }

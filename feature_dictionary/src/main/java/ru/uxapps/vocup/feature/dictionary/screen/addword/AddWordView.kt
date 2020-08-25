@@ -130,10 +130,4 @@ class AddWordView(
             }
         }
     }
-
-    fun showUndoDeleteWord(undo: () -> Unit) {
-        Snackbar.make(bind.root, R.string.word_removed, Snackbar.LENGTH_LONG)
-            .setAction(R.string.undo) { undo() }
-            .show()
-    }
 }

@@ -5,20 +5,19 @@ import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
-import ru.uxapps.vocup.data.Word
-import ru.uxapps.vocup.feature.back
 import ru.uxapps.vocup.feature.dictionary.R
 import ru.uxapps.vocup.feature.dictionary.component.WordDetails
 import ru.uxapps.vocup.feature.dictionary.databinding.FragmentWordBinding
-import ru.uxapps.vocup.feature.target
+import ru.uxapps.vocup.feature.router
 import ru.uxapps.vocup.util.consume
 import javax.inject.Inject
 
 class WordFragment : Fragment(R.layout.fragment_word), AddTransDialog.Host, EditTransDialog.Host {
 
-    interface Target {
-        fun onWordDeleted(word: Word)
+    interface Router {
+        fun onWordDeleted(undo: suspend () -> Unit)
     }
 
     companion object {
@@ -53,10 +52,11 @@ class WordFragment : Fragment(R.layout.fragment_word), AddTransDialog.Host, Edit
             translations.observe(viewLifecycleOwner, v::setTranslations)
             text.observe(viewLifecycleOwner, v::setWordText)
             pron.observe(viewLifecycleOwner, v::setPronText)
-            onTransDeleted.consume(viewLifecycleOwner, v::showDeleteTransUndo)
+            onTransDeleted.consume(viewLifecycleOwner) {
+                v.showDeleteTransUndo { lifecycleScope.launchWhenStarted { it() } }
+            }
             onWordDeleted.consume(viewLifecycleOwner) {
-                target<Target>().onWordDeleted(it)
-                back()
+                router<Router>().onWordDeleted(it)
             }
         }
     }

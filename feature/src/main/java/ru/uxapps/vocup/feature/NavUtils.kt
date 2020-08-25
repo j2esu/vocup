@@ -10,6 +10,4 @@ fun Toolbar.setNavAsBack() {
     }
 }
 
-fun Fragment.back() = requireActivity().onBackPressed()
 inline fun <reified T> Fragment.router(): T = (parentFragment ?: activity) as T
-inline fun <reified T> Fragment.target(): T = (targetFragment ?: parentFragment ?: activity) as T

@@ -9,7 +9,6 @@ import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import ru.uxapps.vocup.data.Repo
-import ru.uxapps.vocup.data.Word
 import ru.uxapps.vocup.util.LiveEvent
 import ru.uxapps.vocup.util.MutableLiveEvent
 import ru.uxapps.vocup.util.send
@@ -19,8 +18,8 @@ interface WordDetails {
     val text: LiveData<String>
     val pron: LiveData<String>
     val translations: LiveData<List<String>?>
-    val onTransDeleted: LiveEvent<() -> Unit>
-    val onWordDeleted: LiveEvent<Word>
+    val onTransDeleted: LiveEvent<suspend () -> Unit>
+    val onWordDeleted: LiveEvent<suspend () -> Unit>
     fun onReorderTrans(newTrans: List<String>)
     fun onAddTrans(text: String)
     fun onEditTrans(trans: String, newText: String)
@@ -39,8 +38,8 @@ class WordDetailsImp(
     override val text = word.mapNotNull { it?.text }.onStart { emit(wordText) }.asLiveData()
     override val pron = word.map { it?.pron ?: "" }.asLiveData()
     override val translations = word.map { it?.translations }.onStart { emit(null) }.asLiveData()
-    override val onTransDeleted = MutableLiveEvent<() -> Unit>()
-    override val onWordDeleted = MutableLiveEvent<Word>()
+    override val onTransDeleted = MutableLiveEvent<suspend () -> Unit>()
+    override val onWordDeleted = MutableLiveEvent<suspend () -> Unit>()
 
     override fun onReorderTrans(newTrans: List<String>) {
         scope.launch {
@@ -61,11 +60,7 @@ class WordDetailsImp(
         val newTrans = currentTrans.toMutableList().apply { remove(trans) }
         scope.launch {
             repo.updateTranslations(wordText, newTrans)
-            onTransDeleted.send {
-                scope.launch {
-                    repo.updateTranslations(wordText, currentTrans)
-                }
-            }
+            onTransDeleted.send { repo.updateTranslations(wordText, currentTrans) }
         }
     }
 
@@ -73,7 +68,7 @@ class WordDetailsImp(
         word.value?.let { word ->
             scope.launch {
                 repo.deleteWord(word.text)
-                onWordDeleted.send(word)
+                onWordDeleted.send { repo.restoreWord(word) }
             }
         }
     }
