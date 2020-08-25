@@ -42,8 +42,8 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
 
     api project(path: ':data')
-    api project(path: ':util')
-    api project(path: ':ui')
+    api project(path: ':base_util')
+    api project(path: ':base_ui')
 
     api 'androidx.fragment:fragment-ktx:1.2.5'
     api 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
