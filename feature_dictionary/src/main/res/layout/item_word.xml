@@ -6,16 +6,8 @@
     style="@style/InteractiveItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:clipChildren="false"
     >
-
-    <ru.uxapps.vocup.feature.dictionary.WordProgressView
-        android:id="@+id/word_progress_fx"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:layout_gravity="center_vertical"
-        android:layout_marginStart="16dp"
-        app:mainColor="?colorSecondary"
-        />
 
     <TextView
         android:id="@+id/word_progress"
@@ -27,9 +19,21 @@
         android:fontFamily="sans-serif-light"
         android:gravity="center"
         android:textSize="24dp"
-        app:backgroundTint="?colorSecondary"
+        app:backgroundTint="#ddd"
         tools:ignore="SpUsage"
         tools:text="47"
+        />
+
+    <ru.uxapps.vocup.feature.dictionary.WordProgressView
+        android:id="@+id/word_progress_fx"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="16dp"
+        app:firstColor="?colorSecondary"
+        app:radius="28dp"
+        app:secondColor="?colorPrimary"
+        app:strokeWidth="5dp"
         />
 
     <LinearLayout

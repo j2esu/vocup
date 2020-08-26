@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="WordProgressView">
-        <attr name="mainColor" format="color|reference" />
+        <attr name="firstColor" format="color|reference" />
+        <attr name="secondColor" format="color|reference" />
+        <attr name="radius" format="dimension|reference" />
+        <attr name="strokeWidth" format="dimension|reference" />
     </declare-styleable>
 </resources>
