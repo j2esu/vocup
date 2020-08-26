@@ -15,13 +15,12 @@
         android:layout_height="56dp"
         android:layout_gravity="center_vertical"
         android:layout_marginStart="16dp"
-        android:background="@drawable/word_progress_bg"
         android:fontFamily="sans-serif-light"
         android:gravity="center"
         android:textSize="24dp"
-        app:backgroundTint="#ddd"
+        app:backgroundTint="#eee"
         tools:ignore="SpUsage"
-        tools:text="47"
+        tools:text="89"
         />
 
     <ru.uxapps.vocup.feature.dictionary.WordProgressView
@@ -30,10 +29,14 @@
         android:layout_height="56dp"
         android:layout_gravity="center_vertical"
         android:layout_marginStart="16dp"
-        app:firstColor="?colorSecondary"
+        app:outlineColor="?colorSecondaryVariant"
+        app:outlineWidth="2dp"
+        app:progressAlphaOffset=".1"
+        app:progressBarWidth="8dp"
+        app:progressEndColor="?colorPrimaryVariant"
+        app:progressStartColor="?colorSecondaryVariant"
         app:radius="28dp"
-        app:secondColor="?colorPrimary"
-        app:strokeWidth="5dp"
+        tools:progress="89"
         />
 
     <LinearLayout

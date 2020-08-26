@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="WordProgressView">
-        <attr name="firstColor" format="color|reference" />
-        <attr name="secondColor" format="color|reference" />
+        <attr name="progressStartColor" format="color|reference" />
+        <attr name="progressAlphaOffset" format="float|reference" />
+        <attr name="progressEndColor" format="color|reference" />
+        <attr name="outlineColor" format="color|reference" />
         <attr name="radius" format="dimension|reference" />
-        <attr name="strokeWidth" format="dimension|reference" />
+        <attr name="progressBarWidth" format="dimension|reference" />
+        <attr name="outlineWidth" format="dimension|reference" />
+        <attr name="progress" format="integer" />
     </declare-styleable>
 </resources>
