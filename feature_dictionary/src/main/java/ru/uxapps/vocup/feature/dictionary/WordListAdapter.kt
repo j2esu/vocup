@@ -5,7 +5,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import ru.uxapps.vocup.data.Word
+import ru.uxapps.vocup.data.api.Word
 import ru.uxapps.vocup.feature.dictionary.databinding.ItemWordBinding
 import ru.uxapps.vocup.feature.inflateBind
 

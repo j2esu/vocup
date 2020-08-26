@@ -6,7 +6,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import kotlinx.coroutines.launch
-import ru.uxapps.vocup.data.Word
+import ru.uxapps.vocup.data.api.Word
 import ru.uxapps.vocup.feature.dictionary.databinding.FragmentDictBinding
 import ru.uxapps.vocup.util.host
 import ru.uxapps.vocup.util.consume

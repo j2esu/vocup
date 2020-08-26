@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
-import ru.uxapps.vocup.data.Repo
+import ru.uxapps.vocup.data.api.Repo
 import ru.uxapps.vocup.util.LiveEvent
 import ru.uxapps.vocup.util.MutableLiveEvent
 import ru.uxapps.vocup.util.send

@@ -1,4 +1,4 @@
-package ru.uxapps.vocup.data
+package ru.uxapps.vocup.data.api
 
 import kotlin.random.Random
 

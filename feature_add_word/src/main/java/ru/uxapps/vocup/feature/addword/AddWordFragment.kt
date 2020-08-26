@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
-import ru.uxapps.vocup.data.Language
+import ru.uxapps.vocup.data.api.Language
 import ru.uxapps.vocup.feature.addword.AddWord.DefItem
 import ru.uxapps.vocup.feature.addword.databinding.FragmentAddWordBinding
 import ru.uxapps.vocup.util.host

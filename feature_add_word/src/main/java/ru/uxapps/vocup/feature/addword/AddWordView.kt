@@ -11,7 +11,7 @@ import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
-import ru.uxapps.vocup.data.Language
+import ru.uxapps.vocup.data.api.Language
 import ru.uxapps.vocup.feature.addword.AddWord.DefItem
 import ru.uxapps.vocup.feature.addword.AddWord.State
 import ru.uxapps.vocup.feature.addword.AddWord.State.*

@@ -1,4 +1,7 @@
-package ru.uxapps.vocup.data
+package ru.uxapps.vocup.data.imp
+
+import ru.uxapps.vocup.data.api.Def
+import ru.uxapps.vocup.data.api.Language
 
 interface Api {
     suspend fun getDefinitions(words: List<String>, lang: Language): List<Def>

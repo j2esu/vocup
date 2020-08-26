@@ -6,9 +6,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import ru.uxapps.vocup.data.Def
-import ru.uxapps.vocup.data.Language
-import ru.uxapps.vocup.data.Repo
+import ru.uxapps.vocup.data.api.Def
+import ru.uxapps.vocup.data.api.Language
+import ru.uxapps.vocup.data.api.Repo
 import ru.uxapps.vocup.feature.addword.AddWord.DefItem
 import ru.uxapps.vocup.feature.addword.AddWord.State
 import ru.uxapps.vocup.feature.addword.AddWord.State.*

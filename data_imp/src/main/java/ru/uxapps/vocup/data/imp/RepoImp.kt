@@ -1,4 +1,4 @@
-package ru.uxapps.vocup.data
+package ru.uxapps.vocup.data.imp
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -6,6 +6,10 @@ import androidx.core.os.LocaleListCompat
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.channels.sendBlocking
 import kotlinx.coroutines.flow.*
+import ru.uxapps.vocup.data.api.Def
+import ru.uxapps.vocup.data.api.Language
+import ru.uxapps.vocup.data.api.Repo
+import ru.uxapps.vocup.data.api.Word
 
 class RepoImp(
     context: Context,

@@ -1,6 +1,8 @@
-package ru.uxapps.vocup.data
+package ru.uxapps.vocup.data.imp
 
 import kotlinx.coroutines.delay
+import ru.uxapps.vocup.data.api.Def
+import ru.uxapps.vocup.data.api.Language
 import java.io.IOException
 import kotlin.random.Random
 

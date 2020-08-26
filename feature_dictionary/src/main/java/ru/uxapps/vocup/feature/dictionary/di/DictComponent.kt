@@ -6,7 +6,7 @@ import dagger.BindsInstance
 import dagger.Component
 import dagger.Module
 import dagger.Provides
-import ru.uxapps.vocup.data.Repo
+import ru.uxapps.vocup.data.api.Repo
 import ru.uxapps.vocup.data.RepoProvider
 import ru.uxapps.vocup.feature.ViewModelScope
 import ru.uxapps.vocup.feature.dictionary.DictFragment

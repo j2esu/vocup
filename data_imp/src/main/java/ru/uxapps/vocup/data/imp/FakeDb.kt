@@ -1,4 +1,4 @@
-package ru.uxapps.vocup.data
+package ru.uxapps.vocup.data.imp
 
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import ru.uxapps.vocup.data.api.Word
 
 object FakeDb : Db {
 
