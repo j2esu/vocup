@@ -42,6 +42,7 @@ class WordListAdapter(
                 text = context.getString(R.string.pron_pattern, word.pron)
             }
             wordProgress.text = word.progress.toString()
+            wordProgressFx.setProgress(word.progress)
         }
     }
 }
