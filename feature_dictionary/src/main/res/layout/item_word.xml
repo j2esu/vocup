@@ -6,7 +6,6 @@
     style="@style/InteractiveItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:clipChildren="false"
     >
 
     <TextView
@@ -29,13 +28,11 @@
         android:layout_height="56dp"
         android:layout_gravity="center_vertical"
         android:layout_marginStart="16dp"
-        app:outlineColor="?colorSecondaryVariant"
-        app:outlineWidth="2dp"
-        app:progressAlphaOffset=".1"
-        app:progressBarWidth="8dp"
-        app:progressEndColor="?colorPrimaryVariant"
-        app:progressStartColor="?colorSecondaryVariant"
-        app:radius="28dp"
+        app:outlineColor="?colorOutline"
+        app:outlineWidth="1dp"
+        app:progressEndColor="?colorSecondary"
+        app:progressStartColor="?colorPrimaryVariant"
+        app:progressWidth="4dp"
         tools:progress="89"
         />
 

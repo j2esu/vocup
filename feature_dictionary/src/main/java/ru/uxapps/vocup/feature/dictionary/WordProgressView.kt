@@ -2,80 +2,96 @@ package ru.uxapps.vocup.feature.dictionary
 
 import android.content.Context
 import android.graphics.*
+import android.graphics.Paint.*
+import android.graphics.Shader.TileMode
 import android.util.AttributeSet
 import android.view.View
 import androidx.core.content.res.use
-import androidx.core.graphics.rotationMatrix
 import androidx.core.math.MathUtils
-import kotlin.math.max
+import kotlin.math.min
 
 class WordProgressView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
-    private var radius: Float = 0f
+    companion object {
+        private const val DEF_SIZE = 100
+    }
+
     private var progressStartColor: Int = 0
     private var progressEndColor: Int = 0
-    private var progressWidth: Float = 0f
+    private var progressStrokeWidth: Float = 0f
     private var outlineColor: Int = 0
-    private var outlineWidth: Float = 0f
-    private var progress: Int = 60
-    private var progressAlphaOffset: Float = 0f
+    private var outlineStrokeWidth: Float = 0f
+    private var progress: Int = 0
 
     init {
         context.obtainStyledAttributes(attrs, R.styleable.WordProgressView).use {
-            radius = it.getDimension(R.styleable.WordProgressView_radius, 0f)
             progressStartColor = it.getColor(R.styleable.WordProgressView_progressStartColor, Color.BLACK)
             progressEndColor = it.getColor(R.styleable.WordProgressView_progressEndColor, Color.BLACK)
-            progressWidth = it.getDimension(R.styleable.WordProgressView_progressBarWidth, 0f)
+            progressStrokeWidth = it.getDimension(R.styleable.WordProgressView_progressWidth, 0f)
             outlineColor = it.getColor(R.styleable.WordProgressView_outlineColor, Color.BLACK)
-            outlineWidth = it.getDimension(R.styleable.WordProgressView_outlineWidth, 0f)
+            outlineStrokeWidth = it.getDimension(R.styleable.WordProgressView_outlineWidth, 0f)
             progress = it.getInteger(R.styleable.WordProgressView_progress, 0)
-            progressAlphaOffset = it.getFloat(R.styleable.WordProgressView_progressAlphaOffset, 0f)
         }
     }
 
-    private val size = radius * 2
-    private val progressStartOffset = progressWidth
-    private val outlineOffset = progressStartOffset
-
-    private val progressPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        style = Paint.Style.STROKE
-        strokeCap = Paint.Cap.ROUND
-        strokeWidth = progressWidth
-        val colors = intArrayOf(Color.TRANSPARENT, progressStartColor, progressEndColor)
-        val pos = floatArrayOf(0f, progressAlphaOffset, 1f)
-        shader = SweepGradient(radius, radius, colors, pos).apply {
-            setLocalMatrix(rotationMatrix(-90f + progressStartOffset / 2, radius, radius))
-        }
+    private val progressPaint = Paint(ANTI_ALIAS_FLAG).apply {
+        style = Style.STROKE
+        strokeCap = Cap.ROUND
+        strokeWidth = progressStrokeWidth
     }
 
-    private val outlinePaint = Paint().apply {
-        style = Paint.Style.STROKE
-        strokeCap = Paint.Cap.ROUND
-        strokeWidth = outlineWidth
+    private val outlinePaint = Paint(ANTI_ALIAS_FLAG).apply {
+        style = Style.STROKE
+        strokeCap = Cap.ROUND
+        strokeWidth = outlineStrokeWidth
         color = outlineColor
     }
 
+    private var size = 0f
+    private var prevSize = 0f
+    private var cen = 0f
+    private var rad = 0f
     private val path = Path()
 
+    private fun updateShader() {
+        progressPaint.shader = LinearGradient(
+            cen, size, cen, 0f, progressStartColor, progressEndColor, TileMode.MIRROR
+        )
+    }
+
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        size = min(getSpecSize(widthMeasureSpec), getSpecSize(heightMeasureSpec)).toFloat()
+        if (size != prevSize) {
+            rad = (size - progressStrokeWidth) / 2
+            cen = size / 2
+            updateShader()
+            prevSize = size
+        }
         setMeasuredDimension(size.toInt(), size.toInt())
     }
 
-    override fun onDraw(canvas: Canvas) {
-        // draw progress
-        var angle = (360f - progressStartOffset) * progress / 100f
-        path.reset()
-        path.arcTo(0f, 0f, size, size, -90f + progressStartOffset, angle, true)
-        canvas.drawPath(path, progressPaint)
-        // draw outline
-        angle = max(0f, 360 - angle - progressStartOffset - outlineOffset)
-        path.reset()
-        path.arcTo(0f, 0f, size, size, -90f, -angle, true)
-        canvas.drawPath(path, outlinePaint)
+    private fun getSpecSize(spec: Int): Int {
+        return when (MeasureSpec.getMode(spec)) {
+            MeasureSpec.EXACTLY -> MeasureSpec.getSize(spec)
+            MeasureSpec.AT_MOST -> min(DEF_SIZE, MeasureSpec.getSize(spec))
+            else -> DEF_SIZE
+        }
     }
 
-    fun setProgress(progress: Int) {
-        this.progress = MathUtils.clamp(progress, 0, 100)
-        invalidate()
+    override fun onDraw(canvas: Canvas) {
+        // draw outline
+        canvas.drawCircle(cen, cen, rad, outlinePaint)
+        // draw progress
+        val angle = 360f * progress / 100f
+        path.reset()
+        path.arcTo(cen - rad, cen - rad, cen + rad, cen + rad, -90f, angle, true)
+        canvas.drawPath(path, progressPaint)
+    }
+
+    fun setProgress(value: Int) {
+        if (progress != value) {
+            progress = MathUtils.clamp(value, 0, 100)
+            invalidate()
+        }
     }
 }
