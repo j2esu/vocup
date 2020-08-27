@@ -5,12 +5,15 @@ import android.graphics.*
 import android.graphics.Paint.*
 import android.graphics.Shader.TileMode
 import android.util.AttributeSet
-import android.view.View
+import android.widget.FrameLayout
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.content.res.use
 import androidx.core.math.MathUtils
+import androidx.core.view.isVisible
 import kotlin.math.min
 
-class WordProgressView(context: Context, attrs: AttributeSet) : View(context, attrs) {
+class WordProgressView(context: Context, attrs: AttributeSet) : FrameLayout(context, attrs) {
 
     companion object {
         private const val DEF_SIZE = 100
@@ -21,17 +24,25 @@ class WordProgressView(context: Context, attrs: AttributeSet) : View(context, at
     private var progressStrokeWidth: Float = 0f
     private var outlineColor: Int = 0
     private var outlineStrokeWidth: Float = 0f
-    private var progress: Int = 0
+    private var progress: Int = -1 // to init first redraw, if 0
+
+    private val textView: TextView
+    private val imageView: ImageView
 
     init {
+        var progressAttr = 0
         context.obtainStyledAttributes(attrs, R.styleable.WordProgressView).use {
             progressStartColor = it.getColor(R.styleable.WordProgressView_progressStartColor, Color.BLACK)
-            progressEndColor = it.getColor(R.styleable.WordProgressView_progressEndColor, Color.BLACK)
-            progressStrokeWidth = it.getDimension(R.styleable.WordProgressView_progressWidth, 0f)
-            outlineColor = it.getColor(R.styleable.WordProgressView_outlineColor, Color.BLACK)
-            outlineStrokeWidth = it.getDimension(R.styleable.WordProgressView_outlineWidth, 0f)
-            progress = it.getInteger(R.styleable.WordProgressView_progress, 0)
+            progressEndColor = it.getColor(R.styleable.WordProgressView_progressEndColor, Color.GRAY)
+            progressStrokeWidth = it.getDimension(R.styleable.WordProgressView_progressWidth, 16f)
+            outlineColor = it.getColor(R.styleable.WordProgressView_outlineColor, Color.LTGRAY)
+            outlineStrokeWidth = it.getDimension(R.styleable.WordProgressView_outlineWidth, 4f)
+            progressAttr = it.getInteger(R.styleable.WordProgressView_progress, 0)
         }
+        inflate(context, R.layout.word_progress_inner, this)
+        textView = findViewById(R.id.word_progress_inner_text)
+        imageView = findViewById(R.id.word_progress_inner_img)
+        setProgress(progressAttr)
     }
 
     private val progressPaint = Paint(ANTI_ALIAS_FLAG).apply {
@@ -52,6 +63,7 @@ class WordProgressView(context: Context, attrs: AttributeSet) : View(context, at
     private var cen = 0f
     private var rad = 0f
     private val path = Path()
+    private val circleRect = RectF()
 
     private fun updateShader() {
         progressPaint.shader = LinearGradient(
@@ -64,10 +76,12 @@ class WordProgressView(context: Context, attrs: AttributeSet) : View(context, at
         if (size != prevSize) {
             rad = (size - progressStrokeWidth) / 2
             cen = size / 2
+            circleRect.set(cen - rad, cen - rad, cen + rad, cen + rad)
             updateShader()
             prevSize = size
         }
-        setMeasuredDimension(size.toInt(), size.toInt())
+        val sizeSpec = MeasureSpec.makeMeasureSpec(size.toInt(), MeasureSpec.EXACTLY)
+        super.onMeasure(sizeSpec, sizeSpec)
     }
 
     private fun getSpecSize(spec: Int): Int {
@@ -78,19 +92,27 @@ class WordProgressView(context: Context, attrs: AttributeSet) : View(context, at
         }
     }
 
-    override fun onDraw(canvas: Canvas) {
+    override fun dispatchDraw(canvas: Canvas) {
         // draw outline
-        canvas.drawCircle(cen, cen, rad, outlinePaint)
+        canvas.drawOval(circleRect, outlinePaint)
         // draw progress
-        val angle = 360f * progress / 100f
-        path.reset()
-        path.arcTo(cen - rad, cen - rad, cen + rad, cen + rad, -90f, angle, true)
-        canvas.drawPath(path, progressPaint)
+        val angle = 360f * progress / 100
+        if (angle == 360f) { // arc 360 draws nothing
+            canvas.drawOval(circleRect, progressPaint)
+        } else {
+            path.reset()
+            path.arcTo(circleRect, -90f, angle, true)
+            canvas.drawPath(path, progressPaint)
+        }
+        super.dispatchDraw(canvas)
     }
 
     fun setProgress(value: Int) {
         if (progress != value) {
             progress = MathUtils.clamp(value, 0, 100)
+            textView.isVisible = progress < 100
+            textView.text = progress.toString()
+            imageView.isVisible = progress == 100
             invalidate()
         }
     }
