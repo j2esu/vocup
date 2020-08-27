@@ -3,10 +3,13 @@
 
     <style name="BaseAppTheme.DayNight">
         <item name="colorPrimary">#7A50C1</item>
+        <item name="colorPrimaryVariant">#F06292</item>
         <item name="colorPrimarySurface">#161616</item>
         <item name="colorSecondary">#4A148C</item>
+        <item name="colorSecondaryVariant">#291245</item>
         <item name="colorOnPrimary">#fafafa</item>
         <item name="colorOnSecondary">#fafafa</item>
+        <item name="colorOutline">#555</item>
     </style>
 
 </resources>

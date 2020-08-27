@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:layout_height="56dp"
+    tools:layout_width="56dp"
+    tools:parentTag="android.widget.FrameLayout"
+    >
+
+    <TextView
+        android:id="@+id/word_progress_inner_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:fontFamily="sans-serif-light"
+        android:gravity="center"
+        android:padding="12dp"
+        app:autoSizeTextType="uniform"
+        tools:text="89"
+        />
+
+    <ImageView
+        android:id="@+id/word_progress_inner_img"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="12dp"
+        android:visibility="gone"
+        app:srcCompat="@drawable/ic_check"
+        app:tint="?colorControlNormal"
+        tools:ignore="ContentDescription"
+        tools:visibility="visible"
+        />
+
+</merge>

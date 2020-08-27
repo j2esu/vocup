@@ -8,27 +8,18 @@
     android:layout_height="wrap_content"
     >
 
-    <ImageView
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:layout_gravity="center_vertical"
-        android:layout_marginStart="16dp"
-        app:srcCompat="@drawable/word_progress_bg"
-        app:tint="?colorPrimary"
-        tools:ignore="ContentDescription"
-        />
-
-    <TextView
+    <ru.uxapps.vocup.feature.dictionary.WordProgressView
         android:id="@+id/word_progress"
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:layout_gravity="center_vertical"
         android:layout_marginStart="16dp"
-        android:fontFamily="sans-serif-light"
-        android:gravity="center"
-        android:textSize="24dp"
-        tools:ignore="SpUsage"
-        tools:text="47"
+        app:outlineColor="?colorOutline"
+        app:outlineWidth="1dp"
+        app:progressEndColor="?colorSecondary"
+        app:progressStartColor="?colorPrimaryVariant"
+        app:progressWidth="4dp"
+        tools:progress="89"
         />
 
     <LinearLayout
@@ -72,8 +63,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:layout_marginEnd="16dp"
         android:layout_marginTop="18dp"
+        android:layout_marginEnd="16dp"
         android:lines="1"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
         tools:text="@tools:sample/cities"
