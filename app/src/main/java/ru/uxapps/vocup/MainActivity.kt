@@ -23,10 +23,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), NavFragment.Rout
                 override fun onFragmentStarted(fm: FragmentManager, f: Fragment) {
                     when (f) {
                         is WordFragment -> window.setSoftInputMode(SOFT_INPUT_ADJUST_PAN)
-                        !is DialogFragment -> {
-                            @Suppress("DEPRECATION")
-                            window.setSoftInputMode(SOFT_INPUT_ADJUST_RESIZE)
-                        }
+                        !is DialogFragment -> window.setSoftInputMode(SOFT_INPUT_ADJUST_RESIZE)
                     }
                 }
             },

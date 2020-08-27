@@ -6,6 +6,7 @@ buildscript {
             "-Xuse-experimental=kotlinx.coroutines.FlowPreview",
             "-XXLanguage:-NewInference"
     ]
+    ext.sdk_version = 29
     repositories {
         google()
         jcenter()

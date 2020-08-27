@@ -3,12 +3,12 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion sdk_version
 
     defaultConfig {
         applicationId "ru.uxapps.vocup"
         minSdkVersion 21
-        targetSdkVersion 30
+        targetSdkVersion sdk_version
         versionCode 1
         versionName "1.0"
 
