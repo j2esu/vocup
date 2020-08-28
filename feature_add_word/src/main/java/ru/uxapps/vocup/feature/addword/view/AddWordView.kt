@@ -1,4 +1,4 @@
-package ru.uxapps.vocup.feature.addword
+package ru.uxapps.vocup.feature.addword.view
 
 import android.text.InputFilter
 import android.view.View
@@ -12,13 +12,14 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import ru.uxapps.vocup.data.api.Language
-import ru.uxapps.vocup.feature.addword.AddWord.DefItem
-import ru.uxapps.vocup.feature.addword.AddWord.State
-import ru.uxapps.vocup.feature.addword.AddWord.State.*
+import ru.uxapps.vocup.feature.addword.model.AddWord.DefItem
+import ru.uxapps.vocup.feature.addword.model.AddWord.State
+import ru.uxapps.vocup.feature.addword.model.AddWord.State.*
+import ru.uxapps.vocup.feature.addword.R
 import ru.uxapps.vocup.feature.addword.databinding.FragmentAddWordBinding
 import ru.uxapps.vocup.feature.setNavAsBack
 
-class AddWordView(
+internal class AddWordView(
     private val bind: FragmentAddWordBinding,
     private val callback: Callback
 ) {

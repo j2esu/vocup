@@ -1,15 +1,16 @@
-package ru.uxapps.vocup.feature.addword
+package ru.uxapps.vocup.feature.addword.view
 
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import ru.uxapps.vocup.feature.addword.AddWord.DefItem
+import ru.uxapps.vocup.feature.addword.model.AddWord.DefItem
+import ru.uxapps.vocup.feature.addword.R
 import ru.uxapps.vocup.feature.addword.databinding.ItemDefBinding
 import ru.uxapps.vocup.feature.inflateBind
 
-class DefListAdapter(
+internal class DefListAdapter(
     private val onClick: (DefItem) -> Unit
 ) :
     ListAdapter<DefItem, DefListAdapter.DefVh>(
