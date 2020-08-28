@@ -1,4 +1,4 @@
-package ru.uxapps.vocup.data
+package ru.uxapps.vocup.data.imp
 
 import org.junit.Test
 
