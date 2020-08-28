@@ -1,4 +1,4 @@
-package ru.uxapps.vocup.feature.dictionary
+package ru.uxapps.vocup.feature.dictionary.model
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
@@ -8,20 +8,10 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import ru.uxapps.vocup.data.api.Repo
 import ru.uxapps.vocup.data.api.Word
-import ru.uxapps.vocup.util.LiveEvent
 import ru.uxapps.vocup.util.MutableLiveEvent
 import ru.uxapps.vocup.util.send
 
-interface Dictionary {
-
-    val words: LiveData<List<Word>>
-    val loading: LiveData<Boolean>
-    val onWordRemoved: LiveEvent<suspend () -> Unit>
-
-    fun onRemove(word: Word)
-}
-
-class DictionaryImp(
+internal class DictionaryImp(
     private val repo: Repo,
     private val scope: CoroutineScope
 ) : Dictionary {
