@@ -7,9 +7,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
-import ru.uxapps.vocup.util.host
 import ru.uxapps.vocup.feature.worddetails.databinding.FragmentWordBinding
+import ru.uxapps.vocup.feature.worddetails.di.WordViewModel
+import ru.uxapps.vocup.feature.worddetails.model.WordDetails
+import ru.uxapps.vocup.feature.worddetails.view.AddTransDialog
+import ru.uxapps.vocup.feature.worddetails.view.EditTransDialog
+import ru.uxapps.vocup.feature.worddetails.view.WordView
 import ru.uxapps.vocup.util.consume
+import ru.uxapps.vocup.util.host
 import javax.inject.Inject
 
 class WordFragment : Fragment(R.layout.fragment_word), AddTransDialog.Host, EditTransDialog.Host {
@@ -25,7 +30,7 @@ class WordFragment : Fragment(R.layout.fragment_word), AddTransDialog.Host, Edit
 
     private val vm by viewModels<WordViewModel>()
 
-    @Inject lateinit var detailsModel: WordDetails
+    @Inject internal lateinit var detailsModel: WordDetails
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
         super.onViewStateRestored(savedInstanceState)
