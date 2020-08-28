@@ -1,4 +1,4 @@
-package ru.uxapps.vocup.feature.worddetails
+package ru.uxapps.vocup.feature.worddetails.view
 
 import android.annotation.SuppressLint
 import android.graphics.Canvas
@@ -14,7 +14,7 @@ import ru.uxapps.vocup.feature.worddetails.databinding.ItemTransBinding
 import java.util.*
 
 
-class TransListAdapter(
+internal class TransListAdapter(
     private val onReorder: (List<String>) -> Unit,
     private val onClick: (String) -> Unit
 ) : ListAdapter<String, TransListAdapter.TransVh>(

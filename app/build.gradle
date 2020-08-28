@@ -3,12 +3,12 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion sdk_version
+    compileSdkVersion rootProject.ext.sdk_version
 
     defaultConfig {
         applicationId "ru.uxapps.vocup"
         minSdkVersion 21
-        targetSdkVersion sdk_version
+        targetSdkVersion rootProject.ext.sdk_version
         versionCode 1
         versionName "1.0"
 
@@ -49,5 +49,5 @@ dependencies {
     implementation project(path: ':feature_learn')
     implementation project(path: ':feature_explore')
 
-    kapt 'com.google.dagger:dagger-compiler:2.28.3'
+    kapt "com.google.dagger:dagger-compiler:${rootProject.ext.dagger_version}"
 }

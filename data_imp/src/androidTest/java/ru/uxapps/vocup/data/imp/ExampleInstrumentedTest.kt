@@ -1,4 +1,4 @@
-package ru.uxapps.vocup.data
+package ru.uxapps.vocup.data.imp
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry

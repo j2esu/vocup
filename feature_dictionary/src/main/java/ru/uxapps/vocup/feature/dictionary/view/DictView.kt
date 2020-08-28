@@ -1,4 +1,4 @@
-package ru.uxapps.vocup.feature.dictionary
+package ru.uxapps.vocup.feature.dictionary.view
 
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -6,9 +6,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import ru.uxapps.vocup.data.api.Word
 import ru.uxapps.vocup.feature.SwipeDismissDecor
+import ru.uxapps.vocup.feature.dictionary.R
 import ru.uxapps.vocup.feature.dictionary.databinding.FragmentDictBinding
 
-class DictView(
+internal class DictView(
     private val bind: FragmentDictBinding,
     private val callback: Callback
 ) {

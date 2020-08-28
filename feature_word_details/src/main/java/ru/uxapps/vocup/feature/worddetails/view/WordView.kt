@@ -1,4 +1,4 @@
-package ru.uxapps.vocup.feature.worddetails
+package ru.uxapps.vocup.feature.worddetails.view
 
 import android.annotation.SuppressLint
 import androidx.core.view.isVisible
@@ -6,9 +6,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import ru.uxapps.vocup.feature.SwipeDismissDecor
 import ru.uxapps.vocup.feature.setNavAsBack
+import ru.uxapps.vocup.feature.worddetails.R
 import ru.uxapps.vocup.feature.worddetails.databinding.FragmentWordBinding
 
-class WordView(
+internal class WordView(
     private val bind: FragmentWordBinding,
     private val callback: Callback
 ) {

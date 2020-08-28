@@ -1,6 +1,5 @@
-package ru.uxapps.vocup.feature.worddetails
+package ru.uxapps.vocup.feature.worddetails.model
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.filterNotNull
@@ -9,25 +8,11 @@ import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import ru.uxapps.vocup.data.api.Repo
-import ru.uxapps.vocup.util.LiveEvent
 import ru.uxapps.vocup.util.MutableLiveEvent
 import ru.uxapps.vocup.util.send
 import ru.uxapps.vocup.util.toStateFlow
 
-interface WordDetails {
-    val text: LiveData<String>
-    val pron: LiveData<String>
-    val translations: LiveData<List<String>?>
-    val onTransDeleted: LiveEvent<suspend () -> Unit>
-    val onWordDeleted: LiveEvent<suspend () -> Unit>
-    fun onReorderTrans(newTrans: List<String>)
-    fun onAddTrans(text: String)
-    fun onEditTrans(trans: String, newText: String)
-    fun onDeleteTrans(trans: String)
-    fun onDeleteWord()
-}
-
-class WordDetailsImp(
+internal class WordDetailsImp(
     private val wordText: String,
     private val repo: Repo,
     private val scope: CoroutineScope

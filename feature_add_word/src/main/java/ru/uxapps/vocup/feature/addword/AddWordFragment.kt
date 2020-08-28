@@ -5,8 +5,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import ru.uxapps.vocup.data.api.Language
-import ru.uxapps.vocup.feature.addword.AddWord.DefItem
 import ru.uxapps.vocup.feature.addword.databinding.FragmentAddWordBinding
+import ru.uxapps.vocup.feature.addword.di.AddWordViewModel
+import ru.uxapps.vocup.feature.addword.model.AddWord
+import ru.uxapps.vocup.feature.addword.model.AddWord.DefItem
+import ru.uxapps.vocup.feature.addword.view.AddWordView
 import ru.uxapps.vocup.util.host
 import javax.inject.Inject
 
@@ -18,7 +21,7 @@ class AddWordFragment : Fragment(R.layout.fragment_add_word) {
 
     private val vm by viewModels<AddWordViewModel>()
 
-    @Inject lateinit var addWordModel: AddWord
+    @Inject internal lateinit var addWordModel: AddWord
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
         super.onViewStateRestored(savedInstanceState)

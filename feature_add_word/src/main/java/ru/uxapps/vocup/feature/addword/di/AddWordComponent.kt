@@ -6,16 +6,16 @@ import dagger.BindsInstance
 import dagger.Component
 import dagger.Module
 import dagger.Provides
-import ru.uxapps.vocup.data.api.Repo
 import ru.uxapps.vocup.data.RepoProvider
+import ru.uxapps.vocup.data.api.Repo
 import ru.uxapps.vocup.feature.ViewModelScope
-import ru.uxapps.vocup.feature.addword.AddWord
 import ru.uxapps.vocup.feature.addword.AddWordFragment
-import ru.uxapps.vocup.feature.addword.AddWordImp
+import ru.uxapps.vocup.feature.addword.model.AddWord
+import ru.uxapps.vocup.feature.addword.model.AddWordImp
 
 @ViewModelScope
 @Component(dependencies = [RepoProvider::class], modules = [AddWordModule::class])
-interface AddWordComponent {
+internal interface AddWordComponent {
 
     fun inject(f: AddWordFragment)
 
@@ -26,7 +26,7 @@ interface AddWordComponent {
 }
 
 @Module
-class AddWordModule {
+internal class AddWordModule {
 
     @ViewModelScope
     @Provides

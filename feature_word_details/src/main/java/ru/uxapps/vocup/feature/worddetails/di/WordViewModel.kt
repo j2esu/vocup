@@ -1,12 +1,10 @@
-package ru.uxapps.vocup.feature.worddetails
+package ru.uxapps.vocup.feature.worddetails.di
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import ru.uxapps.vocup.data.RepoProvider
-import ru.uxapps.vocup.feature.worddetails.di.DaggerWordComponent
-import ru.uxapps.vocup.feature.worddetails.di.WordComponent
 
-class WordViewModel(private val app: Application) : AndroidViewModel(app) {
+internal class WordViewModel(private val app: Application) : AndroidViewModel(app) {
 
     private var wordComponent: WordComponent? = null
 

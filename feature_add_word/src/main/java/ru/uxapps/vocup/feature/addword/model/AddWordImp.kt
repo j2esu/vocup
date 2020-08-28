@@ -1,4 +1,4 @@
-package ru.uxapps.vocup.feature.addword
+package ru.uxapps.vocup.feature.addword.model
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
@@ -9,36 +9,12 @@ import kotlinx.coroutines.launch
 import ru.uxapps.vocup.data.api.Def
 import ru.uxapps.vocup.data.api.Language
 import ru.uxapps.vocup.data.api.Repo
-import ru.uxapps.vocup.feature.addword.AddWord.DefItem
-import ru.uxapps.vocup.feature.addword.AddWord.State
-import ru.uxapps.vocup.feature.addword.AddWord.State.*
 import ru.uxapps.vocup.util.repeatWhen
 import ru.uxapps.vocup.util.toStateFlow
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 
-interface AddWord {
-
-    val state: LiveData<State>
-    val maxWordLength: Int
-    val languages: LiveData<List<Language>>
-    fun onInput(text: String)
-    fun onSave(item: DefItem)
-    fun onChooseLang(lang: Language)
-    fun onRetry()
-    fun onSearch(text: String)
-
-    sealed class State {
-        object Idle : State()
-        object Loading : State()
-        data class Definitions(val items: List<DefItem>, val error: Boolean) : State()
-        data class Completions(val items: List<String>) : State()
-    }
-
-    data class DefItem(val text: String, val saved: Boolean, val trans: List<Pair<String, Boolean>>?)
-}
-
-class AddWordImp(
+internal class AddWordImp(
     private val repo: Repo,
     private val scope: CoroutineScope
 ) : AddWord {
@@ -65,25 +41,25 @@ class AddWordImp(
                     is Action.Search -> definitionFlow(normalizeInput(it.text))
                 }
             }
-            .onStart { emit(Idle) }
+            .onStart { emit(AddWord.State.Idle) }
             .asLiveData(timeoutInMs = TimeUnit.MINUTES.toMillis(5))
 
     private fun normalizeInput(input: String) = input.trim().replace(Regex("\\s+"), " ")
 
-    private fun completionFlow(input: String): Flow<State> = flow {
+    private fun completionFlow(input: String): Flow<AddWord.State> = flow {
         if (input.length >= WORD_RANGE.first) {
             val comp = repo.getCompletions(input)
             if (comp.isNotEmpty()) {
-                emit(Completions(comp))
+                emit(AddWord.State.Completions(comp))
             } else {
-                emit(Completions(listOf(input)))
+                emit(AddWord.State.Completions(listOf(input)))
             }
         } else {
-            emit(Completions(emptyList()))
+            emit(AddWord.State.Completions(emptyList()))
         }
     }
 
-    private fun defItemsFlow(input: String, loadDefResult: List<Def>?): Flow<List<DefItem>> =
+    private fun defItemsFlow(input: String, loadDefResult: List<Def>?): Flow<List<AddWord.DefItem>> =
         allWords
             .filterNotNull()
             .map { words ->
@@ -92,32 +68,32 @@ class AddWordImp(
                     val savedWord = words.find { it.text == def.text }
                     if (loadDefResult != null) {
                         if (savedWord != null) {
-                            DefItem(def.text, true, def.translations.map {
+                            AddWord.DefItem(def.text, true, def.translations.map {
                                 it to savedWord.translations.contains(it)
                             })
                         } else {
-                            DefItem(def.text, false, def.translations.map { it to false })
+                            AddWord.DefItem(def.text, false, def.translations.map { it to false })
                         }
                     } else {
-                        DefItem(def.text, savedWord != null, null)
+                        AddWord.DefItem(def.text, savedWord != null, null)
                     }
                 }
             }
 
-    private fun definitionFlow(input: String): Flow<State> =
+    private fun definitionFlow(input: String): Flow<AddWord.State> =
         repo.getTargetLanguage()
             .repeatWhen(retry.receiveAsFlow())
             .transformLatest { lang ->
                 if (input.length in WORD_RANGE) {
-                    emit(Loading)
+                    emit(AddWord.State.Loading)
                     val result = try {
                         repo.getDefinitions(input, lang)
                     } catch (e: IOException) {
                         null
                     }
-                    emitAll(defItemsFlow(input, result).map { Definitions(it, result == null) })
+                    emitAll(defItemsFlow(input, result).map { AddWord.State.Definitions(it, result == null) })
                 } else {
-                    emit(Idle)
+                    emit(AddWord.State.Idle)
                 }
             }
 
@@ -132,7 +108,7 @@ class AddWordImp(
         actions.offer(Action.Input(text))
     }
 
-    override fun onSave(item: DefItem) {
+    override fun onSave(item: AddWord.DefItem) {
         scope.launch {
             if (!item.saved) {
                 repo.addWord(item.text, item.trans?.map { it.first } ?: emptyList())
