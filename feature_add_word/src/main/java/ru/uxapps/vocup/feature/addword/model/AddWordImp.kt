@@ -3,6 +3,7 @@ package ru.uxapps.vocup.feature.addword.model
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -42,7 +43,7 @@ internal class AddWordImp(
                 }
             }
             .onStart { emit(AddWord.State.Idle) }
-            .asLiveData(timeoutInMs = TimeUnit.MINUTES.toMillis(5))
+            .asLiveData(Dispatchers.IO, TimeUnit.MINUTES.toMillis(5))
 
     private fun normalizeInput(input: String) = input.trim().replace(Regex("\\s+"), " ")
 
@@ -102,7 +103,7 @@ internal class AddWordImp(
     override val languages: LiveData<List<Language>> =
         repo.getTargetLanguage().map {
             listOf(it) + (Language.values().toList() - it)
-        }.asLiveData()
+        }.asLiveData(Dispatchers.IO)
 
     override fun onInput(text: String) {
         actions.offer(Action.Input(text))
