@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
+import ru.uxapps.vocup.feature.delayTransition
 import ru.uxapps.vocup.feature.worddetails.databinding.FragmentWordBinding
 import ru.uxapps.vocup.feature.worddetails.di.WordViewModel
 import ru.uxapps.vocup.feature.worddetails.model.WordDetails
@@ -36,6 +37,7 @@ class WordFragment : Fragment(R.layout.fragment_word), AddTransDialog.Host, Edit
         super.onViewStateRestored(savedInstanceState)
         vm.getWordComponent(word).inject(this)
         val v = WordView(FragmentWordBinding.bind(requireView()), object : WordView.Callback {
+
             override fun onDelete() = detailsModel.onDeleteWord()
             override fun onAddTrans() = AddTransDialog().show(childFragmentManager, null)
             override fun onDeleteTrans(trans: String) = detailsModel.onDeleteTrans(trans)
@@ -62,6 +64,7 @@ class WordFragment : Fragment(R.layout.fragment_word), AddTransDialog.Host, Edit
                 host<Router>().onWordDeleted(it)
             }
         }
+        delayTransition(detailsModel.translations, detailsModel.text, detailsModel.pron)
     }
 
     override fun onAddTrans(text: String) = detailsModel.onAddTrans(text)

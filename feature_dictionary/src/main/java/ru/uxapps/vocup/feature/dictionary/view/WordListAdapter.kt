@@ -1,5 +1,6 @@
 package ru.uxapps.vocup.feature.dictionary.view
 
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
@@ -11,7 +12,7 @@ import ru.uxapps.vocup.feature.dictionary.databinding.ItemWordBinding
 import ru.uxapps.vocup.feature.inflateBind
 
 internal class WordListAdapter(
-    private val onWordClick: (Word) -> Unit
+    private val onWordClick: (Word, View) -> Unit
 ) : ListAdapter<Word, WordListAdapter.WordVh>(object : DiffUtil.ItemCallback<Word>() {
     override fun areItemsTheSame(oldItem: Word, newItem: Word) = oldItem.text == newItem.text
     override fun areContentsTheSame(oldItem: Word, newItem: Word) = oldItem == newItem
@@ -25,7 +26,7 @@ internal class WordListAdapter(
     inner class WordVh(private val bind: ItemWordBinding) : ViewHolder(bind.root) {
 
         init {
-            bind.root.setOnClickListener { onWordClick(getItem(adapterPosition)) }
+            itemView.setOnClickListener { onWordClick(getItem(adapterPosition), it) }
         }
 
         fun bind(word: Word) = with(bind) {
@@ -43,6 +44,7 @@ internal class WordListAdapter(
                 text = context.getString(R.string.pron_pattern, word.pron)
             }
             wordProgress.setProgress(word.progress)
+            itemView.transitionName = "word_${word.text}"
         }
     }
 }

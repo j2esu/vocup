@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:transitionName="word_root"
     >
 
     <com.google.android.material.appbar.MaterialToolbar
@@ -70,10 +71,8 @@
             android:layout_marginTop="56dp"
             android:clipToPadding="false"
             android:overScrollMode="never"
-            android:scrollIndicators="top"
             tools:itemCount="5"
             tools:listitem="@layout/item_trans"
-            tools:targetApi="m"
             />
 
         <ProgressBar
