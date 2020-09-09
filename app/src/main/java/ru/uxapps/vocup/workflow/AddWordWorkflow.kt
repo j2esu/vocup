@@ -1,22 +1,22 @@
 package ru.uxapps.vocup.workflow
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.view.View
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.commit
+import androidx.fragment.app.commitNow
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 import ru.uxapps.vocup.R
+import ru.uxapps.vocup.feature.BaseFragment
 import ru.uxapps.vocup.feature.addword.AddWordFragment
 import ru.uxapps.vocup.feature.worddetails.WordFragment
 
-class AddWordWorkflow : Fragment(R.layout.workflow_add_word), AddWordFragment.Router, WordFragment.Router {
+class AddWordWorkflow : BaseFragment(R.layout.workflow_add_word), AddWordFragment.Router, WordFragment.Router {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        if (savedInstanceState == null) {
-            childFragmentManager.commit {
+    override fun onViewReady(view: View, init: Boolean) {
+        if (init) {
+            childFragmentManager.commitNow {
                 add(R.id.add_word_container, AddWordFragment())
             }
         }

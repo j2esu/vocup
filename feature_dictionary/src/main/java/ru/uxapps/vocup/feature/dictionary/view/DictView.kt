@@ -2,7 +2,6 @@ package ru.uxapps.vocup.feature.dictionary.view
 
 import android.view.View
 import androidx.core.view.isVisible
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import ru.uxapps.vocup.data.api.Word
@@ -16,19 +15,18 @@ internal class DictView(
 ) {
 
     interface Callback {
-        fun onAdd()
+        fun onAdd(srcView: View)
         fun onSwipe(word: Word)
-        fun onClick(word: Word, srcItem: View)
+        fun onClick(word: Word, srcView: View)
     }
 
     private val listAdapter = WordListAdapter(callback::onClick)
 
     init {
-        bind.dictAdd.setOnClickListener { callback.onAdd() }
+        bind.dictAdd.setOnClickListener { callback.onAdd(it) }
         bind.dictList.apply {
             adapter = listAdapter
             layoutManager = LinearLayoutManager(context)
-            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
             val swipeDecor =
                 SwipeDismissDecor(context.getDrawable(R.drawable.delete_item_hint_bg)!!) {
                     callback.onSwipe(listAdapter.currentList[it.adapterPosition])

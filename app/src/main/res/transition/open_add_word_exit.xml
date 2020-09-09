@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<transitionSet xmlns:android="http://schemas.android.com/apk/res/android">
+    <fade />
+    <slide
+        android:interpolator="@android:interpolator/accelerate_quad"
+        android:slideEdge="bottom"
+        >
+        <targets>
+            <target android:targetName="nav_pager" />
+        </targets>
+    </slide>
+</transitionSet>

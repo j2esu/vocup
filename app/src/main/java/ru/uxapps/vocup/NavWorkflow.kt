@@ -1,34 +1,39 @@
 package ru.uxapps.vocup
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.view.View
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.commit
-import ru.uxapps.vocup.databinding.FragmentNavBinding
+import ru.uxapps.vocup.databinding.WorkflowNavBinding
+import ru.uxapps.vocup.feature.BaseFragment
+import ru.uxapps.vocup.feature.awaitReady
+import ru.uxapps.vocup.feature.delayTransition
 import ru.uxapps.vocup.feature.explore.ExploreFragment
 import ru.uxapps.vocup.feature.learn.LearnFragment
 import ru.uxapps.vocup.util.host
 import ru.uxapps.vocup.workflow.DictWorkflow
 
-class NavFragment : Fragment(R.layout.fragment_nav), DictWorkflow.Router {
+class NavWorkflow : BaseFragment(R.layout.workflow_nav), DictWorkflow.Router {
 
     interface Router {
-        fun openAddWord()
+        fun openAddWord(srcView: View)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        if (savedInstanceState == null) {
+    override fun onViewReady(view: View, init: Boolean) {
+        val currentFragment = if (init) {
+            val dictFragment = DictWorkflow()
             childFragmentManager.commit {
-                add(R.id.nav_container, DictWorkflow().also { setPrimaryNavigationFragment(it) })
+                add(R.id.nav_container, dictFragment)
+                setPrimaryNavigationFragment(dictFragment)
+                setReorderingAllowed(true)
             }
+            dictFragment
+        } else {
+            childFragmentManager.findFragmentById(R.id.nav_container) as BaseFragment
         }
-    }
+        delayTransition { currentFragment.awaitReady() }
 
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        super.onViewStateRestored(savedInstanceState)
-        val bind = FragmentNavBinding.bind(requireView())
+        val bind = WorkflowNavBinding.bind(view)
         bind.navPager.apply {
             setOnNavigationItemSelectedListener {
                 if (selectedItemId != it.itemId) {
@@ -51,5 +56,5 @@ class NavFragment : Fragment(R.layout.fragment_nav), DictWorkflow.Router {
         }
     }
 
-    override fun openAddWord() = host<Router>().openAddWord()
+    override fun openAddWord(srcView: View) = host<Router>().openAddWord(srcView)
 }

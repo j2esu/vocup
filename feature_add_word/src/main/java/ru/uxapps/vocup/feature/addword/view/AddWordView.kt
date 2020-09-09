@@ -3,21 +3,20 @@ package ru.uxapps.vocup.feature.addword.view
 import android.text.InputFilter
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
-import androidx.core.content.getSystemService
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import ru.uxapps.vocup.data.api.Language
+import ru.uxapps.vocup.feature.addword.R
+import ru.uxapps.vocup.feature.addword.databinding.FragmentAddWordBinding
 import ru.uxapps.vocup.feature.addword.model.AddWord.DefItem
 import ru.uxapps.vocup.feature.addword.model.AddWord.State
 import ru.uxapps.vocup.feature.addword.model.AddWord.State.*
-import ru.uxapps.vocup.feature.addword.R
-import ru.uxapps.vocup.feature.addword.databinding.FragmentAddWordBinding
 import ru.uxapps.vocup.feature.setNavAsBack
+import ru.uxapps.vocup.feature.softInput
 
 internal class AddWordView(
     private val bind: FragmentAddWordBinding,
@@ -69,8 +68,7 @@ internal class AddWordView(
                     callback.onInput(it.toString())
                 }
             }
-            val imm = context.getSystemService<InputMethodManager>()
-            imm?.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
+            softInput.show(this)
             setOnEditorActionListener { v, actionId, _ ->
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     callback.onInputDone(v.text.toString())

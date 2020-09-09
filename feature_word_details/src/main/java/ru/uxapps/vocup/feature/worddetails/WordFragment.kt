@@ -1,12 +1,13 @@
 package ru.uxapps.vocup.feature.worddetails
 
-import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.core.os.bundleOf
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
+import ru.uxapps.vocup.feature.BaseFragment
+import ru.uxapps.vocup.feature.awaitValue
 import ru.uxapps.vocup.feature.delayTransition
 import ru.uxapps.vocup.feature.worddetails.databinding.FragmentWordBinding
 import ru.uxapps.vocup.feature.worddetails.di.WordViewModel
@@ -18,7 +19,7 @@ import ru.uxapps.vocup.util.consume
 import ru.uxapps.vocup.util.host
 import javax.inject.Inject
 
-class WordFragment : Fragment(R.layout.fragment_word), AddTransDialog.Host, EditTransDialog.Host {
+class WordFragment : BaseFragment(R.layout.fragment_word), AddTransDialog.Host, EditTransDialog.Host {
 
     interface Router {
         fun onWordDeleted(undo: suspend () -> Unit)
@@ -33,10 +34,9 @@ class WordFragment : Fragment(R.layout.fragment_word), AddTransDialog.Host, Edit
 
     @Inject internal lateinit var detailsModel: WordDetails
 
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        super.onViewStateRestored(savedInstanceState)
+    override fun onViewReady(view: View, init: Boolean) {
         vm.getWordComponent(word).inject(this)
-        val v = WordView(FragmentWordBinding.bind(requireView()), object : WordView.Callback {
+        val v = WordView(FragmentWordBinding.bind(view), object : WordView.Callback {
 
             override fun onDelete() = detailsModel.onDeleteWord()
             override fun onAddTrans() = AddTransDialog().show(childFragmentManager, null)
@@ -64,7 +64,11 @@ class WordFragment : Fragment(R.layout.fragment_word), AddTransDialog.Host, Edit
                 host<Router>().onWordDeleted(it)
             }
         }
-        delayTransition(detailsModel.translations, detailsModel.text, detailsModel.pron)
+        delayTransition {
+            detailsModel.translations.awaitValue()
+            detailsModel.text.awaitValue()
+            detailsModel.pron.awaitValue()
+        }
     }
 
     override fun onAddTrans(text: String) = detailsModel.onAddTrans(text)
