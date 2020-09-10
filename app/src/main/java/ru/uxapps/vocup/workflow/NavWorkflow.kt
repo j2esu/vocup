@@ -1,16 +1,16 @@
-package ru.uxapps.vocup
+package ru.uxapps.vocup.workflow
 
 import android.view.View
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.commit
+import ru.uxapps.vocup.R
 import ru.uxapps.vocup.databinding.WorkflowNavBinding
 import ru.uxapps.vocup.feature.BaseFragment
 import ru.uxapps.vocup.feature.awaitReady
 import ru.uxapps.vocup.feature.explore.ExploreFragment
 import ru.uxapps.vocup.feature.learn.LearnFragment
 import ru.uxapps.vocup.util.host
-import ru.uxapps.vocup.workflow.DictWorkflow
 
 class NavWorkflow : BaseFragment(R.layout.workflow_nav), DictWorkflow.Router {
 
