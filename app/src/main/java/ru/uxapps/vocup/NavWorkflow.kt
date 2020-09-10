@@ -7,7 +7,6 @@ import androidx.fragment.app.commit
 import ru.uxapps.vocup.databinding.WorkflowNavBinding
 import ru.uxapps.vocup.feature.BaseFragment
 import ru.uxapps.vocup.feature.awaitReady
-import ru.uxapps.vocup.feature.delayTransition
 import ru.uxapps.vocup.feature.explore.ExploreFragment
 import ru.uxapps.vocup.feature.learn.LearnFragment
 import ru.uxapps.vocup.util.host
@@ -20,19 +19,17 @@ class NavWorkflow : BaseFragment(R.layout.workflow_nav), DictWorkflow.Router {
     }
 
     override fun onViewReady(view: View, init: Boolean) {
-        val currentFragment = if (init) {
-            val dictFragment = DictWorkflow()
+        if (init) {
+            val dictWorkflow = DictWorkflow()
             childFragmentManager.commit {
-                add(R.id.nav_container, dictFragment)
-                setPrimaryNavigationFragment(dictFragment)
+                add(R.id.nav_container, dictWorkflow)
+                setPrimaryNavigationFragment(dictWorkflow)
                 setReorderingAllowed(true)
             }
-            dictFragment
-        } else {
-            childFragmentManager.findFragmentById(R.id.nav_container) as BaseFragment
+            postponeUntil {
+                dictWorkflow.awaitReady()
+            }
         }
-        delayTransition { currentFragment.awaitReady() }
-
         val bind = WorkflowNavBinding.bind(view)
         bind.navPager.apply {
             setOnNavigationItemSelectedListener {

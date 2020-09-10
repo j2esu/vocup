@@ -12,7 +12,6 @@ import ru.uxapps.vocup.feature.dictionary.databinding.FragmentDictBinding
 import ru.uxapps.vocup.feature.dictionary.di.DictViewModel
 import ru.uxapps.vocup.feature.dictionary.model.Dictionary
 import ru.uxapps.vocup.feature.dictionary.view.DictView
-import ru.uxapps.vocup.feature.delayTransition
 import ru.uxapps.vocup.util.consume
 import ru.uxapps.vocup.util.host
 import javax.inject.Inject
@@ -42,7 +41,9 @@ class DictFragment : BaseFragment(R.layout.fragment_dict) {
                 v.showRemoveWordUndo { lifecycleScope.launch { it() } }
             }
         }
-        delayTransition { dictModel.words.awaitValue() }
+        postponeUntil {
+            dictModel.words.awaitValue()
+        }
     }
 
     override fun getViewsSavedForTransition() = intArrayOf(R.id.dict_list)

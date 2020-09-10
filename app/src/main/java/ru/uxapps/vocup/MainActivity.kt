@@ -44,6 +44,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), NavWorkflow.Rout
         val navWorkflow = supportFragmentManager.findFragmentById(R.id.main_container) as NavWorkflow
         navWorkflow.exitTransition = loadTransition(R.transition.open_add_word_exit)
         navWorkflow.reenterTransition = loadTransition(R.transition.open_add_word_reenter)
+        navWorkflow.postpone()
         // enter
         val addWordWorkflow = AddWordWorkflow()
         addWordWorkflow.sharedElementEnterTransition = loadTransition(R.transition.open_add_word_enter_shared)

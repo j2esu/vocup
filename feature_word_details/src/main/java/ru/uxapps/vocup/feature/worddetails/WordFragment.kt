@@ -8,7 +8,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import ru.uxapps.vocup.feature.BaseFragment
 import ru.uxapps.vocup.feature.awaitValue
-import ru.uxapps.vocup.feature.delayTransition
 import ru.uxapps.vocup.feature.worddetails.databinding.FragmentWordBinding
 import ru.uxapps.vocup.feature.worddetails.di.WordViewModel
 import ru.uxapps.vocup.feature.worddetails.model.WordDetails
@@ -64,7 +63,7 @@ class WordFragment : BaseFragment(R.layout.fragment_word), AddTransDialog.Host, 
                 host<Router>().onWordDeleted(it)
             }
         }
-        delayTransition {
+        postponeUntil {
             detailsModel.translations.awaitValue()
             detailsModel.text.awaitValue()
             detailsModel.pron.awaitValue()
