@@ -17,6 +17,8 @@
 
     <style name="Vocup.AppBar" parent="@style/Widget.MaterialComponents.AppBarLayout.Primary">
         <item name="android:background">?colorPrimarySurface</item>
+        <item name="android:stateListAnimator">@null</item>
+        <item name="android:elevation">4dp</item>
     </style>
 
 </resources>
