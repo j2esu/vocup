@@ -15,6 +15,10 @@ import androidx.transition.Visibility
 
 class ScaleVisibilityTransition(context: Context, attrs: AttributeSet) : Visibility(context, attrs) {
 
+    companion object {
+        private const val DEF_DURATION = 200L
+    }
+
     override fun onAppear(
         sceneRoot: ViewGroup, view: View,
         startValues: TransitionValues?, endValues: TransitionValues?
@@ -25,9 +29,10 @@ class ScaleVisibilityTransition(context: Context, attrs: AttributeSet) : Visibil
         view.scaleX = 0f
         view.scaleY = 0f
         return ObjectAnimator.ofPropertyValuesHolder(view, scaleX, scaleY).also {
+            it.duration = DEF_DURATION
+            it.interpolator = DecelerateInterpolator()
             // set start delay to allow prev fab to finish hide
             it.startDelay = if (duration >= 0) duration else it.duration
-            it.interpolator = DecelerateInterpolator()
         }
     }
 
@@ -45,6 +50,7 @@ class ScaleVisibilityTransition(context: Context, attrs: AttributeSet) : Visibil
         val scaleX = PropertyValuesHolder.ofFloat(View.SCALE_X, 1f, 0f)
         val scaleY = PropertyValuesHolder.ofFloat(View.SCALE_Y, 1f, 0f)
         return ObjectAnimator.ofPropertyValuesHolder(view, scaleX, scaleY).also {
+            it.duration = DEF_DURATION
             it.interpolator = AccelerateInterpolator()
         }
     }

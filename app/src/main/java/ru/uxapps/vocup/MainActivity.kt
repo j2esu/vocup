@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), NavWorkflow.Rout
         navWorkflow.postpone()
         // enter
         val addWordWorkflow = AddWordWorkflow()
-        addWordWorkflow.sharedElementEnterTransition = loadTransition(R.transition.open_add_word_enter_shared)
+        addWordWorkflow.sharedElementEnterTransition = loadTransition(R.transition.open_add_word_shared_enter)
             .also { softInput.nextShowDelay = it.duration }
         // transaction
         supportFragmentManager.commit {

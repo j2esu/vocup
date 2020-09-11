@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <transitionSet xmlns:android="http://schemas.android.com/apk/res/android">
-    <fade />
+    <fade>
+        <targets>
+            <target android:excludeName="@string/trans_nav_bar" />
+            <target android:excludeName="@string/trans_dict_toolbar" />
+        </targets>
+    </fade>
+    <fade android:startDelay="50" android:duration="250">
+        <targets>
+            <target android:targetName="@string/trans_dict_toolbar" />
+        </targets>
+    </fade>
     <slide
         android:interpolator="@android:interpolator/accelerate_quad"
         android:slideEdge="bottom"

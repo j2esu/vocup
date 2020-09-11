@@ -39,7 +39,8 @@ class DictWorkflow : BaseFragment(R.layout.workflow_dict), DictFragment.Router, 
         dictFrag.postpone()
         // setup enter
         val wordFrag = WordFragment().apply { arguments = WordFragment.argsOf(text) }
-        wordFrag.sharedElementEnterTransition = loadTransition(R.transition.open_word_enter_shared)
+        wordFrag.sharedElementEnterTransition = loadTransition(R.transition.open_word_shared_enter)
+        wordFrag.sharedElementReturnTransition = loadTransition(R.transition.open_word_shared_return)
         wordFrag.postpone()
         // run transaction
         childFragmentManager.commit {
