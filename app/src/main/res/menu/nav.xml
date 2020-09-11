@@ -3,19 +3,19 @@
 
     <item
         android:id="@+id/menu_nav_dict"
-        android:icon="@drawable/ic_dict"
+        android:icon="@drawable/dict_anim_sel"
         android:title="@string/title_dict"
         />
 
     <item
         android:id="@+id/menu_nav_learn"
-        android:icon="@drawable/ic_learn"
+        android:icon="@drawable/learn_anim_sel"
         android:title="@string/title_learn"
         />
 
     <item
         android:id="@+id/menu_nav_explore"
-        android:icon="@drawable/ic_explore"
+        android:icon="@drawable/explore_anim_sel"
         android:title="@string/title_explore"
         />
 

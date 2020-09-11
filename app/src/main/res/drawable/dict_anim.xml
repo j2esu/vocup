@@ -1,0 +1,38 @@
+<animated-vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt">
+    <aapt:attr name="android:drawable">
+        <vector
+            android:name="vector"
+            android:width="24dp"
+            android:height="24dp"
+            android:viewportWidth="24"
+            android:viewportHeight="24">
+            <path
+                android:name="path"
+                android:pathData="M 4 6 L 2 6 L 2 20 C 2 21.1 2.9 22 4 22 L 18 22 L 18 20 L 4 20 L 4 6 Z M 20 2 L 8 2 C 6.9 2 6 2.9 6 4 L 6 16 C 6 17.1 6.9 18 8 18 L 20 18 C 21.1 18 22 17.1 22 16 L 22 4 C 22 2.9 21.1 2 20 2 Z M 19 11 L 9 11 L 9 9 L 19 9 L 19 11 Z M 15 15 L 9 15 L 9 13 L 15 13 L 15 15 Z M 19 7 L 9 7 L 9 5 L 19 5 L 19 7 Z"
+                android:fillColor="#000000"/>
+        </vector>
+    </aapt:attr>
+    <target android:name="path">
+        <aapt:attr name="android:animation">
+            <set>
+                <objectAnimator
+                    android:propertyName="pathData"
+                    android:duration="500"
+                    android:valueFrom="M 4 6 L 2 6 L 2 20 C 2 21.1 2.9 22 4 22 L 18 22 L 18 20 L 4 20 L 4 6 Z M 20 2 L 8 2 C 6.9 2 6 2.9 6 4 L 6 16 C 6 17.1 6.9 18 8 18 L 20 18 C 21.1 18 22 17.1 22 16 L 22 4 C 22 2.9 21.1 2 20 2 Z M 19 11 L 9 11 L 9 9 L 19 9 L 19 11 Z M 15 15 L 9 15 L 9 13 L 15 13 L 15 15 Z M 19 7 L 9 7 L 9 5 L 19 5 L 19 7 Z"
+                    android:valueTo="M 4 6 L 2 6 L 2 20 C 2 21.1 2.9 22 4 22 L 18 22 L 18 20 L 4 20 L 4 6 Z M 20 2 L 8 2 C 6.9 2 6 2.9 6 4 L 6 16 C 6 17.1 6.9 18 8 18 L 20 18 C 21.1 18 22 17.1 22 16 L 22 4 C 22 2.9 21.1 2 20 2 Z M 13.602 11 L 9 11 L 9 9 L 13.602 9 L 13.602 11 Z M 10.029 15 L 9 15 L 9 13 L 10.029 13 L 10.029 15 Z M 11.346 7 L 9 7 L 9 5 L 11.346 5 L 11.346 7 Z"
+                    android:valueType="pathType"
+                    android:interpolator="@android:interpolator/fast_out_slow_in"/>
+                <objectAnimator
+                    android:propertyName="pathData"
+                    android:startOffset="500"
+                    android:duration="500"
+                    android:valueFrom="M 4 6 L 2 6 L 2 20 C 2 21.1 2.9 22 4 22 L 18 22 L 18 20 L 4 20 L 4 6 Z M 20 2 L 8 2 C 6.9 2 6 2.9 6 4 L 6 16 C 6 17.1 6.9 18 8 18 L 20 18 C 21.1 18 22 17.1 22 16 L 22 4 C 22 2.9 21.1 2 20 2 Z M 13.602 11 L 9 11 L 9 9 L 13.602 9 L 13.602 11 Z M 10.029 15 L 9 15 L 9 13 L 10.029 13 L 10.029 15 Z M 11.346 7 L 9 7 L 9 5 L 11.346 5 L 11.346 7 Z"
+                    android:valueTo="M 4 6 L 2 6 L 2 20 C 2 21.1 2.9 22 4 22 L 18 22 L 18 20 L 4 20 L 4 6 Z M 20 2 L 8 2 C 6.9 2 6 2.9 6 4 L 6 16 C 6 17.1 6.9 18 8 18 L 20 18 C 21.1 18 22 17.1 22 16 L 22 4 C 22 2.9 21.1 2 20 2 Z M 19 11 L 9 11 L 9 9 L 19 9 L 19 11 Z M 15 15 L 9 15 L 9 13 L 15 13 L 15 15 Z M 19 7 L 9 7 L 9 5 L 19 5 L 19 7 Z"
+                    android:valueType="pathType"
+                    android:interpolator="@android:interpolator/fast_out_slow_in"/>
+            </set>
+        </aapt:attr>
+    </target>
+</animated-vector>
