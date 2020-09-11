@@ -8,4 +8,6 @@
     <string name="translation_language">Translation language</string>
     <string name="add_word_hint">Search words</string>
     <string name="save_to_dict">Save to dictionary</string>
+
+    <string name="trans_add_word_toolbar" translatable="false">add_word_toolbar</string>
 </resources>

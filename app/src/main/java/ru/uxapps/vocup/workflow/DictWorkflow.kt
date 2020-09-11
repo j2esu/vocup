@@ -44,7 +44,7 @@ class DictWorkflow : BaseFragment(R.layout.workflow_dict), DictFragment.Router, 
         // run transaction
         childFragmentManager.commit {
             replace(R.id.dict_container, wordFrag)
-            addSharedElement(srcView, "word_root")
+            addSharedElement(srcView, getString(R.string.trans_word_root))
             setReorderingAllowed(true)
             addToBackStack(null)
         }

@@ -4,13 +4,13 @@
     >
     <explode>
         <targets>
-            <target android:excludeName="dict_add" />
-            <target android:excludeName="dict_toolbar" />
+            <target android:excludeName="@string/trans_dict_add" />
+            <target android:excludeName="@string/trans_dict_toolbar" />
         </targets>
     </explode>
     <fade>
         <targets>
-            <target android:excludeName="dict_add" />
+            <target android:excludeName="@string/trans_dict_add" />
         </targets>
     </fade>
     <transitionSet>
@@ -19,7 +19,7 @@
             tools:ignore="Instantiatable"
             />
         <targets>
-            <target android:targetName="dict_add" />
+            <target android:targetName="@string/trans_dict_add" />
         </targets>
     </transitionSet>
 </transitionSet>

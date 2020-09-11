@@ -10,7 +10,7 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:transitionName="dict_toolbar"
+        android:transitionName="@string/trans_dict_toolbar"
         >
 
         <com.google.android.material.appbar.MaterialToolbar
@@ -53,7 +53,7 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:contentDescription="@string/add_word"
-        android:transitionName="dict_add"
+        android:transitionName="@string/trans_dict_add"
         app:srcCompat="@drawable/ic_add"
         />
 

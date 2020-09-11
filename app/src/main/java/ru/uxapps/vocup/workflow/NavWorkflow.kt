@@ -31,7 +31,7 @@ class NavWorkflow : BaseFragment(R.layout.workflow_nav), DictWorkflow.Router {
             }
         }
         val bind = WorkflowNavBinding.bind(view)
-        bind.navPager.apply {
+        bind.navBar.apply {
             setOnNavigationItemSelectedListener {
                 if (selectedItemId != it.itemId) {
                     // exit

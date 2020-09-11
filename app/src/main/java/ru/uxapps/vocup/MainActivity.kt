@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), NavWorkflow.Rout
         supportFragmentManager.commit {
             replace(R.id.main_container, addWordWorkflow)
             setPrimaryNavigationFragment(addWordWorkflow)
-            addSharedElement(srcView, "add_word_toolbar")
+            addSharedElement(srcView, getString(R.string.trans_add_word_toolbar))
             addToBackStack(null)
             setReorderingAllowed(true)
         }

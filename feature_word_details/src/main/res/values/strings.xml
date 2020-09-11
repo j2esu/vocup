@@ -7,4 +7,6 @@
     <string name="edit_translation">Edit translation</string>
     <string name="translation_deleted">Translation was deleted</string>
     <string name="listen_pron">Listen</string>
+
+    <string name="trans_word_root" translatable="false">word_root</string>
 </resources>

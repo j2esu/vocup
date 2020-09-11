@@ -6,7 +6,7 @@
         android:slideEdge="bottom"
         >
         <targets>
-            <target android:targetName="nav_pager" />
+            <target android:targetName="@string/trans_nav_bar" />
         </targets>
     </slide>
 </transitionSet>

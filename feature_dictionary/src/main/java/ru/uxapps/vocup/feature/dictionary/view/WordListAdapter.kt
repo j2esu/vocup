@@ -44,7 +44,7 @@ internal class WordListAdapter(
                 text = context.getString(R.string.pron_pattern, word.pron)
             }
             wordProgress.setProgress(word.progress)
-            itemView.transitionName = "word_${word.text}"
+            itemView.transitionName = root.context.getString(R.string.trans_word_item_pattern, word.text)
         }
     }
 }

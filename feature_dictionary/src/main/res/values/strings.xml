@@ -4,4 +4,8 @@
     <string name="no_translations">No translations</string>
     <string name="no_words">No words yet</string>
     <string name="add_word">Add word</string>
+
+    <string name="trans_dict_add" translatable="false">dict_add</string>
+    <string name="trans_dict_toolbar" translatable="false">dict_toolbar</string>
+    <string name="trans_word_item_pattern" translatable="false">word_item_%s</string>
 </resources>
