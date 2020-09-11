@@ -8,7 +8,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
-import android.view.animation.DecelerateInterpolator
+import android.view.animation.OvershootInterpolator
 import android.widget.ImageView
 import androidx.transition.TransitionValues
 import androidx.transition.Visibility
@@ -30,7 +30,7 @@ class ScaleVisibilityTransition(context: Context, attrs: AttributeSet) : Visibil
         view.scaleY = 0f
         return ObjectAnimator.ofPropertyValuesHolder(view, scaleX, scaleY).also {
             it.duration = DEF_DURATION
-            it.interpolator = DecelerateInterpolator()
+            it.interpolator = OvershootInterpolator()
             // set start delay to allow prev fab to finish hide
             it.startDelay = if (duration >= 0) duration else it.duration
         }
