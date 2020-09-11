@@ -1,10 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<transitionSet xmlns:android="http://schemas.android.com/apk/res/android">
+<transitionSet xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
     <explode>
         <targets>
             <target android:excludeName="dict_add" />
             <target android:excludeName="dict_toolbar" />
         </targets>
     </explode>
-    <fade />
+    <fade>
+        <targets>
+            <target android:excludeName="dict_add" />
+        </targets>
+    </fade>
+    <transitionSet>
+        <transition
+            class="ru.uxapps.vocup.transitions.ScaleVisibilityTransition"
+            tools:ignore="Instantiatable"
+            />
+        <targets>
+            <target android:targetName="dict_add" />
+        </targets>
+    </transitionSet>
 </transitionSet>
