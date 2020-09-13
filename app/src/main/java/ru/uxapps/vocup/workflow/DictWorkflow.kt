@@ -52,10 +52,10 @@ class DictWorkflow : BaseFragment(R.layout.workflow_dict), DictFragment.Router, 
         dictFrag.postpone()
         // setup enter
         val wordFrag = WordFragment().apply { arguments = WordFragment.argsOf(text) }
-        wordFrag.sharedElementEnterTransition = MaterialContainerTransform().also {
-            it.duration = 400
-            it.drawingViewId = R.id.dict_container
-            it.setAllContainerColors(requireContext().getColorAttr(android.R.attr.colorBackground))
+        wordFrag.sharedElementEnterTransition = MaterialContainerTransform().apply {
+            duration = 400
+            drawingViewId = R.id.dict_container
+            setAllContainerColors(requireContext().getColorAttr(android.R.attr.colorBackground))
         }
         wordFrag.postpone()
         // run transaction

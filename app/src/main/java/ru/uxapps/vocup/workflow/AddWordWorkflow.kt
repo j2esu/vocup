@@ -1,15 +1,18 @@
 package ru.uxapps.vocup.workflow
 
 import android.view.View
-import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.commit
 import androidx.fragment.app.commitNow
 import androidx.lifecycle.lifecycleScope
+import androidx.transition.TransitionSet
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.transition.MaterialContainerTransform
+import com.google.android.material.transition.MaterialElevationScale
 import kotlinx.coroutines.launch
 import ru.uxapps.vocup.R
 import ru.uxapps.vocup.feature.BaseFragment
 import ru.uxapps.vocup.feature.addword.AddWordFragment
+import ru.uxapps.vocup.feature.getColorAttr
 import ru.uxapps.vocup.feature.worddetails.WordFragment
 
 class AddWordWorkflow : BaseFragment(R.layout.workflow_add_word), AddWordFragment.Router, WordFragment.Router {
@@ -22,11 +25,28 @@ class AddWordWorkflow : BaseFragment(R.layout.workflow_add_word), AddWordFragmen
         }
     }
 
-    override fun openWord(text: String) {
+    override fun openWord(text: String, srcView: View) {
+        // exit
+        val addWordFragment = childFragmentManager.findFragmentById(R.id.add_word_container) as AddWordFragment
+        addWordFragment.exitTransition = TransitionSet().apply {
+            duration = 400
+            addTransition(MaterialElevationScale(false))
+        }
+        addWordFragment.postpone()
+        // enter
+        val wordFragment = WordFragment().apply { arguments = WordFragment.argsOf(text) }
+        wordFragment.sharedElementEnterTransition = MaterialContainerTransform().apply {
+            duration = 400
+            drawingViewId = R.id.add_word_container
+            setAllContainerColors(requireContext().getColorAttr(android.R.attr.colorBackground))
+        }
+        wordFragment.postpone()
+        // transition
         childFragmentManager.commit {
-            replace(R.id.add_word_container, WordFragment::class.java, WordFragment.argsOf(text))
+            replace(R.id.add_word_container, wordFragment)
+            addSharedElement(srcView, getString(R.string.trans_word_root))
             addToBackStack(null)
-            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            setReorderingAllowed(true)
         }
     }
 

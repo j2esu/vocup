@@ -20,11 +20,12 @@ import ru.uxapps.vocup.feature.softInput
 
 internal class AddWordView(
     private val bind: FragmentAddWordBinding,
+    private val init: Boolean,
     private val callback: Callback
 ) {
 
     interface Callback {
-        fun onOpen(item: DefItem)
+        fun onOpen(item: DefItem, srcView: View)
         fun onSave(item: DefItem)
         fun onInput(input: String)
         fun onLangClick(lang: Language)
@@ -33,11 +34,11 @@ internal class AddWordView(
         fun onCompClick(text: String)
     }
 
-    private val defAdapter = DefListAdapter { item ->
+    private val defAdapter = DefListAdapter { item, srcView ->
         if (!item.saved || item.trans?.any { !it.second } == true) {
             callback.onSave(item)
         } else {
-            callback.onOpen(item)
+            callback.onOpen(item, srcView)
         }
     }
     private val errorSnack = Snackbar.make(bind.root, R.string.cant_load_translations, Snackbar.LENGTH_INDEFINITE)
@@ -68,7 +69,9 @@ internal class AddWordView(
                     callback.onInput(it.toString())
                 }
             }
-            softInput.show(this)
+            if (init) {
+                softInput.show(this)
+            }
             setOnEditorActionListener { v, actionId, _ ->
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     callback.onInputDone(v.text.toString())

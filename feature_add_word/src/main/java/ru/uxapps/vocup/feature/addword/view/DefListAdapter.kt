@@ -1,17 +1,18 @@
 package ru.uxapps.vocup.feature.addword.view
 
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import ru.uxapps.vocup.feature.addword.model.AddWord.DefItem
 import ru.uxapps.vocup.feature.addword.R
 import ru.uxapps.vocup.feature.addword.databinding.ItemDefBinding
+import ru.uxapps.vocup.feature.addword.model.AddWord.DefItem
 import ru.uxapps.vocup.feature.inflateBind
 
 internal class DefListAdapter(
-    private val onClick: (DefItem) -> Unit
+    private val onClick: (DefItem, View) -> Unit
 ) :
     ListAdapter<DefItem, DefListAdapter.DefVh>(
         object : DiffUtil.ItemCallback<DefItem>() {
@@ -30,7 +31,7 @@ internal class DefListAdapter(
     inner class DefVh(private val bind: ItemDefBinding) : ViewHolder(bind.root) {
 
         init {
-            bind.defBg.setOnClickListener { onClick(getItem(adapterPosition)) }
+            bind.defBg.setOnClickListener { onClick(getItem(adapterPosition), itemView) }
         }
 
         fun bind(item: DefItem) {
@@ -58,6 +59,7 @@ internal class DefListAdapter(
                 isVisible = item.saved
                 isActivated = item.trans?.all { it.second } == true
             }
+            bind.root.transitionName = bind.root.context.getString(R.string.trans_def_item_pattern, item.text)
         }
     }
 }

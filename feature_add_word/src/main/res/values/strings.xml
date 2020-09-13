@@ -10,4 +10,5 @@
     <string name="save_to_dict">Save to dictionary</string>
 
     <string name="trans_add_word_toolbar" translatable="false">add_word_toolbar</string>
+    <string name="trans_def_item_pattern" translatable="false">def_item_%s</string>
 </resources>
