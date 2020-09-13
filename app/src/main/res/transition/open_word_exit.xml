@@ -16,7 +16,7 @@
     </slide>
     <transitionSet>
         <transition
-            class="ru.uxapps.vocup.transitions.ScaleVisibilityTransition"
+            class="ru.uxapps.vocup.transition.ScaleVisibility"
             tools:ignore="Instantiatable"
             />
         <targets>

@@ -2,12 +2,14 @@ package ru.uxapps.vocup
 
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN
+import android.view.WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.commit
-import androidx.fragment.app.commitNow
+import androidx.fragment.app.*
+import ru.uxapps.vocup.feature.SoftInputImp
 import ru.uxapps.vocup.feature.SoftInputProvider
-import ru.uxapps.vocup.feature.loadTransition
-import ru.uxapps.vocup.util.SoftInputImp
+import ru.uxapps.vocup.feature.worddetails.WordFragment
+import ru.uxapps.vocup.transition.loadTransition
 import ru.uxapps.vocup.workflow.AddWordWorkflow
 import ru.uxapps.vocup.workflow.NavWorkflow
 
@@ -24,7 +26,26 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), NavWorkflow.Rout
                 setPrimaryNavigationFragment(navWorkflow)
             }
         }
-        softInput.configureInputMode()
+        configureInputMode()
+    }
+
+    private fun configureInputMode() {
+        // need custom ime settings in some fragments for better ui
+        supportFragmentManager.registerFragmentLifecycleCallbacks(
+            object : FragmentManager.FragmentLifecycleCallbacks() {
+                override fun onFragmentStarted(fm: FragmentManager, f: Fragment) {
+                    when (f) {
+                        is WordFragment -> {
+                            window.setSoftInputMode(SOFT_INPUT_ADJUST_PAN)
+                        }
+                        !is DialogFragment -> {
+                            window.setSoftInputMode(SOFT_INPUT_ADJUST_RESIZE)
+                        }
+                    }
+                }
+            },
+            true
+        )
     }
 
     override fun openAddWord(srcView: View) {

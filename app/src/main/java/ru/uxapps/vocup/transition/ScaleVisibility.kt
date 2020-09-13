@@ -1,4 +1,4 @@
-package ru.uxapps.vocup.transitions
+package ru.uxapps.vocup.transition
 
 import android.animation.Animator
 import android.animation.ObjectAnimator
@@ -15,7 +15,7 @@ import android.widget.ImageView
 import androidx.transition.TransitionValues
 import androidx.transition.Visibility
 
-class ScaleVisibilityTransition(context: Context, attrs: AttributeSet) : Visibility(context, attrs) {
+class ScaleVisibility(context: Context, attrs: AttributeSet) : Visibility(context, attrs) {
 
     companion object {
         private const val DEF_DURATION = 200L

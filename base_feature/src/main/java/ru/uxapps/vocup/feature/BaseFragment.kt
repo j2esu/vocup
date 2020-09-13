@@ -8,11 +8,16 @@ import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.asFlow
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withTimeoutOrNull
 import ru.uxapps.vocup.util.forEachParentRecursive
+import kotlin.coroutines.resume
 
 abstract class BaseFragment(@LayoutRes layoutRes: Int) : Fragment(layoutRes) {
 
@@ -140,4 +145,16 @@ abstract class BaseFragment(@LayoutRes layoutRes: Int) : Fragment(layoutRes) {
             }
         } ?: emptyMap()
     }
+}
+
+suspend fun BaseFragment.awaitReady() {
+    suspendCancellableCoroutine<Unit> {
+        doOnReadyForTransition {
+            it.resume(Unit)
+        }
+    }
+}
+
+suspend fun LiveData<*>.awaitValue() {
+    asFlow().first()
 }

@@ -9,7 +9,7 @@ import ru.uxapps.vocup.R
 import ru.uxapps.vocup.feature.BaseFragment
 import ru.uxapps.vocup.feature.awaitReady
 import ru.uxapps.vocup.feature.dictionary.DictFragment
-import ru.uxapps.vocup.feature.loadTransition
+import ru.uxapps.vocup.transition.loadTransition
 import ru.uxapps.vocup.feature.worddetails.WordFragment
 import ru.uxapps.vocup.util.host
 
