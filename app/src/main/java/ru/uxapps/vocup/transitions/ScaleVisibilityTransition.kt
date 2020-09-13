@@ -4,9 +4,11 @@ import android.animation.Animator
 import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
 import android.content.Context
+import android.graphics.Outline
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewOutlineProvider
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.OvershootInterpolator
 import android.widget.ImageView
@@ -45,8 +47,15 @@ class ScaleVisibilityTransition(context: Context, attrs: AttributeSet) : Visibil
             return null
         }
         // imitate prev view elevation
-        view.background = startValues?.view?.background
-        view.elevation = startValues?.view?.elevation ?: 0f
+        val startView = startValues?.view
+        if (startView != null && startView.elevation > 0) {
+            view.outlineProvider = object : ViewOutlineProvider() {
+                override fun getOutline(view: View, outline: Outline) {
+                    startView.outlineProvider?.getOutline(startView, outline)
+                }
+            }
+            view.elevation = startView.elevation
+        }
         val scaleX = PropertyValuesHolder.ofFloat(View.SCALE_X, 1f, 0f)
         val scaleY = PropertyValuesHolder.ofFloat(View.SCALE_Y, 1f, 0f)
         return ObjectAnimator.ofPropertyValuesHolder(view, scaleX, scaleY).also {
