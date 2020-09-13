@@ -15,11 +15,14 @@ import android.widget.ImageView
 import androidx.transition.TransitionValues
 import androidx.transition.Visibility
 
-class ScaleVisibilityTransition(context: Context, attrs: AttributeSet) : Visibility(context, attrs) {
+class ScaleVisibility : Visibility {
 
     companion object {
         private const val DEF_DURATION = 200L
     }
+
+    constructor() : super()
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
     override fun onAppear(
         sceneRoot: ViewGroup, view: View,
