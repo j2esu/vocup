@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <color android:color="?colorPrimary" />
+    </item>
+    <item
+        android:width="24dp"
+        android:height="24dp"
+        android:drawable="@drawable/delete_item_hint_img"
+        android:gravity="end|center_vertical"
+        android:right="16dp"
+        />
+    <item
+        android:width="24dp"
+        android:height="24dp"
+        android:drawable="@drawable/delete_item_hint_img"
+        android:gravity="start|center_vertical"
+        android:left="16dp"
+        />
+</layer-list>
