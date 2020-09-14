@@ -10,13 +10,14 @@ import ru.uxapps.vocup.feature.addword.di.AddWordViewModel
 import ru.uxapps.vocup.feature.addword.model.AddWord
 import ru.uxapps.vocup.feature.addword.model.AddWord.DefItem
 import ru.uxapps.vocup.feature.addword.view.AddWordView
+import ru.uxapps.vocup.feature.awaitValue
 import ru.uxapps.vocup.util.host
 import javax.inject.Inject
 
 class AddWordFragment : BaseFragment(R.layout.fragment_add_word) {
 
     interface Router {
-        fun openWord(text: String)
+        fun openWord(text: String, srcView: View)
     }
 
     private val vm by viewModels<AddWordViewModel>()
@@ -25,8 +26,8 @@ class AddWordFragment : BaseFragment(R.layout.fragment_add_word) {
 
     override fun onViewReady(view: View, init: Boolean) {
         vm.addWordComponent.inject(this)
-        val v = AddWordView(FragmentAddWordBinding.bind(view), object : AddWordView.Callback {
-            override fun onOpen(item: DefItem) = host<Router>().openWord(item.text)
+        val v = AddWordView(FragmentAddWordBinding.bind(view), init, object : AddWordView.Callback {
+            override fun onOpen(item: DefItem, srcView: View) = host<Router>().openWord(item.text, srcView)
             override fun onSave(item: DefItem) = addWordModel.onSave(item)
             override fun onInput(input: String) = addWordModel.onInput(input)
             override fun onLangClick(lang: Language) = addWordModel.onChooseLang(lang)
@@ -39,5 +40,10 @@ class AddWordFragment : BaseFragment(R.layout.fragment_add_word) {
             languages.observe(viewLifecycleOwner, v::setLanguages)
             state.observe(viewLifecycleOwner, v::setState)
         }
+        postponeUntil {
+            addWordModel.state.awaitValue()
+        }
     }
+
+    override fun getViewsSavedForTransition() = intArrayOf(R.id.add_word_def_list)
 }

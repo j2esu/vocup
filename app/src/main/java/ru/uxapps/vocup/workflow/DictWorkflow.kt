@@ -3,14 +3,18 @@ package ru.uxapps.vocup.workflow
 import android.view.View
 import androidx.fragment.app.commit
 import androidx.lifecycle.lifecycleScope
+import androidx.transition.TransitionSet
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.transition.MaterialContainerTransform
+import com.google.android.material.transition.MaterialElevationScale
 import kotlinx.coroutines.launch
 import ru.uxapps.vocup.R
 import ru.uxapps.vocup.feature.BaseFragment
 import ru.uxapps.vocup.feature.awaitReady
 import ru.uxapps.vocup.feature.dictionary.DictFragment
-import ru.uxapps.vocup.transition.loadTransition
+import ru.uxapps.vocup.feature.getColorAttr
 import ru.uxapps.vocup.feature.worddetails.WordFragment
+import ru.uxapps.vocup.transitions.ScaleVisibility
 import ru.uxapps.vocup.util.host
 
 class DictWorkflow : BaseFragment(R.layout.workflow_dict), DictFragment.Router, WordFragment.Router {
@@ -35,12 +39,33 @@ class DictWorkflow : BaseFragment(R.layout.workflow_dict), DictFragment.Router, 
     override fun openWord(text: String, srcView: View) {
         // setup exit
         val dictFrag = childFragmentManager.findFragmentById(R.id.dict_container) as DictFragment
-        dictFrag.exitTransition = loadTransition(R.transition.open_word_exit)
+        dictFrag.exitTransition = TransitionSet()
+            .addTransition(MaterialElevationScale(false).apply {
+                duration = 400
+                excludeTarget(getString(R.string.trans_dict_add), true)
+            })
+            .addTransition(ScaleVisibility().apply {
+                duration = 100
+                addTarget(getString(R.string.trans_dict_add))
+            })
+        dictFrag.reenterTransition = TransitionSet()
+            .addTransition(MaterialElevationScale(true).apply {
+                duration = 400
+                excludeTarget(getString(R.string.trans_dict_add), true)
+            })
+            .addTransition(ScaleVisibility().apply {
+                startDelay = 200
+                duration = 200
+                addTarget(getString(R.string.trans_dict_add))
+            })
         dictFrag.postpone()
         // setup enter
         val wordFrag = WordFragment().apply { arguments = WordFragment.argsOf(text) }
-        wordFrag.sharedElementEnterTransition = loadTransition(R.transition.open_word_shared_enter)
-        wordFrag.sharedElementReturnTransition = loadTransition(R.transition.open_word_shared_return)
+        wordFrag.sharedElementEnterTransition = MaterialContainerTransform().apply {
+            duration = 400
+            drawingViewId = R.id.dict_container
+            setAllContainerColors(requireContext().getColorAttr(android.R.attr.colorBackground))
+        }
         wordFrag.postpone()
         // run transaction
         childFragmentManager.commit {

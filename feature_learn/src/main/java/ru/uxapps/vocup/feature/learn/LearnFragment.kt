@@ -1,6 +1,10 @@
 package ru.uxapps.vocup.feature.learn
 
-import androidx.fragment.app.Fragment
+import android.view.View
+import ru.uxapps.vocup.feature.BaseFragment
 
-class LearnFragment : Fragment(R.layout.fragment_learn) {
+class LearnFragment : BaseFragment(R.layout.fragment_learn) {
+
+    override fun onViewReady(view: View, init: Boolean) {
+    }
 }

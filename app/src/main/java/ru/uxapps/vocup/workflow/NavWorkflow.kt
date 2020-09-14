@@ -3,13 +3,17 @@ package ru.uxapps.vocup.workflow
 import android.view.View
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
+import androidx.transition.TransitionSet
+import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.transition.MaterialFadeThrough
 import ru.uxapps.vocup.R
 import ru.uxapps.vocup.databinding.WorkflowNavBinding
 import ru.uxapps.vocup.feature.BaseFragment
 import ru.uxapps.vocup.feature.awaitReady
 import ru.uxapps.vocup.feature.explore.ExploreFragment
 import ru.uxapps.vocup.feature.learn.LearnFragment
-import ru.uxapps.vocup.transition.loadTransition
+import ru.uxapps.vocup.transitions.ScaleVisibility
 import ru.uxapps.vocup.util.host
 
 class NavWorkflow : BaseFragment(R.layout.workflow_nav), DictWorkflow.Router {
@@ -34,9 +38,19 @@ class NavWorkflow : BaseFragment(R.layout.workflow_nav), DictWorkflow.Router {
         bind.navBar.apply {
             setOnNavigationItemSelectedListener {
                 if (selectedItemId != it.itemId) {
+                    val changeNavTransitProvider = {
+                        TransitionSet()
+                            .addTransition(MaterialFadeThrough().apply {
+                                excludeTarget(AppBarLayout::class.java, true)
+                                excludeTarget(FloatingActionButton::class.java, true)
+                            })
+                            .addTransition(ScaleVisibility().apply {
+                                addTarget(FloatingActionButton::class.java)
+                            })
+                    }
                     // exit
-                    val currentFragment = childFragmentManager.findFragmentById(R.id.nav_container)!!
-                    currentFragment.exitTransition = loadTransition(R.transition.change_nav)
+                    val currentFragment = childFragmentManager.findFragmentById(R.id.nav_container) as BaseFragment
+                    currentFragment.exitTransition = changeNavTransitProvider()
                     // enter
                     val newFragment = when (it.itemId) {
                         R.id.menu_nav_dict -> DictWorkflow()
@@ -44,7 +58,7 @@ class NavWorkflow : BaseFragment(R.layout.workflow_nav), DictWorkflow.Router {
                         R.id.menu_nav_explore -> ExploreFragment()
                         else -> error("Unknown menu: ${it.title}")
                     }
-                    newFragment.enterTransition = loadTransition(R.transition.change_nav)
+                    newFragment.enterTransition = changeNavTransitProvider()
                     // transaction
                     childFragmentManager.commit {
                         replace(R.id.nav_container, newFragment)

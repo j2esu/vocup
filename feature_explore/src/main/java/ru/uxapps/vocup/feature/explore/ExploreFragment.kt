@@ -1,6 +1,10 @@
 package ru.uxapps.vocup.feature.explore
 
-import androidx.fragment.app.Fragment
+import android.view.View
+import ru.uxapps.vocup.feature.BaseFragment
 
-class ExploreFragment : Fragment(R.layout.fragment_explore) {
+class ExploreFragment : BaseFragment(R.layout.fragment_explore) {
+
+    override fun onViewReady(view: View, init: Boolean) {
+    }
 }

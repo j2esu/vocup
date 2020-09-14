@@ -6,12 +6,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:transitionName="@string/trans_add_word_root"
     >
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:transitionName="@string/trans_add_word_toolbar"
         >
 
         <com.google.android.material.appbar.MaterialToolbar
@@ -46,6 +46,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:transitionGroup="true"
         >
 
         <androidx.recyclerview.widget.RecyclerView
