@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">Voc Up</string>
 
-    <string name="trans_nav_bar" translatable="false">nav_bar</string>
+    <string name="transit_nav_bar" translatable="false">nav_bar</string>
 </resources>

@@ -42,7 +42,7 @@ class AddWordWorkflow : BaseFragment(R.layout.workflow_add_word), AddWordFragmen
         // transition
         childFragmentManager.commit {
             replace(R.id.add_word_container, wordFragment)
-            addSharedElement(srcView, getString(R.string.trans_word_root))
+            addSharedElement(srcView, getString(R.string.transit_word_root))
             addToBackStack(null)
             setReorderingAllowed(true)
         }

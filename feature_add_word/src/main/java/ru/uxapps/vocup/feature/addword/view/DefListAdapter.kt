@@ -59,7 +59,7 @@ internal class DefListAdapter(
                 isVisible = item.saved
                 isActivated = item.trans?.all { it.second } == true
             }
-            bind.root.transitionName = bind.root.context.getString(R.string.trans_def_item_pattern, item.text)
+            bind.root.transitionName = bind.root.context.getString(R.string.transit_def_item_pattern, item.text)
         }
     }
 }

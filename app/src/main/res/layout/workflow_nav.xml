@@ -18,7 +18,7 @@
         android:id="@+id/nav_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:transitionName="@string/trans_nav_bar"
+        android:transitionName="@string/transit_nav_bar"
         app:menu="@menu/nav"
         />
 

@@ -7,8 +7,7 @@
     <string name="no_translations_found">No translations found</string>
     <string name="translation_language">Translation language</string>
     <string name="add_word_hint">Search words</string>
-    <string name="save_to_dict">Save to dictionary</string>
 
-    <string name="trans_def_item_pattern" translatable="false">def_item_%s</string>
-    <string name="trans_add_word_root" translatable="false">add_word_root</string>
+    <string name="transit_def_item_pattern" translatable="false">def_item_%s</string>
+    <string name="transit_add_word_root" translatable="false">add_word_root</string>
 </resources>

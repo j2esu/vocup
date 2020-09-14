@@ -14,7 +14,7 @@ import ru.uxapps.vocup.feature.awaitReady
 import ru.uxapps.vocup.feature.dictionary.DictFragment
 import ru.uxapps.vocup.feature.getColorAttr
 import ru.uxapps.vocup.feature.worddetails.WordFragment
-import ru.uxapps.vocup.transitions.ScaleVisibility
+import ru.uxapps.vocup.transition.ScaleVisibility
 import ru.uxapps.vocup.util.host
 
 class DictWorkflow : BaseFragment(R.layout.workflow_dict), DictFragment.Router, WordFragment.Router {
@@ -42,21 +42,21 @@ class DictWorkflow : BaseFragment(R.layout.workflow_dict), DictFragment.Router, 
         dictFrag.exitTransition = TransitionSet()
             .addTransition(MaterialElevationScale(false).apply {
                 duration = 400
-                excludeTarget(getString(R.string.trans_dict_add), true)
+                excludeTarget(getString(R.string.transit_dict_add), true)
             })
             .addTransition(ScaleVisibility().apply {
                 duration = 100
-                addTarget(getString(R.string.trans_dict_add))
+                addTarget(getString(R.string.transit_dict_add))
             })
         dictFrag.reenterTransition = TransitionSet()
             .addTransition(MaterialElevationScale(true).apply {
                 duration = 400
-                excludeTarget(getString(R.string.trans_dict_add), true)
+                excludeTarget(getString(R.string.transit_dict_add), true)
             })
             .addTransition(ScaleVisibility().apply {
                 startDelay = 200
                 duration = 200
-                addTarget(getString(R.string.trans_dict_add))
+                addTarget(getString(R.string.transit_dict_add))
             })
         dictFrag.postpone()
         // setup enter
@@ -70,7 +70,7 @@ class DictWorkflow : BaseFragment(R.layout.workflow_dict), DictFragment.Router, 
         // run transaction
         childFragmentManager.commit {
             replace(R.id.dict_container, wordFrag)
-            addSharedElement(srcView, getString(R.string.trans_word_root))
+            addSharedElement(srcView, getString(R.string.transit_word_root))
             setReorderingAllowed(true)
             addToBackStack(null)
         }
