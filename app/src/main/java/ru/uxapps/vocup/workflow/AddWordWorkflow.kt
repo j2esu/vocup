@@ -4,7 +4,6 @@ import android.view.View
 import androidx.fragment.app.commit
 import androidx.fragment.app.commitNow
 import androidx.lifecycle.lifecycleScope
-import androidx.transition.TransitionSet
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialContainerTransform
 import com.google.android.material.transition.MaterialElevationScale
@@ -28,9 +27,8 @@ class AddWordWorkflow : BaseFragment(R.layout.workflow_add_word), AddWordFragmen
     override fun openWord(text: String, srcView: View) {
         // exit
         val addWordFragment = childFragmentManager.findFragmentById(R.id.add_word_container) as AddWordFragment
-        addWordFragment.exitTransition = TransitionSet().apply {
+        addWordFragment.exitTransition = MaterialElevationScale(false).apply {
             duration = 400
-            addTransition(MaterialElevationScale(false))
         }
         addWordFragment.postpone()
         // enter

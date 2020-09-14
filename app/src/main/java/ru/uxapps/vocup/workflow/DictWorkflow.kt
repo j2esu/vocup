@@ -39,16 +39,25 @@ class DictWorkflow : BaseFragment(R.layout.workflow_dict), DictFragment.Router, 
     override fun openWord(text: String, srcView: View) {
         // setup exit
         val dictFrag = childFragmentManager.findFragmentById(R.id.dict_container) as DictFragment
-        dictFrag.exitTransition = TransitionSet().apply {
-            addTransition(MaterialElevationScale(false).apply {
+        dictFrag.exitTransition = TransitionSet()
+            .addTransition(MaterialElevationScale(false).apply {
                 duration = 400
                 excludeTarget(getString(R.string.trans_dict_add), true)
             })
-            addTransition(ScaleVisibility().apply {
+            .addTransition(ScaleVisibility().apply {
+                duration = 100
+                addTarget(getString(R.string.trans_dict_add))
+            })
+        dictFrag.reenterTransition = TransitionSet()
+            .addTransition(MaterialElevationScale(true).apply {
+                duration = 400
+                excludeTarget(getString(R.string.trans_dict_add), true)
+            })
+            .addTransition(ScaleVisibility().apply {
+                startDelay = 200
                 duration = 200
                 addTarget(getString(R.string.trans_dict_add))
             })
-        }
         dictFrag.postpone()
         // setup enter
         val wordFrag = WordFragment().apply { arguments = WordFragment.argsOf(text) }

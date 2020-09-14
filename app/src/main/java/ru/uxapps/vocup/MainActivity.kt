@@ -5,6 +5,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
 import androidx.fragment.app.commitNow
+import androidx.transition.ArcMotion
 import com.google.android.material.transition.Hold
 import com.google.android.material.transition.MaterialContainerTransform
 import ru.uxapps.vocup.feature.SoftInputProvider
@@ -39,7 +40,9 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), NavWorkflow.Rout
         addWordWorkflow.sharedElementEnterTransition = MaterialContainerTransform().apply {
             startContainerColor = getColorAttr(R.attr.colorSecondary)
             endContainerColor = getColorAttr(android.R.attr.colorBackground)
-        }.also { softInput.nextShowDelay = it.duration }
+            softInput.nextShowDelay = 350
+            setPathMotion(ArcMotion())
+        }
         // transaction
         supportFragmentManager.commit {
             replace(R.id.main_container, addWordWorkflow)
