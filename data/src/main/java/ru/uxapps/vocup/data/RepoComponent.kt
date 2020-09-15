@@ -6,9 +6,9 @@ import dagger.Component
 import dagger.Module
 import dagger.Provides
 import ru.uxapps.vocup.data.api.Repo
-import ru.uxapps.vocup.data.imp.FakeApi
-import ru.uxapps.vocup.data.imp.FakeDb
 import ru.uxapps.vocup.data.imp.RepoImp
+import ru.uxapps.vocup.data.imp.api.ApiImp
+import ru.uxapps.vocup.data.imp.db.FakeDb
 import javax.inject.Singleton
 
 @Singleton
@@ -26,5 +26,6 @@ class RepoModule {
 
     @Singleton
     @Provides
-    fun provideRepo(context: Context): Repo = RepoImp(context, FakeDb, FakeApi)
+    fun provideRepo(context: Context): Repo = RepoImp(context, FakeDb, ApiImp())
+
 }

@@ -1,4 +1,4 @@
-package ru.uxapps.vocup.data.imp
+package ru.uxapps.vocup.data.imp.db
 
 import kotlinx.coroutines.flow.Flow
 import ru.uxapps.vocup.data.api.Word

@@ -10,6 +10,8 @@ import ru.uxapps.vocup.data.api.Def
 import ru.uxapps.vocup.data.api.Language
 import ru.uxapps.vocup.data.api.Repo
 import ru.uxapps.vocup.data.api.Word
+import ru.uxapps.vocup.data.imp.api.Api
+import ru.uxapps.vocup.data.imp.db.Db
 
 class RepoImp(
     context: Context,

@@ -1,4 +1,4 @@
-package ru.uxapps.vocup.data.imp
+package ru.uxapps.vocup.data.imp.api
 
 import ru.uxapps.vocup.data.api.Def
 import ru.uxapps.vocup.data.api.Language
