@@ -5,6 +5,9 @@ import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.Query
 
+/**
+ * https://docs.microsoft.com/en-us/azure/cognitive-services/translator/reference/v3-0-reference
+ */
 internal interface DictionaryApi {
 
     @Headers(
@@ -25,5 +28,6 @@ internal data class LookupResponse(
     val displaySource: String,
     val translations: List<Translation>
 ) {
-    data class Translation(val displayTarget: String)
+    data class Translation(val displayTarget: String, val backTranslations: List<BackTranslation>)
+    data class BackTranslation(val displayText: String)
 }

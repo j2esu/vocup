@@ -21,11 +21,28 @@ class ApiImp : Api {
         .create(DictionaryApi::class.java)
 
     override suspend fun getDefinitions(words: List<String>, lang: Language): List<Def> {
-        val requests = words.map { LookupRequest(it) }
-        val responses = dictionary.lookup("en", lang.code, requests)
-        return responses.map { response ->
-            Def(response.displaySource, response.translations.map { it.displayTarget })
+        val engWords = words.filter { word ->
+            word.toCharArray().all { it.toInt() < 128 }
         }
+        val nonEngWords = words - engWords
+        val defs = mutableListOf<Def>()
+        if (engWords.isNotEmpty()) {
+            val requests = engWords.map { LookupRequest(it) }
+            val responses = dictionary.lookup("en", lang.code, requests)
+            defs.addAll(responses.map { response ->
+                Def(response.displaySource, response.translations.map { it.displayTarget })
+            })
+        }
+        if (nonEngWords.isNotEmpty()) {
+            val requests = nonEngWords.map { LookupRequest(it) }
+            val responses = dictionary.lookup(lang.code, "en", requests)
+            defs.addAll(responses.flatMap { response ->
+                response.translations.map { trans ->
+                    Def(trans.displayTarget, trans.backTranslations.map { it.displayText })
+                }
+            })
+        }
+        return defs
     }
 
     override suspend fun getPredictions(input: String): List<String> {
