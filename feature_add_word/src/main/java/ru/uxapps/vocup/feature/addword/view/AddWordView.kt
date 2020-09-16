@@ -41,16 +41,7 @@ internal class AddWordView(
             callback.onOpen(item, srcView)
         }
     }
-    private val errorSnack = Snackbar.make(bind.root, R.string.cant_load_translations, Snackbar.LENGTH_INDEFINITE)
-        .setAction(R.string.retry) { callback.onRetry() }
-        .also {
-            bind.root.addOnAttachStateChangeListener(object : View.OnAttachStateChangeListener {
-                override fun onViewAttachedToWindow(v: View?) {}
-                override fun onViewDetachedFromWindow(v: View?) {
-                    it.dismiss()
-                }
-            })
-        }
+    private var errorSnack: Snackbar? = null
 
     private var handlingCompletion = false
     private val compAdapter = CompletionAdapter {
@@ -91,15 +82,27 @@ internal class AddWordView(
             layoutManager = LinearLayoutManager(context)
             itemAnimator = null
         }
+        bind.root.addOnAttachStateChangeListener(object : View.OnAttachStateChangeListener {
+            override fun onViewAttachedToWindow(v: View?) {}
+            override fun onViewDetachedFromWindow(v: View?) {
+                errorSnack?.dismiss()
+            }
+        })
     }
 
     fun setState(state: State) {
         bind.addWordProgress.isVisible = state is Loading
         bind.addWordDefList.apply {
             if ((state as? Definitions)?.error == true) {
-                errorSnack.show()
+                if (errorSnack == null) {
+                    errorSnack = Snackbar.make(
+                        bind.root, R.string.cant_load_translations, Snackbar.LENGTH_INDEFINITE
+                    ).setAction(R.string.retry) { callback.onRetry() }
+                    errorSnack?.show()
+                }
             } else {
-                errorSnack.dismiss()
+                errorSnack?.dismiss()
+                errorSnack = null
             }
             defAdapter.submitList((state as? Definitions)?.items ?: emptyList())
             isInvisible = state !is Definitions // gone delays animations -> see blink on new list shown
