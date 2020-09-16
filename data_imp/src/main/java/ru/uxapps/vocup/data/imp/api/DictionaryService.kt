@@ -22,7 +22,7 @@ internal interface DictionaryApi {
     ): List<LookupResponse>
 }
 
-data class LookupRequest(val text: String)
+internal data class LookupRequest(val text: String)
 
 internal data class LookupResponse(
     val displaySource: String,

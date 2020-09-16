@@ -12,6 +12,7 @@ import ru.uxapps.vocup.data.api.Repo
 import ru.uxapps.vocup.data.api.Word
 import ru.uxapps.vocup.data.imp.api.Api
 import ru.uxapps.vocup.data.imp.db.Db
+import java.io.IOException
 
 class RepoImp(
     context: Context,
@@ -56,8 +57,14 @@ class RepoImp(
         return Language.Russian
     }
 
-    override suspend fun getDefinitions(word: String, lang: Language): List<Def> =
-        api.getDefinitions((listOf(word) + api.getPredictions(word)).distinct(), currentLang)
+    override suspend fun getDefinitions(word: String, lang: Language): List<Def> {
+        val predictions = try {
+            api.getPredictions(word, lang).take(2)
+        } catch (e: IOException) {
+            emptyList<String>()
+        }
+        return api.getDefinitions((listOf(word) + predictions).distinct(), lang)
+    }
 
     override suspend fun getCompletions(word: String): List<String> = api.getCompletions(word)
     override suspend fun addWord(text: String, trans: List<String>) =

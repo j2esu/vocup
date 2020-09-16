@@ -2,40 +2,49 @@ package ru.uxapps.vocup.data.imp.api
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.HttpException
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import ru.uxapps.vocup.data.api.Def
 import ru.uxapps.vocup.data.api.Language
+import java.io.IOException
 
 class ApiImp : Api {
 
     private val dictionary = Retrofit.Builder()
         .baseUrl("https://api.cognitive.microsofttranslator.com/dictionary/")
         .addConverterFactory(MoshiConverterFactory.create())
-        .client(
-            OkHttpClient.Builder()
-                .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
-                .build()
-        )
+        .client(createOkHttpWithLogging())
         .build()
         .create(DictionaryApi::class.java)
 
-    override suspend fun getDefinitions(words: List<String>, lang: Language): List<Def> {
-        val engWords = words.filter { word ->
-            word.toCharArray().all { it.toInt() < 128 }
-        }
+    private val predictor = Retrofit.Builder()
+        .baseUrl("https://predictor.yandex.net/api/v1/predict.json/")
+        .addConverterFactory(MoshiConverterFactory.create())
+        .client(createOkHttpWithLogging())
+        .build()
+        .create(PredictorService::class.java)
+
+    private fun createOkHttpWithLogging(): OkHttpClient {
+        return OkHttpClient.Builder()
+            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+            .build()
+    }
+
+    override suspend fun getDefinitions(words: List<String>, userLang: Language): List<Def> = withHttp {
+        val engWords = words.filter { isAscii(it) }
         val nonEngWords = words - engWords
         val defs = mutableListOf<Def>()
         if (engWords.isNotEmpty()) {
             val requests = engWords.map { LookupRequest(it) }
-            val responses = dictionary.lookup("en", lang.code, requests)
+            val responses = dictionary.lookup("en", userLang.code, requests)
             defs.addAll(responses.map { response ->
                 Def(response.displaySource, response.translations.map { it.displayTarget })
             })
         }
         if (nonEngWords.isNotEmpty()) {
             val requests = nonEngWords.map { LookupRequest(it) }
-            val responses = dictionary.lookup(lang.code, "en", requests)
+            val responses = dictionary.lookup(userLang.code, "en", requests)
             defs.addAll(responses.flatMap { response ->
                 response.translations.map { trans ->
                     Def(trans.displayTarget, trans.backTranslations.map { it.displayText })
@@ -45,8 +54,15 @@ class ApiImp : Api {
         return defs
     }
 
-    override suspend fun getPredictions(input: String): List<String> {
-        return listOf()
+    override suspend fun getPredictions(input: String, userLang: Language): List<String> = withHttp {
+        val inputLang = if (isAscii(input)) "en" else userLang.code
+        if (PredictorService.SUPPORTED_LANGUAGES.contains(inputLang)) {
+            val response = predictor.complete(input, inputLang)
+            if (!response.endOfWord && response.pos <= 0) {
+                return response.text.map { input.substring(0, input.length + response.pos) + it }
+            }
+        }
+        return emptyList()
     }
 
     override suspend fun getPronunciations(word: String): List<String> {
@@ -55,5 +71,15 @@ class ApiImp : Api {
 
     override suspend fun getCompletions(input: String): List<String> {
         return listOf(input)
+    }
+
+    private fun isAscii(string: String) = string.toCharArray().all { it.toInt() < 128 }
+
+    private inline fun <T> withHttp(action: () -> T): T {
+        return try {
+            action()
+        } catch (e: HttpException) {
+            throw IOException("Http error ${e.code()}: ${e.message()}", e)
+        }
     }
 }
