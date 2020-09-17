@@ -26,6 +26,6 @@ class RepoModule {
 
     @Singleton
     @Provides
-    fun provideRepo(context: Context): Repo = RepoImp(context, FakeDb, ApiImp())
+    fun provideRepo(context: Context): Repo = RepoImp(context, FakeDb, ApiImp(context))
 
 }

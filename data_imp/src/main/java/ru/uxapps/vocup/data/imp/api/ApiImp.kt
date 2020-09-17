@@ -1,5 +1,7 @@
 package ru.uxapps.vocup.data.imp.api
 
+import android.content.Context
+import androidx.room.Room
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.HttpException
@@ -7,9 +9,13 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import ru.uxapps.vocup.data.api.Def
 import ru.uxapps.vocup.data.api.Language
+import ru.uxapps.vocup.data.imp.api.local.LocalApiDb
+import ru.uxapps.vocup.data.imp.api.web.DictionaryApi
+import ru.uxapps.vocup.data.imp.api.web.LookupRequest
+import ru.uxapps.vocup.data.imp.api.web.PredictorService
 import java.io.IOException
 
-class ApiImp : Api {
+class ApiImp(context: Context) : Api {
 
     private val dictionary = Retrofit.Builder()
         .baseUrl("https://api.cognitive.microsofttranslator.com/dictionary/")
@@ -24,6 +30,11 @@ class ApiImp : Api {
         .client(createOkHttpWithLogging())
         .build()
         .create(PredictorService::class.java)
+
+    private val localApi = Room.databaseBuilder(context, LocalApiDb::class.java, "local_api.db")
+        .fallbackToDestructiveMigration()
+        .createFromAsset("local_api.db")
+        .build()
 
     private fun createOkHttpWithLogging(): OkHttpClient {
         return OkHttpClient.Builder()
@@ -66,11 +77,14 @@ class ApiImp : Api {
     }
 
     override suspend fun getPronunciations(word: String): List<String> {
-        return listOf()
+        return localApi.dict().findPron(word).map { it.pron }
     }
 
     override suspend fun getCompletions(input: String): List<String> {
-        return listOf(input)
+        val completions = localApi.frequentWords().findCompletions(input, 10)
+            .map { it.text }
+            .filter { !it.equals(input, true) }
+        return listOf(input) + completions
     }
 
     private fun isAscii(string: String) = string.toCharArray().all { it.toInt() < 128 }
