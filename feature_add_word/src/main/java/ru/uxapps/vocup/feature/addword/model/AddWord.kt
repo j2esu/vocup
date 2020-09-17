@@ -21,5 +21,5 @@ internal interface AddWord {
         data class Completions(val items: List<String>) : State()
     }
 
-    data class DefItem(val text: String, val saved: Boolean, val trans: List<Pair<String, Boolean>>?)
+    data class DefItem(val text: String, val wordId: Long?, val trans: List<Pair<String, Boolean>>?)
 }

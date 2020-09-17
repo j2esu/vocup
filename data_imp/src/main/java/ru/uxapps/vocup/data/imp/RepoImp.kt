@@ -28,7 +28,7 @@ class RepoImp(
     private val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
 
     override fun getAllWords(): Flow<List<Word>> = db.getAllWords()
-    override fun getWord(text: String): Flow<Word?> = db.getWord(text)
+    override fun getWord(wordId: Long): Flow<Word?> = db.getWord(wordId)
 
     override fun getTargetLanguage(): Flow<Language> = callbackFlow<String> {
         val listener = SharedPreferences.OnSharedPreferenceChangeListener { _, key -> sendBlocking(key) }
@@ -71,18 +71,18 @@ class RepoImp(
         db.addWord(text, trans, api.getPronunciations(text).firstOrNull())
 
     override suspend fun restoreWord(word: Word) = db.restoreWord(word)
-    override suspend fun deleteWord(text: String) = db.deleteWord(text)
+    override suspend fun deleteWord(wordId: Long) = db.deleteWord(wordId)
 
     override suspend fun setTargetLanguage(lang: Language) {
         currentLang = lang
     }
 
-    override suspend fun updateTranslations(word: String, trans: List<String>) =
-        db.updateTranslations(word, trans)
+    override suspend fun updateTranslations(wordId: Long, trans: List<String>) =
+        db.updateTranslations(wordId, trans)
 
-    override suspend fun addTranslations(word: String, trans: List<String>) {
-        db.getWord(word).first()?.translations?.let { currentTrans ->
-            db.updateTranslations(word, currentTrans + trans)
+    override suspend fun addTranslations(wordId: Long, trans: List<String>) {
+        db.getWord(wordId).first()?.translations?.let { currentTrans ->
+            db.updateTranslations(wordId, currentTrans + trans)
         }
     }
 }

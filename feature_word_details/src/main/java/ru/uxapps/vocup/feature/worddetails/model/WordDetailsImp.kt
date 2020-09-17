@@ -14,14 +14,14 @@ import ru.uxapps.vocup.util.send
 import ru.uxapps.vocup.util.toStateFlow
 
 internal class WordDetailsImp(
-    private val wordText: String,
+    private val wordId: Long,
     private val repo: Repo,
     private val scope: CoroutineScope
 ) : WordDetails {
 
-    private val word = repo.getWord(wordText).filterNotNull().toStateFlow(scope)
+    private val word = repo.getWord(wordId).filterNotNull().toStateFlow(scope)
 
-    override val text = word.mapNotNull { it?.text }.onStart { emit(wordText) }.asLiveData(Dispatchers.IO)
+    override val text = word.mapNotNull { it?.text }.asLiveData(Dispatchers.IO)
     override val pron = word.map { it?.pron ?: "" }.asLiveData(Dispatchers.IO)
     override val translations = word.map { it?.translations }.onStart { emit(null) }
         .asLiveData(Dispatchers.IO)
@@ -30,14 +30,14 @@ internal class WordDetailsImp(
 
     override fun onReorderTrans(newTrans: List<String>) {
         scope.launch {
-            repo.updateTranslations(wordText, newTrans)
+            repo.updateTranslations(wordId, newTrans)
         }
     }
 
     override fun onAddTrans(text: String) {
         scope.launch {
             translations.value?.let {
-                repo.updateTranslations(wordText, it + text)
+                repo.updateTranslations(wordId, it + text)
             }
         }
     }
@@ -46,15 +46,15 @@ internal class WordDetailsImp(
         val currentTrans = translations.value!!
         val newTrans = currentTrans.toMutableList().apply { remove(trans) }
         scope.launch {
-            repo.updateTranslations(wordText, newTrans)
-            onTransDeleted.send { repo.updateTranslations(wordText, currentTrans) }
+            repo.updateTranslations(wordId, newTrans)
+            onTransDeleted.send { repo.updateTranslations(wordId, currentTrans) }
         }
     }
 
     override fun onDeleteWord() {
         word.value?.let { word ->
             scope.launch {
-                repo.deleteWord(word.text)
+                repo.deleteWord(word.id)
                 onWordDeleted.send { repo.restoreWord(word) }
             }
         }
@@ -66,7 +66,7 @@ internal class WordDetailsImp(
             set(indexOfFirst { it == trans }, newText)
         }
         scope.launch {
-            repo.updateTranslations(wordText, newTrans)
+            repo.updateTranslations(wordId, newTrans)
         }
     }
 }

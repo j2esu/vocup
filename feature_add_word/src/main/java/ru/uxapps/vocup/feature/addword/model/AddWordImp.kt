@@ -69,14 +69,14 @@ internal class AddWordImp(
                     val savedWord = words.find { it.text == def.text }
                     if (loadDefResult != null) {
                         if (savedWord != null) {
-                            AddWord.DefItem(def.text, true, def.translations.map {
+                            AddWord.DefItem(def.text, savedWord.id, def.translations.map {
                                 it to savedWord.translations.contains(it)
                             })
                         } else {
-                            AddWord.DefItem(def.text, false, def.translations.map { it to false })
+                            AddWord.DefItem(def.text, null, def.translations.map { it to false })
                         }
                     } else {
-                        AddWord.DefItem(def.text, savedWord != null, null)
+                        AddWord.DefItem(def.text, savedWord?.id, null)
                     }
                 }
             }
@@ -111,11 +111,11 @@ internal class AddWordImp(
 
     override fun onSave(item: AddWord.DefItem) {
         scope.launch {
-            if (!item.saved) {
+            if (item.wordId == null) {
                 repo.addWord(item.text, item.trans?.map { it.first } ?: emptyList())
             } else {
                 repo.addTranslations(
-                    item.text, (item.trans ?: emptyList()).filter { !it.second }.map { it.first }
+                    item.wordId, (item.trans ?: emptyList()).filter { !it.second }.map { it.first }
                 )
             }
         }

@@ -8,8 +8,8 @@ internal class WordViewModel(private val app: Application) : AndroidViewModel(ap
 
     private var wordComponent: WordComponent? = null
 
-    fun getWordComponent(word: String): WordComponent {
-        return wordComponent ?: DaggerWordComponent.factory().create(this, word, app as RepoProvider)
+    fun getWordComponent(wordId: Long): WordComponent {
+        return wordComponent ?: DaggerWordComponent.factory().create(this, wordId, app as RepoProvider)
             .also { wordComponent = it }
     }
 }

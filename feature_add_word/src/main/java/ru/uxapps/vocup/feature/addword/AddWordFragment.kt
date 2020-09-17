@@ -17,7 +17,7 @@ import javax.inject.Inject
 class AddWordFragment : BaseFragment(R.layout.fragment_add_word) {
 
     interface Router {
-        fun openWord(text: String, srcView: View)
+        fun openWord(wordId: Long, srcView: View)
     }
 
     private val vm by viewModels<AddWordViewModel>()
@@ -27,13 +27,15 @@ class AddWordFragment : BaseFragment(R.layout.fragment_add_word) {
     override fun onViewReady(view: View, init: Boolean) {
         vm.addWordComponent.inject(this)
         val v = AddWordView(FragmentAddWordBinding.bind(view), init, object : AddWordView.Callback {
-            override fun onOpen(item: DefItem, srcView: View) = host<Router>().openWord(item.text, srcView)
             override fun onSave(item: DefItem) = addWordModel.onSave(item)
             override fun onInput(input: String) = addWordModel.onInput(input)
             override fun onLangClick(lang: Language) = addWordModel.onChooseLang(lang)
             override fun onRetry() = addWordModel.onRetry()
             override fun onInputDone(text: String) = addWordModel.onSearch(text)
             override fun onCompClick(text: String) = addWordModel.onSearch(text)
+            override fun onOpen(item: DefItem, srcView: View) {
+                item.wordId?.let { host<Router>().openWord(it, srcView) }
+            }
         })
         with(addWordModel) {
             v.setMaxWordLength(maxWordLength)

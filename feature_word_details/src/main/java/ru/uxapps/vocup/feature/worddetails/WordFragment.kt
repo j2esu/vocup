@@ -25,8 +25,8 @@ class WordFragment : BaseFragment(R.layout.fragment_word), AddTransDialog.Host, 
     }
 
     companion object {
-        fun argsOf(word: String) = bundleOf("word" to word)
-        private val WordFragment.word get() = requireArguments()["word"] as String
+        fun argsOf(wordId: Long) = bundleOf("word" to wordId)
+        private val WordFragment.wordId get() = requireArguments()["word"] as Long
     }
 
     private val vm by viewModels<WordViewModel>()
@@ -34,7 +34,7 @@ class WordFragment : BaseFragment(R.layout.fragment_word), AddTransDialog.Host, 
     @Inject internal lateinit var detailsModel: WordDetails
 
     override fun onViewReady(view: View, init: Boolean) {
-        vm.getWordComponent(word).inject(this)
+        vm.getWordComponent(wordId).inject(this)
         val v = WordView(FragmentWordBinding.bind(view), object : WordView.Callback {
 
             override fun onDelete() = detailsModel.onDeleteWord()

@@ -3,6 +3,7 @@ package ru.uxapps.vocup.data.api
 import kotlin.random.Random
 
 data class Word(
+    val id: Long,
     val text: String,
     val translations: List<String>,
     val pron: String?,

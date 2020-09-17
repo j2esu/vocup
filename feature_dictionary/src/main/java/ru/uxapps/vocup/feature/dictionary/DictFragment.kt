@@ -19,7 +19,7 @@ import javax.inject.Inject
 class DictFragment : BaseFragment(R.layout.fragment_dict) {
 
     interface Router {
-        fun openWord(text: String, srcView: View)
+        fun openWord(wordId: Long, srcView: View)
         fun openAddWord(srcView: View)
     }
 
@@ -32,7 +32,7 @@ class DictFragment : BaseFragment(R.layout.fragment_dict) {
         val v = DictView(FragmentDictBinding.bind(view), object : DictView.Callback {
             override fun onAdd(srcView: View) = host<Router>().openAddWord(srcView)
             override fun onSwipe(word: Word) = dictModel.onRemove(word)
-            override fun onClick(word: Word, srcView: View) = host<Router>().openWord(word.text, srcView)
+            override fun onClick(word: Word, srcView: View) = host<Router>().openWord(word.id, srcView)
         })
         with(dictModel) {
             words.observe(viewLifecycleOwner, v::setWords)

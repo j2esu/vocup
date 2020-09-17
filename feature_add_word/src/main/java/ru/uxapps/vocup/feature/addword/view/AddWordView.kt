@@ -35,7 +35,7 @@ internal class AddWordView(
     }
 
     private val defAdapter = DefListAdapter { item, srcView ->
-        if (!item.saved || item.trans?.any { !it.second } == true) {
+        if (item.wordId == null || item.trans?.any { !it.second } == true) {
             callback.onSave(item)
         } else {
             callback.onOpen(item, srcView)

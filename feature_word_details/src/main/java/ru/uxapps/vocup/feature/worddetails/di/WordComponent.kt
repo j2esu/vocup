@@ -22,7 +22,7 @@ internal interface WordComponent {
     @Component.Factory
     interface Factory {
         fun create(
-            @BindsInstance vm: ViewModel, @BindsInstance word: String, repoProvider: RepoProvider
+            @BindsInstance vm: ViewModel, @BindsInstance wordId: Long, repoProvider: RepoProvider
         ): WordComponent
     }
 }
@@ -32,6 +32,6 @@ internal class WordModule {
 
     @ViewModelScope
     @Provides
-    fun provideDetails(vm: ViewModel, word: String, repo: Repo): WordDetails =
-        WordDetailsImp(word, repo, vm.viewModelScope)
+    fun provideDetails(vm: ViewModel, wordId: Long, repo: Repo): WordDetails =
+        WordDetailsImp(wordId, repo, vm.viewModelScope)
 }

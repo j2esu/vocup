@@ -24,7 +24,7 @@ class AddWordWorkflow : BaseFragment(R.layout.workflow_add_word), AddWordFragmen
         }
     }
 
-    override fun openWord(text: String, srcView: View) {
+    override fun openWord(wordId: Long, srcView: View) {
         // exit
         val addWordFragment = childFragmentManager.findFragmentById(R.id.add_word_container) as AddWordFragment
         addWordFragment.exitTransition = MaterialElevationScale(false).apply {
@@ -32,7 +32,7 @@ class AddWordWorkflow : BaseFragment(R.layout.workflow_add_word), AddWordFragmen
         }
         addWordFragment.postpone()
         // enter
-        val wordFragment = WordFragment().apply { arguments = WordFragment.argsOf(text) }
+        val wordFragment = WordFragment().apply { arguments = WordFragment.argsOf(wordId) }
         wordFragment.sharedElementEnterTransition = MaterialContainerTransform().apply {
             duration = 400
             drawingViewId = R.id.add_word_container

@@ -28,7 +28,7 @@ internal class DictionaryImp(
 
     override fun onRemove(word: Word) {
         scope.launch {
-            repo.deleteWord(word.text)
+            repo.deleteWord(word.id)
             onWordRemoved.send { repo.restoreWord(word) }
         }
     }

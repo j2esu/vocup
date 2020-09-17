@@ -36,7 +36,7 @@ class DictWorkflow : BaseFragment(R.layout.workflow_dict), DictFragment.Router, 
         }
     }
 
-    override fun openWord(text: String, srcView: View) {
+    override fun openWord(wordId: Long, srcView: View) {
         // setup exit
         val dictFrag = childFragmentManager.findFragmentById(R.id.dict_container) as DictFragment
         dictFrag.exitTransition = TransitionSet()
@@ -60,7 +60,7 @@ class DictWorkflow : BaseFragment(R.layout.workflow_dict), DictFragment.Router, 
             })
         dictFrag.postpone()
         // setup enter
-        val wordFrag = WordFragment().apply { arguments = WordFragment.argsOf(text) }
+        val wordFrag = WordFragment().apply { arguments = WordFragment.argsOf(wordId) }
         wordFrag.sharedElementEnterTransition = MaterialContainerTransform().apply {
             duration = 400
             drawingViewId = R.id.dict_container
