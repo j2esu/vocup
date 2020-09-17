@@ -6,7 +6,7 @@ import androidx.room.Query
 @Dao
 internal interface CmuDictDao {
 
-    @Query("select * from CmuDict where text == :wordText")
+    @Query("select * from CmuDict where lower(text) == lower(:wordText)")
     suspend fun findPron(wordText: String): List<CmuDictEntity>
 
 }

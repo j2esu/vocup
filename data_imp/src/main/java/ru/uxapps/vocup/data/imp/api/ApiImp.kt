@@ -14,6 +14,7 @@ import ru.uxapps.vocup.data.imp.api.web.DictionaryApi
 import ru.uxapps.vocup.data.imp.api.web.LookupRequest
 import ru.uxapps.vocup.data.imp.api.web.PredictorService
 import java.io.IOException
+import java.util.*
 
 class ApiImp(context: Context) : Api {
 
@@ -43,7 +44,7 @@ class ApiImp(context: Context) : Api {
     }
 
     override suspend fun getDefinitions(words: List<String>, userLang: Language): List<Def> = withHttp {
-        val engWords = words.filter { isAscii(it) }
+        val engWords = words.filter { it.isAscii() }
         val nonEngWords = words - engWords
         val defs = mutableListOf<Def>()
         if (engWords.isNotEmpty()) {
@@ -66,7 +67,7 @@ class ApiImp(context: Context) : Api {
     }
 
     override suspend fun getPredictions(input: String, userLang: Language): List<String> = withHttp {
-        val inputLang = if (isAscii(input)) "en" else userLang.code
+        val inputLang = if (input.isAscii()) "en" else userLang.code
         if (PredictorService.SUPPORTED_LANGUAGES.contains(inputLang)) {
             val response = predictor.complete(input, inputLang)
             if (!response.endOfWord && response.pos <= 0) {
@@ -81,13 +82,17 @@ class ApiImp(context: Context) : Api {
     }
 
     override suspend fun getCompletions(input: String): List<String> {
-        val completions = localApi.frequentWords().findCompletions(input, 10)
-            .map { it.text }
-            .filter { !it.equals(input, true) }
-        return listOf(input) + completions
+        val completions = if (input.isAscii()) {
+            localApi.frequentWords().findCompletions(input, 10)
+                .map { it.text }
+                .filter { !it.equals(input, true) }
+        } else {
+            emptyList()
+        }
+        return completions + input.toLowerCase(Locale.ROOT)
     }
 
-    private fun isAscii(string: String) = string.toCharArray().all { it.toInt() < 128 }
+    private fun String.isAscii() = toCharArray().all { it.toInt() < 128 }
 
     private inline fun <T> withHttp(action: () -> T): T {
         return try {

@@ -6,7 +6,7 @@ import androidx.room.Query
 @Dao
 internal interface FrequentWordsDao {
 
-    @Query("select * from FrequentWords where text like :input || '%' order by text limit :limit")
+    @Query("select * from FrequentWords where lower(text) like lower(:input) || '%' order by text limit :limit")
     suspend fun findCompletions(input: String, limit: Int): List<FrequentWordsEntity>
 
 }
