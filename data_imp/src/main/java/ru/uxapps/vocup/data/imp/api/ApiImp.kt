@@ -82,14 +82,18 @@ class ApiImp(context: Context) : Api {
     }
 
     override suspend fun getCompletions(input: String): List<String> {
-        val completions = if (input.isAscii()) {
+        return if (input.isAscii()) {
+            val lowerInput = input.toLowerCase(Locale.ROOT)
             localApi.frequentWords().findCompletions(input, 10)
                 .map { it.text }
-                .filter { !it.equals(input, true) }
+                .toMutableList().apply {
+                    if (!contains(lowerInput)) {
+                        add(lowerInput)
+                    }
+                }
         } else {
-            emptyList()
+            listOf(input)
         }
-        return completions + input.toLowerCase(Locale.ROOT)
     }
 
     private fun String.isAscii() = toCharArray().all { it.toInt() < 128 }
