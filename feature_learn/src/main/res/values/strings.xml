@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="title_learn">Learn</string>
+    <string name="word_to_translation_title">Word -> Translation</string>
+    <string name="word_to_translation_desc">Choose the right translations for a given word</string>
+    <string name="word_to_translation_req">Add at least 3 words to the dictionary</string>
 </resources>
