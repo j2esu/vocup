@@ -1,4 +1,4 @@
-package ru.uxapps.vocup.feature.dictionary
+package ru.uxapps.vocup.feature.dictionary.view
 
 import android.content.Context
 import android.graphics.*
@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.core.content.res.use
 import androidx.core.math.MathUtils
 import androidx.core.view.isVisible
+import ru.uxapps.vocup.feature.dictionary.R
 import kotlin.math.min
 
 class WordProgressView(context: Context, attrs: AttributeSet) : FrameLayout(context, attrs) {

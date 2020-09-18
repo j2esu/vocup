@@ -8,7 +8,7 @@
     android:layout_height="wrap_content"
     >
 
-    <ru.uxapps.vocup.feature.dictionary.WordProgressView
+    <ru.uxapps.vocup.feature.dictionary.view.WordProgressView
         android:id="@+id/word_progress"
         android:layout_width="56dp"
         android:layout_height="56dp"
