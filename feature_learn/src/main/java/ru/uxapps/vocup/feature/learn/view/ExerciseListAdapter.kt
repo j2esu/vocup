@@ -31,13 +31,14 @@ internal class ExerciseListAdapter(
 
         init {
             bind.root.setOnClickListener {
-                if (it.isActivated) {
-                    onStartClick(getItem(adapterPosition))
+                val item = getItem(adapterPosition)
+                if (item.enabled) {
+                    onStartClick(item)
                 } else {
-                    bind.exerciseRequirement.translationX = 0f
-                    bind.exerciseRequirement.animate().translationX(8f).apply {
-                        interpolator = CycleInterpolator(1.5f)
-                        duration = 200
+                    bind.exerciseRequirement.alpha = 1f
+                    bind.exerciseRequirement.animate().alpha(.3f).apply {
+                        interpolator = CycleInterpolator(3f)
+                        duration = 2000
                     }
                 }
             }
@@ -46,9 +47,10 @@ internal class ExerciseListAdapter(
         fun bind(item: ExerciseItem) = with(bind) {
             exerciseTitle.setText(item.exercise.title)
             exerciseDesc.setText(item.exercise.desc)
-            bind.root.isActivated = item.enabled
-            exerciseRequirement.isVisible = !item.enabled
             exerciseRequirement.setText(item.exercise.requirement)
+            exerciseRequirement.animate().cancel()
+            exerciseRequirement.isVisible = !item.enabled
+            exerciseRequirement.alpha = 1f
         }
     }
 }
