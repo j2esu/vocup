@@ -10,8 +10,8 @@ import ru.uxapps.vocup.data.RepoProvider
 import ru.uxapps.vocup.data.api.Repo
 import ru.uxapps.vocup.feature.ViewModelScope
 import ru.uxapps.vocup.feature.learn.LearnFragment
-import ru.uxapps.vocup.feature.learn.model.Games
-import ru.uxapps.vocup.feature.learn.model.GamesImp
+import ru.uxapps.vocup.feature.learn.model.GameListModel
+import ru.uxapps.vocup.feature.learn.model.GameListModelImp
 
 @ViewModelScope
 @Component(dependencies = [RepoProvider::class], modules = [LearnModule::class])
@@ -30,7 +30,7 @@ internal class LearnModule {
 
     @ViewModelScope
     @Provides
-    fun provideGames(viewModel: ViewModel, repo: Repo): Games =
-        GamesImp(repo, viewModel.viewModelScope)
+    fun provideGameList(viewModel: ViewModel, repo: Repo): GameListModel =
+        GameListModelImp(repo, viewModel.viewModelScope)
 
 }

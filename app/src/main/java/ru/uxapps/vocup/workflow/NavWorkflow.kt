@@ -12,7 +12,6 @@ import ru.uxapps.vocup.databinding.WorkflowNavBinding
 import ru.uxapps.vocup.feature.BaseFragment
 import ru.uxapps.vocup.feature.awaitReady
 import ru.uxapps.vocup.feature.explore.ExploreFragment
-import ru.uxapps.vocup.feature.learn.LearnFragment
 import ru.uxapps.vocup.transition.ScaleVisibility
 import ru.uxapps.vocup.util.host
 
@@ -54,7 +53,7 @@ class NavWorkflow : BaseFragment(R.layout.workflow_nav), DictWorkflow.Router {
                     // enter
                     val newFragment = when (it.itemId) {
                         R.id.menu_nav_dict -> DictWorkflow()
-                        R.id.menu_nav_learn -> LearnFragment().apply { postpone() }
+                        R.id.menu_nav_learn -> LearnWorkflow().apply { postpone() }
                         R.id.menu_nav_explore -> ExploreFragment()
                         else -> error("Unknown menu: ${it.title}")
                     }

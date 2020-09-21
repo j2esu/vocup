@@ -8,8 +8,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.map
 import ru.uxapps.vocup.data.api.Repo
 import ru.uxapps.vocup.data.api.Word
+import ru.uxapps.vocup.feature.learn.model.game.Game
 
-internal class GamesImp(repo: Repo, scope: CoroutineScope) : Games {
+internal class GameListModelImp(repo: Repo, scope: CoroutineScope) : GameListModel {
 
     private val requirements = mapOf<Game, (List<Word>) -> Boolean>(
         Game.WordToTranslation to { words ->
