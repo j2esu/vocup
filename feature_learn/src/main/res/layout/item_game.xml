@@ -22,7 +22,7 @@
         >
 
         <TextView
-            android:id="@+id/exercise_title"
+            android:id="@+id/game_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawablePadding="16dp"
@@ -33,7 +33,7 @@
             />
 
         <TextView
-            android:id="@+id/exercise_desc"
+            android:id="@+id/game_desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="8dp"
@@ -42,7 +42,7 @@
             />
 
         <TextView
-            android:id="@+id/exercise_requirement"
+            android:id="@+id/game_req"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawablePadding="8dp"

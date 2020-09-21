@@ -29,16 +29,16 @@
         android:paddingTop="8dp"
         android:paddingBottom="80dp"
         android:transitionGroup="true"
-        tools:listitem="@layout/item_exercise"
+        tools:listitem="@layout/item_game"
         />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/learn_start_random"
+        android:id="@+id/learn_play"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        app:srcCompat="@drawable/ic_random"
+        app:srcCompat="@drawable/ic_play"
         />
 
 </FrameLayout>

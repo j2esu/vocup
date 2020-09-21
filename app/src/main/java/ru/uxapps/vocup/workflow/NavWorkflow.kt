@@ -54,7 +54,7 @@ class NavWorkflow : BaseFragment(R.layout.workflow_nav), DictWorkflow.Router {
                     // enter
                     val newFragment = when (it.itemId) {
                         R.id.menu_nav_dict -> DictWorkflow()
-                        R.id.menu_nav_learn -> LearnFragment()
+                        R.id.menu_nav_learn -> LearnFragment().apply { postpone() }
                         R.id.menu_nav_explore -> ExploreFragment()
                         else -> error("Unknown menu: ${it.title}")
                     }
