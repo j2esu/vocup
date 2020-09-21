@@ -1,5 +1,6 @@
 package ru.uxapps.vocup.feature.learn.di
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.BindsInstance
@@ -21,7 +22,11 @@ internal interface LearnComponent {
 
     @Component.Factory
     interface Factory {
-        fun create(@BindsInstance viewModel: ViewModel, repoProvider: RepoProvider): LearnComponent
+        fun create(
+            @BindsInstance viewModel: ViewModel,
+            repoProvider: RepoProvider,
+            @BindsInstance context: Context
+        ): LearnComponent
     }
 }
 
@@ -30,7 +35,7 @@ internal class LearnModule {
 
     @ViewModelScope
     @Provides
-    fun provideGameList(viewModel: ViewModel, repo: Repo): GameListModel =
-        GameListModelImp(repo, viewModel.viewModelScope)
+    fun provideGameList(viewModel: ViewModel, repo: Repo, context: Context): GameListModel =
+        GameListModelImp(context, repo, viewModel.viewModelScope)
 
 }

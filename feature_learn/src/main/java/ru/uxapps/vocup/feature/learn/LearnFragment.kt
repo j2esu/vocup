@@ -27,7 +27,7 @@ class LearnFragment : BaseFragment(R.layout.fragment_learn) {
     override fun onViewReady(view: View, init: Boolean) {
         vm.learnComponent.inject(this)
         val learnView = LearnView(FragmentLearnBinding.bind(view), object : LearnView.Callback {
-            override fun onStart(item: GameItem) = host<Host>().openGame(item.game.ordinal)
+            override fun onStart(item: GameItem) = host<Host>().openGame(item.id)
 
             override fun onPlay() =
                 Toast.makeText(context, "Start random game", Toast.LENGTH_SHORT).show()

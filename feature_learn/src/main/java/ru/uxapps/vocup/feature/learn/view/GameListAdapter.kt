@@ -14,7 +14,7 @@ internal class GameListAdapter(
     private val onStartClick: (GameItem) -> Unit
 ) : ListAdapter<GameItem, GameListAdapter.ExVh>(
     object : DiffUtil.ItemCallback<GameItem>() {
-        override fun areItemsTheSame(oldItem: GameItem, newItem: GameItem) = oldItem.game == newItem.game
+        override fun areItemsTheSame(oldItem: GameItem, newItem: GameItem) = oldItem.id == newItem.id
         override fun areContentsTheSame(oldItem: GameItem, newItem: GameItem) = oldItem == newItem
     }
 ) {
@@ -29,11 +29,11 @@ internal class GameListAdapter(
         init {
             bind.root.setOnClickListener {
                 val item = getItem(adapterPosition)
-                if (item.enabled) {
+                if (item.error == null) {
                     onStartClick(item)
                 } else {
-                    bind.gameReq.alpha = 1f
-                    bind.gameReq.animate().alpha(.3f).apply {
+                    bind.gameError.alpha = 1f
+                    bind.gameError.animate().alpha(.3f).apply {
                         interpolator = CycleInterpolator(3f)
                         duration = 2000
                     }
@@ -42,12 +42,12 @@ internal class GameListAdapter(
         }
 
         fun bind(item: GameItem) = with(bind) {
-            gameTitle.setText(item.game.title)
-            gameDesc.setText(item.game.desc)
-            gameReq.setText(item.game.requirement)
-            gameReq.animate().cancel()
-            gameReq.isVisible = !item.enabled
-            gameReq.alpha = 1f
+            gameTitle.text = item.title
+            gameDesc.text = item.desc
+            gameError.text = item.error
+            gameError.animate().cancel()
+            gameError.isVisible = item.error != null
+            gameError.alpha = 1f
         }
     }
 }
