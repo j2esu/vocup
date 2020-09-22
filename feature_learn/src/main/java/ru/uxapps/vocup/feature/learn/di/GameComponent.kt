@@ -29,6 +29,7 @@ internal interface GameComponent {
 @Module
 internal class GameModule {
 
+    @ViewModelScope
     @Provides
     fun provideGame(viewModel: ViewModel, gameId: Int): GameModel =
         GameModelImp(gameId, viewModel.viewModelScope)
