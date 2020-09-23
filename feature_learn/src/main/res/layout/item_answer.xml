@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/answer_card"
     android:layout_width="match_parent"
@@ -8,21 +9,37 @@
     android:checkable="true"
     android:clickable="true"
     android:focusable="true"
-    tools:cardForegroundColor="@android:color/transparent"
+    app:cardBackgroundColor="@color/answer_bg"
+    app:cardForegroundColor="@android:color/transparent"
+    app:checkedIcon="@null"
     tools:layout_gravity="center"
     tools:layout_height="100dp"
     tools:layout_width="200dp"
-    style="@style/Widget.MaterialComponents.CardView"
     >
+
+    <ImageView
+        android:id="@+id/answer_status"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_gravity="end"
+        android:layout_margin="4dp"
+        app:srcCompat="@drawable/answer_status_sel"
+        app:tint="@color/answer_status_tint"
+        tools:ignore="ContentDescription"
+        />
 
     <TextView
         android:id="@+id/answer_text"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:gravity="center_horizontal"
+        android:padding="16dp"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
-        android:textColor="?colorPrimary"
+        android:textColor="@color/answer_text"
+        app:autoSizeTextType="uniform"
         tools:text="@tools:sample/cities"
+        android:duplicateParentState="true"
         />
 
 </com.google.android.material.card.MaterialCardView>

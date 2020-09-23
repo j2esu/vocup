@@ -57,7 +57,7 @@ internal class WordToTranslationModel(
             val correctTrans = word.translations.random()
             val incorrectTrans = translations.shuffled().filter { it != correctTrans }.take(3)
             val answers = (incorrectTrans + correctTrans).shuffled()
-            state.value = Task(word.text, answers, emptySet())
+            state.value = Task(word.text, answers, setOf(answers.indexOf(correctTrans)), emptySet())
         }
     }
 
@@ -66,6 +66,7 @@ internal class WordToTranslationModel(
     }
 
     private fun examine() {
-
+        val task = state.value as Task
+        state.value = task.copy(examine = true)
     }
 }

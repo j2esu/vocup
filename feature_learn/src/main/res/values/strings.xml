@@ -4,6 +4,4 @@
     <string name="word_to_translation_title">Word -> Translation</string>
     <string name="word_to_translation_desc">Choose the right translations for a given word</string>
     <string name="word_to_translation_req_pattern">"Add at least 10 words with translations (%s)"</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
 </resources>

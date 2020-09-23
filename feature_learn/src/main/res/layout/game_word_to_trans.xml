@@ -56,6 +56,8 @@
 
         <include
             layout="@layout/item_answer"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             app:layout_gravity="fill"
             />
 
@@ -77,10 +79,10 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:background="?selectableItemBackgroundBorderless"
-        android:contentDescription="@string/next"
         android:padding="12dp"
         app:srcCompat="@drawable/ic_next"
         app:tint="?colorSecondary"
+        tools:ignore="ContentDescription"
         />
 
     <ImageView
@@ -90,10 +92,10 @@
         android:layout_gravity="bottom|start"
         android:layout_margin="16dp"
         android:background="?selectableItemBackgroundBorderless"
-        android:contentDescription="@string/previous"
         android:padding="12dp"
         app:srcCompat="@drawable/ic_previous"
         app:tint="?colorSecondary"
+        tools:ignore="ContentDescription"
         />
 
 </FrameLayout>
