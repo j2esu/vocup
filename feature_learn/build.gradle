@@ -43,5 +43,6 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
 
     api project(path: ':base_feature')
+    implementation 'androidx.gridlayout:gridlayout:1.0.0'
     kapt "com.google.dagger:dagger-compiler:${rootProject.ext.dagger_version}"
 }

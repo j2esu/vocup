@@ -8,7 +8,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.map
 import ru.uxapps.vocup.data.api.Repo
-import ru.uxapps.vocup.feature.learn.model.game.Game
+import ru.uxapps.vocup.feature.learn.game.Game
 
 internal class GameListModelImp(context: Context, repo: Repo, scope: CoroutineScope) : GameListModel {
 

@@ -7,6 +7,7 @@ import dagger.Component
 import dagger.Module
 import dagger.Provides
 import ru.uxapps.vocup.data.RepoProvider
+import ru.uxapps.vocup.data.api.Repo
 import ru.uxapps.vocup.feature.ViewModelScope
 import ru.uxapps.vocup.feature.learn.GameFragment
 import ru.uxapps.vocup.feature.learn.model.GameModel
@@ -31,7 +32,7 @@ internal class GameModule {
 
     @ViewModelScope
     @Provides
-    fun provideGame(viewModel: ViewModel, gameId: Int): GameModel =
-        GameModelImp(gameId, viewModel.viewModelScope)
+    fun provideGame(viewModel: ViewModel, gameId: Int, repo: Repo): GameModel =
+        GameModelImp(gameId, viewModel.viewModelScope, repo)
 
 }

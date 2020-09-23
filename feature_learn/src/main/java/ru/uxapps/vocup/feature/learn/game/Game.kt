@@ -1,4 +1,4 @@
-package ru.uxapps.vocup.feature.learn.model.game
+package ru.uxapps.vocup.feature.learn.game
 
 import androidx.annotation.StringRes
 import ru.uxapps.vocup.data.api.Word

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <TextView
+        android:id="@+id/game_word"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:gravity="center"
+        android:padding="16dp"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+        tools:text="@tools:sample/cities"
+        />
+
+    <androidx.gridlayout.widget.GridLayout
+        android:id="@+id/game_answers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:clipToPadding="false"
+        android:padding="16dp"
+        app:alignmentMode="alignBounds"
+        app:columnCount="2"
+        >
+
+        <include
+            layout="@layout/item_answer"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_marginEnd="8dp"
+            app:layout_columnWeight="1"
+            />
+
+        <include
+            layout="@layout/item_answer"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            app:layout_columnWeight="1"
+            app:layout_gravity="fill"
+            />
+
+        <include
+            layout="@layout/item_answer"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="16dp"
+            app:layout_gravity="fill"
+            />
+
+        <include
+            layout="@layout/item_answer"
+            app:layout_gravity="fill"
+            />
+
+    </androidx.gridlayout.widget.GridLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/game_examine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_margin="16dp"
+        app:srcCompat="@drawable/ic_check"
+        />
+
+    <ImageView
+        android:id="@+id/game_next"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:background="?selectableItemBackgroundBorderless"
+        android:contentDescription="@string/next"
+        android:padding="12dp"
+        app:srcCompat="@drawable/ic_next"
+        app:tint="?colorSecondary"
+        />
+
+    <ImageView
+        android:id="@+id/game_prev"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_gravity="bottom|start"
+        android:layout_margin="16dp"
+        android:background="?selectableItemBackgroundBorderless"
+        android:contentDescription="@string/previous"
+        android:padding="12dp"
+        app:srcCompat="@drawable/ic_previous"
+        app:tint="?colorSecondary"
+        />
+
+</FrameLayout>

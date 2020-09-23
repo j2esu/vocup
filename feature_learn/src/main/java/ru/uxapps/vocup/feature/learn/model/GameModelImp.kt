@@ -2,19 +2,21 @@ package ru.uxapps.vocup.feature.learn.model
 
 import androidx.lifecycle.asLiveData
 import kotlinx.coroutines.CoroutineScope
-import ru.uxapps.vocup.feature.learn.model.game.GameAction
-import ru.uxapps.vocup.feature.learn.model.game.WordToTranslationGame
+import ru.uxapps.vocup.data.api.Repo
+import ru.uxapps.vocup.feature.learn.game.GameContract
+import ru.uxapps.vocup.feature.learn.game.WordToTranslationModel
 
 internal class GameModelImp(
     gameId: Int,
-    scope: CoroutineScope
+    scope: CoroutineScope,
+    repo: Repo
 ) : GameModel {
 
-    private val game = WordToTranslationGame(scope)
+    private val game = WordToTranslationModel(scope, repo)
 
     override val state = game.state.asLiveData()
 
-    override fun onAction(action: GameAction) {
-        game.actions.offer(action as WordToTranslationGame.Action)
+    override fun onAction(action: GameContract.Action) {
+        game.proceed(action)
     }
 }
