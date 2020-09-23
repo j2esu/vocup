@@ -5,7 +5,6 @@ import androidx.core.view.isVisible
 import ru.uxapps.vocup.feature.learn.databinding.GameWordToTransBinding
 import ru.uxapps.vocup.feature.learn.databinding.ItemAnswerBinding
 import ru.uxapps.vocup.feature.learn.game.WordToTranslationContract.Action.*
-import ru.uxapps.vocup.feature.learn.game.WordToTranslationContract.AnswerItem
 import ru.uxapps.vocup.feature.learn.game.WordToTranslationContract.State.End
 import ru.uxapps.vocup.feature.learn.game.WordToTranslationContract.State.Task
 
@@ -36,7 +35,7 @@ internal class WordToTranslationView(private val bind: GameWordToTransBinding) :
                 gameAnswers.isVisible = true
                 gameWord.text = state.word
                 state.answers.forEachIndexed { index, item ->
-                    answers[index].bind(item)
+                    answers[index].bind(item, state.checked.contains(index))
                 }
             }
             is End -> {
@@ -46,8 +45,8 @@ internal class WordToTranslationView(private val bind: GameWordToTransBinding) :
         }
     }
 
-    private fun ItemAnswerBinding.bind(item: AnswerItem) {
-        answerText.text = item.trans
-        answerCard.isChecked = item.checked
+    private fun ItemAnswerBinding.bind(text: String, checked: Boolean) {
+        answerText.text = text
+        answerCard.isChecked = checked
     }
 }
