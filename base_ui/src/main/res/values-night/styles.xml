@@ -10,6 +10,7 @@
         <item name="colorOnPrimary">#fafafa</item>
         <item name="colorOnSecondary">#fafafa</item>
         <item name="colorOutline">#555</item>
+        <item name="colorCorrect">#006E4E</item>
     </style>
 
 </resources>

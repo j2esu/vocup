@@ -6,10 +6,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import ru.uxapps.vocup.data.api.Repo
-import ru.uxapps.vocup.data.api.Word
 import ru.uxapps.vocup.feature.learn.game.WordToTranslationContract.Action.*
-import ru.uxapps.vocup.feature.learn.game.WordToTranslationContract.State.End
-import ru.uxapps.vocup.feature.learn.game.WordToTranslationContract.State.Task
+import ru.uxapps.vocup.feature.learn.game.WordToTranslationContract.State
+import ru.uxapps.vocup.feature.learn.game.WordToTranslationContract.State.*
+import ru.uxapps.vocup.feature.learn.game.WordToTranslationContract.Task
 
 internal class WordToTranslationModel(
     scope: CoroutineScope,
@@ -18,55 +18,65 @@ internal class WordToTranslationModel(
 
     override val state = MutableStateFlow<GameContract.State?>(null)
 
-    private lateinit var words: List<Word>
-
-    private lateinit var translations: List<String>
+    private lateinit var tasks: List<Task>
+    private lateinit var taskStates: MutableList<State>
     private var taskIndex = -1
 
     init {
-        // load game data
         scope.launch(Dispatchers.IO) {
-            words = repo.getAllWords().first().filter { it.translations.isNotEmpty() }.shuffled()
-            translations = words.flatMap { it.translations }
-            nextTask()
+            val words = repo.getAllWords().first().filter { it.translations.isNotEmpty() }.shuffled()
+            val translations = words.flatMap { it.translations }
+            tasks = words.mapIndexed { index, word ->
+                val correct = word.translations.random()
+                val incorrect = translations.shuffled().filter { it != correct }.take(3)
+                val answers = (incorrect + correct).shuffled()
+                Task(word.text, answers, setOf(answers.indexOf(correct)), index, words.size)
+            }
+            taskStates = tasks.map { Play(it, emptySet()) }.toMutableList()
+            next()
         }
     }
 
     override fun proceed(action: GameContract.Action) {
+        val state = this.state.value
         when (action) {
-            is Toggle -> toggleAnswer(action.pos)
-            Examine -> examine()
-            Next -> nextTask()
-            Prev -> prevTask()
+            is Toggle -> if (state is Play) toggleAnswer(state, action.pos)
+            Examine -> if (state is Play) examine(state)
+            Next -> if (state !is End) next()
+            Prev -> if (state !is End) prev()
+            Finish -> if (state !is End) finish()
         }
     }
 
-    private fun toggleAnswer(pos: Int) {
-        val task = state.value as Task
-        state.value = task.copy(checked = task.checked.toMutableSet().apply {
+    private fun toggleAnswer(play: Play, pos: Int) {
+        state.value = play.copy(checked = play.checked.toMutableSet().apply {
             if (!add(pos)) remove(pos)
-        })
-    }
-
-    private fun nextTask() {
-        taskIndex++
-        if (taskIndex >= words.size) {
-            state.value = End
-        } else {
-            val word = words[taskIndex]
-            val correctTrans = word.translations.random()
-            val incorrectTrans = translations.shuffled().filter { it != correctTrans }.take(3)
-            val answers = (incorrectTrans + correctTrans).shuffled()
-            state.value = Task(word.text, answers, setOf(answers.indexOf(correctTrans)), emptySet())
+        }).also {
+            taskStates[taskIndex] = it
         }
     }
 
-    private fun prevTask() {
-
+    private fun next() {
+        if (taskIndex < tasks.size - 1) {
+            taskIndex++
+            state.value = taskStates[taskIndex]
+        }
     }
 
-    private fun examine() {
-        val task = state.value as Task
-        state.value = task.copy(examine = true)
+    private fun prev() {
+        if (taskIndex > 0) {
+            taskIndex--
+            state.value = taskStates[taskIndex]
+        }
+    }
+
+    private fun examine(play: Play) {
+        state.value = Solution(play.task, play.checked).also {
+            taskStates[taskIndex] = it
+        }
+    }
+
+    private fun finish() {
+        state.value = End
     }
 }

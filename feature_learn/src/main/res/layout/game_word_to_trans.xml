@@ -79,9 +79,23 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:background="?selectableItemBackgroundBorderless"
-        android:padding="12dp"
+        android:padding="16dp"
         app:srcCompat="@drawable/ic_next"
-        app:tint="?colorSecondary"
+        app:tint="?colorPrimary"
+        tools:ignore="ContentDescription"
+        />
+
+    <ImageView
+        android:id="@+id/game_finish"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:background="?selectableItemBackgroundBorderless"
+        android:padding="16dp"
+        android:visibility="invisible"
+        app:srcCompat="@drawable/ic_finish"
+        app:tint="?colorPrimary"
         tools:ignore="ContentDescription"
         />
 
@@ -92,9 +106,9 @@
         android:layout_gravity="bottom|start"
         android:layout_margin="16dp"
         android:background="?selectableItemBackgroundBorderless"
-        android:padding="12dp"
+        android:padding="16dp"
         app:srcCompat="@drawable/ic_previous"
-        app:tint="?colorSecondary"
+        app:tint="?colorPrimary"
         tools:ignore="ContentDescription"
         />
 

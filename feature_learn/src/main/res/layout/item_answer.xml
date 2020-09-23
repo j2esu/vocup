@@ -23,6 +23,7 @@
         android:layout_height="24dp"
         android:layout_gravity="end"
         android:layout_margin="4dp"
+        android:duplicateParentState="true"
         app:srcCompat="@drawable/answer_status_sel"
         app:tint="@color/answer_status_tint"
         tools:ignore="ContentDescription"
@@ -31,15 +32,16 @@
     <TextView
         android:id="@+id/answer_text"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center_horizontal"
+        android:layout_height="match_parent"
+        android:duplicateParentState="true"
+        android:gravity="center"
         android:padding="16dp"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
         android:textColor="@color/answer_text"
+        app:autoSizeMaxTextSize="14sp"
+        app:autoSizeMinTextSize="8sp"
         app:autoSizeTextType="uniform"
         tools:text="@tools:sample/cities"
-        android:duplicateParentState="true"
         />
 
 </com.google.android.material.card.MaterialCardView>

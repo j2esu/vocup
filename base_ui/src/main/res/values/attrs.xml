@@ -2,4 +2,5 @@
 <resources>
     <attr name="colorOutline" format="color|reference" />
     <attr name="colorCorrect" format="color|reference" />
+    <attr name="colorOnCorrect" format="color|reference" />
 </resources>
