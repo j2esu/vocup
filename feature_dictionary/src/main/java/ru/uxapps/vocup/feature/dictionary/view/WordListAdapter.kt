@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import ru.uxapps.vocup.data.api.Word
 import ru.uxapps.vocup.feature.dictionary.R
 import ru.uxapps.vocup.feature.dictionary.databinding.ItemWordBinding
+import ru.uxapps.vocup.feature.getString
 import ru.uxapps.vocup.feature.inflateBind
 
 internal class WordListAdapter(
@@ -35,16 +36,16 @@ internal class WordListAdapter(
                 text = if (word.translations.isNotEmpty()) {
                     word.translations.joinToString(separator = ", ")
                 } else {
-                    context.getString(R.string.no_translations)
+                    getString(R.string.no_translations)
                 }
                 isEnabled = word.translations.isNotEmpty()
             }
             wordPron.apply {
                 isVisible = word.pron != null
-                text = context.getString(R.string.pron_pattern, word.pron)
+                text = getString(R.string.pron_pattern, word.pron)
             }
             wordProgress.setProgress(word.progress)
-            itemView.transitionName = root.context.getString(R.string.transit_word_item_pattern, word.text)
+            itemView.transitionName = getString(R.string.transit_word_item_pattern, word.text)
         }
     }
 }

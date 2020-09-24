@@ -5,6 +5,7 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.AttrRes
+import androidx.annotation.StringRes
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.FragmentActivity
 import androidx.viewbinding.ViewBinding
@@ -32,3 +33,6 @@ fun FloatingActionButton.animateVisible(visible: Boolean) {
         show()
     }
 }
+
+fun ViewBinding.getString(@StringRes resId: Int) = root.context.getString(resId)
+fun ViewBinding.getString(@StringRes resId: Int, vararg args: Any?) = root.context.getString(resId, *args)

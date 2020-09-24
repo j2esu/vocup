@@ -63,13 +63,15 @@
 
     </androidx.gridlayout.widget.GridLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/game_examine"
+    <TextView
+        android:id="@+id/game_number"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="56dp"
         android:layout_gravity="bottom|center_horizontal"
         android:layout_margin="16dp"
-        app:srcCompat="@drawable/ic_check"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+        tools:text="2 / 10"
         />
 
     <ImageView

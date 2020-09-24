@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import ru.uxapps.vocup.feature.addword.R
 import ru.uxapps.vocup.feature.addword.databinding.ItemDefBinding
 import ru.uxapps.vocup.feature.addword.model.AddWord.DefItem
+import ru.uxapps.vocup.feature.getString
 import ru.uxapps.vocup.feature.inflateBind
 
 internal class DefListAdapter(
@@ -34,9 +35,9 @@ internal class DefListAdapter(
             bind.defBg.setOnClickListener { onClick(getItem(adapterPosition), itemView) }
         }
 
-        fun bind(item: DefItem) {
-            bind.defText.text = item.text
-            bind.defTrans.apply {
+        fun bind(item: DefItem) = with(bind) {
+            defText.text = item.text
+            defTrans.apply {
                 val trans = item.trans
                 when {
                     trans == null -> isVisible = false
@@ -50,16 +51,16 @@ internal class DefListAdapter(
                         isEnabled = true
                         text = trans.joinToString(separator = "\n") {
                             val pattern = if (it.second) R.string.trans_pattern else R.string.new_trans_pattern
-                            context.getString(pattern, it.first)
+                            getString(pattern, it.first)
                         }
                     }
                 }
             }
-            bind.defSaved.apply {
+            defSaved.apply {
                 isVisible = item.wordId != null
                 isActivated = item.trans?.all { it.second } == true
             }
-            bind.root.transitionName = bind.root.context.getString(R.string.transit_def_item_pattern, item.text)
+            root.transitionName = getString(R.string.transit_def_item_pattern, item.text)
         }
     }
 }

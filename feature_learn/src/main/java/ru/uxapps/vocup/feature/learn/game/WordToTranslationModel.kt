@@ -30,9 +30,9 @@ internal class WordToTranslationModel(
                 val correct = word.translations.random()
                 val incorrect = translations.shuffled().filter { it != correct }.take(3)
                 val answers = (incorrect + correct).shuffled()
-                Task(word.text, answers, setOf(answers.indexOf(correct)), index, words.size)
+                Task(word.text, answers, correct, index, words.size)
             }
-            taskStates = tasks.map { Play(it, emptySet()) }.toMutableList()
+            taskStates = tasks.map { Play(it, -1) }.toMutableList()
             next()
         }
     }
@@ -40,18 +40,20 @@ internal class WordToTranslationModel(
     override fun proceed(action: GameContract.Action) {
         val state = this.state.value
         when (action) {
-            is Toggle -> if (state is Play) toggleAnswer(state, action.pos)
-            Examine -> if (state is Play) examine(state)
+            is Check -> if (state is Play) check(state, action.pos)
             Next -> if (state !is End) next()
             Prev -> if (state !is End) prev()
             Finish -> if (state !is End) finish()
         }
     }
 
-    private fun toggleAnswer(play: Play, pos: Int) {
-        state.value = play.copy(checked = play.checked.toMutableSet().apply {
-            if (!add(pos)) remove(pos)
-        }).also {
+    private fun check(play: Play, pos: Int) {
+        val status = play.task.answers.mapIndexed { index, answer ->
+            val checked = index == pos
+            val correct = play.task.correct == answer
+            if (checked || correct) correct else null
+        }
+        state.value = Solution(play.task, pos, status).also {
             taskStates[taskIndex] = it
         }
     }
@@ -67,12 +69,6 @@ internal class WordToTranslationModel(
         if (taskIndex > 0) {
             taskIndex--
             state.value = taskStates[taskIndex]
-        }
-    }
-
-    private fun examine(play: Play) {
-        state.value = Solution(play.task, play.checked).also {
-            taskStates[taskIndex] = it
         }
     }
 

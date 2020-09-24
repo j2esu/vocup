@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@drawable/ic_correct" android:state_activated="true" android:state_checked="true" android:state_selected="true" />
-    <item android:drawable="@drawable/ic_incorrect" android:state_activated="false" android:state_checked="true" android:state_selected="true" />
-    <item>
-        <color android:color="@android:color/transparent" />
-    </item>
-</selector>

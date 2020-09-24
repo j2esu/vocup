@@ -24,7 +24,7 @@
         android:layout_gravity="end"
         android:layout_margin="4dp"
         android:duplicateParentState="true"
-        app:srcCompat="@drawable/answer_status_sel"
+        app:srcCompat="@drawable/answer_status"
         app:tint="@color/answer_status_tint"
         tools:ignore="ContentDescription"
         />

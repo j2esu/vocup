@@ -2,7 +2,8 @@ package ru.uxapps.vocup.feature.learn.game
 
 import androidx.core.view.children
 import androidx.core.view.isVisible
-import ru.uxapps.vocup.feature.animateVisible
+import ru.uxapps.vocup.feature.getString
+import ru.uxapps.vocup.feature.learn.R
 import ru.uxapps.vocup.feature.learn.databinding.GameWordToTransBinding
 import ru.uxapps.vocup.feature.learn.databinding.ItemAnswerBinding
 import ru.uxapps.vocup.feature.learn.game.WordToTranslationContract.Action.*
@@ -19,13 +20,12 @@ internal class WordToTranslationView(private val bind: GameWordToTransBinding) :
     init {
         answers.forEachIndexed { index, answerBind ->
             answerBind.answerCard.setOnClickListener {
-                onAction?.invoke(Toggle(index))
+                onAction?.invoke(Check(index))
             }
         }
         with(bind) {
             gameNext.setOnClickListener { onAction?.invoke(Next) }
             gamePrev.setOnClickListener { onAction?.invoke(Prev) }
-            gameExamine.setOnClickListener { onAction?.invoke(Examine) }
             gameFinish.setOnClickListener { onAction?.invoke(Finish) }
         }
     }
@@ -34,31 +34,26 @@ internal class WordToTranslationView(private val bind: GameWordToTransBinding) :
         when (state) {
             is Play -> {
                 bindTask(state.task)
-                gameExamine.animateVisible(true)
                 state.task.answers.forEachIndexed { index, item ->
-                    answers[index].bind(item, state.checked.contains(index), null)
+                    answers[index].bind(item, state.checked == index, null)
                 }
             }
             is Solution -> {
                 bindTask(state.task)
-                gameExamine.animateVisible(false)
                 state.task.answers.forEachIndexed { index, item ->
-                    val checked = state.checked.contains(index)
-                    val correct = state.task.correct.contains(index)
-                    answers[index].bind(item, checked, if (correct || checked) correct else null)
+                    answers[index].bind(item, state.checked == index, state.status[index])
                 }
             }
-            is End -> {
-                root.isVisible = false
-            }
+            is End -> root.isVisible = false
         }
     }
 
     private fun bindTask(task: Task) = with(bind) {
         root.isVisible = true
         gameWord.text = task.word
-        gameNext.isVisible = task.taskIndex < task.taskCount - 1
-        gameFinish.isVisible = task.taskIndex == task.taskCount - 1
+        gameNumber.text = getString(R.string.game_number_pattern, task.taskIndex + 1, task.totalTaskCount)
+        gameNext.isVisible = task.taskIndex < task.totalTaskCount - 1
+        gameFinish.isVisible = task.taskIndex == task.totalTaskCount - 1
         gamePrev.isVisible = task.taskIndex > 0
     }
 

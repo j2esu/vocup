@@ -3,22 +3,21 @@ package ru.uxapps.vocup.feature.learn.game
 internal interface WordToTranslationContract {
 
     sealed class State : GameContract.State {
-        data class Play(val task: Task, val checked: Set<Int>) : State()
-        data class Solution(val task: Task, val checked: Set<Int>) : State()
+        data class Play(val task: Task, val checked: Int) : State()
+        data class Solution(val task: Task, val checked: Int, val status: List<Boolean?>) : State()
         object End : State()
     }
 
     data class Task(
         val word: String,
         val answers: List<String>,
-        val correct: Set<Int>,
+        val correct: String,
         val taskIndex: Int,
-        val taskCount: Int
+        val totalTaskCount: Int
     )
 
     sealed class Action : GameContract.Action {
-        data class Toggle(val pos: Int) : Action()
-        object Examine : Action()
+        data class Check(val pos: Int) : Action()
         object Next : Action()
         object Prev : Action()
         object Finish : Action()

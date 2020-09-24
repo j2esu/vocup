@@ -14,7 +14,6 @@
         <item name="android:statusBarColor">#222</item>
         <item name="appBarLayoutStyle">@style/Vocup.AppBar</item>
         <item name="colorCorrect">#009A70</item>
-        <item name="colorOnCorrect">?colorOnPrimary</item>
     </style>
 
     <style name="Vocup.AppBar" parent="@style/Widget.MaterialComponents.AppBarLayout.Primary">
