@@ -12,7 +12,7 @@ import ru.uxapps.vocup.feature.learn.model.GameItem
 
 internal class GameListAdapter(
     private val onStartClick: (GameItem) -> Unit
-) : ListAdapter<GameItem, GameListAdapter.ExVh>(
+) : ListAdapter<GameItem, GameListAdapter.GameVh>(
     object : DiffUtil.ItemCallback<GameItem>() {
         override fun areItemsTheSame(oldItem: GameItem, newItem: GameItem) = oldItem.id == newItem.id
         override fun areContentsTheSame(oldItem: GameItem, newItem: GameItem) = oldItem == newItem
@@ -20,11 +20,11 @@ internal class GameListAdapter(
 ) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        ExVh(parent.inflateBind(ItemGameBinding::inflate))
+        GameVh(parent.inflateBind(ItemGameBinding::inflate))
 
-    override fun onBindViewHolder(holder: ExVh, position: Int) = holder.bind(getItem(position))
+    override fun onBindViewHolder(holder: GameVh, position: Int) = holder.bind(getItem(position))
 
-    inner class ExVh(private val bind: ItemGameBinding) : ViewHolder(bind.root) {
+    inner class GameVh(private val bind: ItemGameBinding) : ViewHolder(bind.root) {
 
         init {
             bind.root.setOnClickListener {
