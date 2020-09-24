@@ -2,6 +2,7 @@ package ru.uxapps.vocup.feature.learn.view
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import ru.uxapps.vocup.feature.learn.databinding.FragmentGameBinding
 import ru.uxapps.vocup.feature.learn.databinding.GameWordToTransBinding
 import ru.uxapps.vocup.feature.learn.game.GameContract
@@ -26,6 +27,8 @@ internal class GameView(
     }
 
     fun setState(state: GameContract.State?) = with(bind) {
+        gameContainer.isVisible = state != null
+        gameProgress.isVisible = state == null
         if (state != null) {
             val provider = VIEW_PROVIDERS.first { it.accept(state) }
             if (viewProvider != provider) {
