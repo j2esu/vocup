@@ -66,7 +66,6 @@ class DictWorkflow : BaseFragment(R.layout.workflow_dict), DictFragment.Router, 
             drawingViewId = R.id.dict_container
             setAllContainerColors(requireContext().getColorAttr(android.R.attr.colorBackground))
         }
-        wordFrag.postpone()
         // run transaction
         childFragmentManager.commit {
             replace(R.id.dict_container, wordFrag)

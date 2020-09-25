@@ -2,8 +2,6 @@ package ru.uxapps.vocup.feature.learn.model
 
 import android.content.Context
 import androidx.lifecycle.asLiveData
-import androidx.lifecycle.liveData
-import androidx.lifecycle.map
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.map
@@ -22,11 +20,4 @@ internal class GameListModelImp(context: Context, repo: Repo, scope: CoroutineSc
             )
         }
     }.asLiveData(scope.coroutineContext + Dispatchers.IO)
-
-    override val playEnabled = liveData {
-        emit(false)
-        emitSource(games.map { games ->
-            games.any { it.error == null }
-        })
-    }
 }

@@ -1,35 +1,27 @@
 package ru.uxapps.vocup.feature.learn.view
 
-import androidx.core.view.isVisible
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import ru.uxapps.vocup.feature.learn.databinding.FragmentLearnBinding
 import ru.uxapps.vocup.feature.learn.model.GameItem
 
 internal class LearnView(
-    private val bind: FragmentLearnBinding,
-    private val callback: Callback
+    bind: FragmentLearnBinding,
+    callback: Callback
 ) {
 
     interface Callback {
-        fun onStart(item: GameItem)
-        fun onPlay()
+        fun onStart(item: GameItem, srcView: View)
     }
 
-    private val exAdapter = GameListAdapter { callback.onStart(it) }
+    private val gameAdapter = GameListAdapter(callback::onStart)
 
     init {
         bind.learnRv.apply {
-            adapter = exAdapter
+            adapter = gameAdapter
             layoutManager = LinearLayoutManager(context)
         }
-        bind.learnPlay.setOnClickListener { callback.onPlay() }
     }
 
-    fun setGames(games: List<GameItem>) {
-        exAdapter.submitList(games)
-    }
-
-    fun setPlayEnabled(enabled: Boolean) {
-        bind.learnPlay.isVisible = enabled
-    }
+    fun setGames(games: List<GameItem>) = gameAdapter.submitList(games)
 }

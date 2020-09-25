@@ -5,4 +5,7 @@
     <string name="word_to_translation_desc">Choose the right translations for a given word</string>
     <string name="word_to_translation_req_pattern">"Add at least 10 words with translations (%s)"</string>
     <string name="game_number_pattern" translatable="false">%d / %d</string>
+
+    <string name="transit_game_root" translatable="false">game_root</string>
+    <string name="transit_game_item_pattern" translatable="false">game_item_%s</string>
 </resources>

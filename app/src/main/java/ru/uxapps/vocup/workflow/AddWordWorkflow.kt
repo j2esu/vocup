@@ -38,7 +38,6 @@ class AddWordWorkflow : BaseFragment(R.layout.workflow_add_word), AddWordFragmen
             drawingViewId = R.id.add_word_container
             setAllContainerColors(requireContext().getColorAttr(android.R.attr.colorBackground))
         }
-        wordFragment.postpone()
         // transition
         childFragmentManager.commit {
             replace(R.id.add_word_container, wordFragment)

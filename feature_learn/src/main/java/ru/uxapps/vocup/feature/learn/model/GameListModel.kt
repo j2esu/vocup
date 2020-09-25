@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 
 internal interface GameListModel {
     val games: LiveData<List<GameItem>>
-    val playEnabled: LiveData<Boolean>
 }
 
 internal data class GameItem(

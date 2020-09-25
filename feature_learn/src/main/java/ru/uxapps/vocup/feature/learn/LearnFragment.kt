@@ -1,7 +1,6 @@
 package ru.uxapps.vocup.feature.learn
 
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import ru.uxapps.vocup.feature.BaseFragment
@@ -17,7 +16,7 @@ import javax.inject.Inject
 class LearnFragment : BaseFragment(R.layout.fragment_learn) {
 
     interface Host {
-        fun openGame(gameId: Int)
+        fun openGame(gameId: Int, srcView: View)
     }
 
     private val vm by viewModels<LearnViewModel>()
@@ -27,15 +26,11 @@ class LearnFragment : BaseFragment(R.layout.fragment_learn) {
     override fun onViewReady(view: View, init: Boolean) {
         vm.learnComponent.inject(this)
         val learnView = LearnView(FragmentLearnBinding.bind(view), object : LearnView.Callback {
-            override fun onStart(item: GameItem) = host<Host>().openGame(item.id)
-
-            override fun onPlay() =
-                Toast.makeText(context, "Start random game", Toast.LENGTH_SHORT).show()
+            override fun onStart(item: GameItem, srcView: View) = host<Host>().openGame(item.id, srcView)
         })
         gameListModel.games.observe(viewLifecycleOwner, learnView::setGames)
-        gameListModel.playEnabled.observe(viewLifecycleOwner, learnView::setPlayEnabled)
         postponeUntil {
-            gameListModel.playEnabled.awaitValue()
+            gameListModel.games.awaitValue()
         }
     }
 }
