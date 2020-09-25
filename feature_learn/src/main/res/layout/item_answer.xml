@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/answer_card"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:checkable="true"
-    android:clickable="true"
-    android:focusable="true"
-    app:cardBackgroundColor="@color/answer_bg"
-    app:cardForegroundColor="@android:color/transparent"
-    app:checkedIcon="@null"
+    android:background="@drawable/answer_bg"
     tools:layout_gravity="center"
     tools:layout_height="100dp"
     tools:layout_width="200dp"
@@ -23,7 +17,6 @@
         android:layout_height="24dp"
         android:layout_gravity="end"
         android:layout_margin="4dp"
-        android:duplicateParentState="true"
         app:srcCompat="@drawable/answer_status"
         app:tint="@color/answer_status_tint"
         tools:ignore="ContentDescription"
@@ -44,4 +37,4 @@
         tools:text="@tools:sample/cities"
         />
 
-</com.google.android.material.card.MaterialCardView>
+</FrameLayout>

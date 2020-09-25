@@ -7,111 +7,143 @@
     android:layout_height="match_parent"
     >
 
-    <TextView
-        android:id="@+id/game_word"
+    <FrameLayout
+        android:id="@+id/level_scene"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
-        android:gravity="center"
-        android:padding="16dp"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
-        tools:text="@tools:sample/cities"
-        />
-
-    <androidx.gridlayout.widget.GridLayout
-        android:id="@+id/game_answers"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:clipToPadding="false"
-        android:padding="16dp"
-        app:alignmentMode="alignBounds"
-        app:columnCount="2"
+        android:layout_height="match_parent"
         >
 
-        <include
-            layout="@layout/item_answer"
-            android:layout_width="0dp"
-            android:layout_height="80dp"
-            android:layout_marginEnd="8dp"
-            app:layout_columnWeight="1"
+        <ImageView
+            android:id="@+id/game_level_copy"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="invisible"
+            tools:ignore="ContentDescription"
             />
 
-        <include
-            layout="@layout/item_answer"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="8dp"
-            app:layout_columnWeight="1"
-            app:layout_gravity="fill"
+        <FrameLayout
+            android:id="@+id/game_level"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <TextView
+                android:id="@+id/game_word"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="40dp"
+                android:gravity="center"
+                android:padding="16dp"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline3"
+                tools:text="@tools:sample/cities"
+                />
+
+            <androidx.gridlayout.widget.GridLayout
+                android:id="@+id/game_answers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:clipToPadding="false"
+                android:padding="16dp"
+                app:alignmentMode="alignBounds"
+                app:columnCount="2"
+                >
+
+                <include
+                    layout="@layout/item_answer"
+                    android:layout_width="0dp"
+                    android:layout_height="80dp"
+                    android:layout_marginEnd="8dp"
+                    app:layout_columnWeight="1"
+                    />
+
+                <include
+                    layout="@layout/item_answer"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="8dp"
+                    app:layout_columnWeight="1"
+                    app:layout_gravity="fill"
+                    />
+
+                <include
+                    layout="@layout/item_answer"
+                    android:layout_width="0dp"
+                    android:layout_height="80dp"
+                    android:layout_marginTop="16dp"
+                    app:layout_gravity="fill"
+                    />
+
+                <include
+                    layout="@layout/item_answer"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_gravity="fill"
+                    />
+
+            </androidx.gridlayout.widget.GridLayout>
+
+        </FrameLayout>
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/game_bottom_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_margin="16dp"
+        >
+
+        <TextView
+            android:id="@+id/game_number"
+            android:layout_width="wrap_content"
+            android:layout_height="56dp"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:minWidth="100dp"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+            tools:text="2 / 10"
             />
 
-        <include
-            layout="@layout/item_answer"
-            android:layout_width="0dp"
-            android:layout_height="80dp"
-            android:layout_marginTop="16dp"
-            app:layout_gravity="fill"
+        <ImageView
+            android:id="@+id/game_next"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_gravity="end"
+            android:background="?selectableItemBackgroundBorderless"
+            android:padding="16dp"
+            app:srcCompat="@drawable/ic_next"
+            app:tint="?colorPrimary"
+            tools:ignore="ContentDescription"
             />
 
-        <include
-            layout="@layout/item_answer"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_gravity="fill"
+        <ImageView
+            android:id="@+id/game_finish"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_gravity="end"
+            android:background="?selectableItemBackgroundBorderless"
+            android:padding="16dp"
+            android:visibility="invisible"
+            app:srcCompat="@drawable/ic_finish"
+            app:tint="?colorPrimary"
+            tools:ignore="ContentDescription"
             />
 
-    </androidx.gridlayout.widget.GridLayout>
+        <ImageView
+            android:id="@+id/game_prev"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_gravity="start"
+            android:background="?selectableItemBackgroundBorderless"
+            android:padding="16dp"
+            app:srcCompat="@drawable/ic_previous"
+            app:tint="?colorPrimary"
+            tools:ignore="ContentDescription"
+            />
 
-    <TextView
-        android:id="@+id/game_number"
-        android:layout_width="wrap_content"
-        android:layout_height="56dp"
-        android:layout_gravity="bottom|center_horizontal"
-        android:layout_margin="16dp"
-        android:gravity="center"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-        tools:text="2 / 10"
-        />
-
-    <ImageView
-        android:id="@+id/game_next"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
-        android:background="?selectableItemBackgroundBorderless"
-        android:padding="16dp"
-        app:srcCompat="@drawable/ic_next"
-        app:tint="?colorPrimary"
-        tools:ignore="ContentDescription"
-        />
-
-    <ImageView
-        android:id="@+id/game_finish"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
-        android:background="?selectableItemBackgroundBorderless"
-        android:padding="16dp"
-        android:visibility="invisible"
-        app:srcCompat="@drawable/ic_finish"
-        app:tint="?colorPrimary"
-        tools:ignore="ContentDescription"
-        />
-
-    <ImageView
-        android:id="@+id/game_prev"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:layout_gravity="bottom|start"
-        android:layout_margin="16dp"
-        android:background="?selectableItemBackgroundBorderless"
-        android:padding="16dp"
-        app:srcCompat="@drawable/ic_previous"
-        app:tint="?colorPrimary"
-        tools:ignore="ContentDescription"
-        />
+    </FrameLayout>
 
 </FrameLayout>

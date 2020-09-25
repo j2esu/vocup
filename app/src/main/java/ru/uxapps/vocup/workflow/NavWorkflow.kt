@@ -12,7 +12,7 @@ import ru.uxapps.vocup.databinding.WorkflowNavBinding
 import ru.uxapps.vocup.feature.BaseFragment
 import ru.uxapps.vocup.feature.awaitReady
 import ru.uxapps.vocup.feature.explore.ExploreFragment
-import ru.uxapps.vocup.transition.ScaleVisibility
+import ru.uxapps.vocup.feature.transit.ScaleVisibility
 import ru.uxapps.vocup.util.host
 
 class NavWorkflow : BaseFragment(R.layout.workflow_nav), DictWorkflow.Router {

@@ -1,4 +1,4 @@
-package ru.uxapps.vocup.transition
+package ru.uxapps.vocup.feature.transit
 
 import android.animation.Animator
 import android.animation.ObjectAnimator

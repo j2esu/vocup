@@ -12,7 +12,7 @@ internal interface WordToTranslationContract {
         val word: String,
         val answers: List<String>,
         val correct: String,
-        val taskIndex: Int,
+        val index: Int,
         val totalTaskCount: Int
     )
 
