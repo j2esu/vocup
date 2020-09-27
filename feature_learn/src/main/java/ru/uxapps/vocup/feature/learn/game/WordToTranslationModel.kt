@@ -42,8 +42,7 @@ internal class WordToTranslationModel(
         when (action) {
             is Check -> if (state is Play) check(state, action.pos)
             Next -> if (state !is End) next()
-            Prev -> if (state !is End) prev()
-            Finish -> if (state !is End) finish()
+            Prev -> prev()
         }
     }
 
@@ -59,20 +58,22 @@ internal class WordToTranslationModel(
     }
 
     private fun next() {
-        if (taskIndex < tasks.size - 1) {
+        if (taskIndex < tasks.lastIndex) {
             taskIndex++
             state.value = taskStates[taskIndex]
+        } else if (taskIndex == tasks.lastIndex) {
+            val correct = taskStates.count { (it is Solution) && it.correct }
+            val skipped = taskStates.count { it !is Solution }
+            state.value = End(tasks.size, correct, skipped)
         }
     }
 
     private fun prev() {
-        if (taskIndex > 0) {
+        if (state.value is End) {
+            state.value = taskStates.last()
+        } else if (taskIndex > 0) {
             taskIndex--
             state.value = taskStates[taskIndex]
         }
-    }
-
-    private fun finish() {
-        state.value = End
     }
 }

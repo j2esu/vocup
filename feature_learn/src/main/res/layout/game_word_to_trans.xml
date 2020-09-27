@@ -8,7 +8,7 @@
     >
 
     <FrameLayout
-        android:id="@+id/level_scene"
+        android:id="@+id/game_level_scene"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
@@ -145,5 +145,51 @@
             />
 
     </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/game_stats"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginBottom="56dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="16dp"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="@string/game_completed"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+            />
+
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:padding="16dp"
+            app:srcCompat="@drawable/ic_award"
+            app:tint="?colorPrimary"
+            tools:ignore="ContentDescription"
+            />
+
+        <TextView
+            android:id="@+id/game_stats_correct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+            tools:text="Correct: 15"
+            />
+
+        <TextView
+            android:id="@+id/game_stats_skipped"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+            tools:text="Skipped: 2"
+            />
+
+    </LinearLayout>
 
 </FrameLayout>

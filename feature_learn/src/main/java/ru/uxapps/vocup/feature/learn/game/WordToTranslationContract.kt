@@ -4,8 +4,13 @@ internal interface WordToTranslationContract {
 
     sealed class State : GameContract.State {
         data class Play(val task: Task, val checked: Int) : State()
-        data class Solution(val task: Task, val checked: Int, val status: List<Boolean?>) : State()
-        object End : State()
+        data class Solution(val task: Task, val checked: Int, val status: List<Boolean?>) : State() {
+            val correct = task.correct == task.answers[checked]
+        }
+
+        data class End(val total: Int, val correct: Int, val skipped: Int) : State() {
+            val answered = total - skipped
+        }
     }
 
     data class Task(
@@ -20,6 +25,5 @@ internal interface WordToTranslationContract {
         data class Check(val pos: Int) : Action()
         object Next : Action()
         object Prev : Action()
-        object Finish : Action()
     }
 }

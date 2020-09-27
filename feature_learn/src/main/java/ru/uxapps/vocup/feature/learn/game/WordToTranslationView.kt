@@ -6,6 +6,7 @@ import androidx.transition.Transition
 import androidx.transition.TransitionListenerAdapter
 import androidx.transition.TransitionManager
 import com.google.android.material.transition.MaterialSharedAxis
+import ru.uxapps.vocup.feature.back
 import ru.uxapps.vocup.feature.getString
 import ru.uxapps.vocup.feature.learn.R
 import ru.uxapps.vocup.feature.learn.databinding.GameWordToTransBinding
@@ -33,7 +34,7 @@ internal class WordToTranslationView(private val bind: GameWordToTransBinding) :
         with(bind) {
             gameNext.setOnClickListener { onAction?.invoke(Next) }
             gamePrev.setOnClickListener { onAction?.invoke(Prev) }
-            gameFinish.setOnClickListener { onAction?.invoke(Finish) }
+            gameFinish.setOnClickListener { it.back() }
         }
     }
 
@@ -46,7 +47,7 @@ internal class WordToTranslationView(private val bind: GameWordToTransBinding) :
         // render state
         when (state) {
             is Play -> {
-                bindTask(state.task)
+                renderTask(state.task)
                 state.task.answers.forEachIndexed { index, item ->
                     answers[index].bind(item, state.checked == index, null)
                 }
@@ -56,16 +57,29 @@ internal class WordToTranslationView(private val bind: GameWordToTransBinding) :
                 if (currentState is Play && currentTask?.index == state.task.index) {
                     TransitionManager.beginDelayedTransition(gameAnswers, ScaleVisibility())
                 }
-                bindTask(state.task)
+                renderTask(state.task)
                 state.task.answers.forEachIndexed { index, item ->
                     answers[index].bind(item, state.checked == index, state.status[index])
                 }
                 taskTransition(currentTask, state.task)
             }
-            is End -> root.isVisible = false
+            is End -> {
+                TransitionManager.beginDelayedTransition(
+                    root, MaterialSharedAxis(MaterialSharedAxis.X, true).apply {
+                        excludeTarget(gameBottomBar, true)
+                    }
+                )
+                gameStats.isVisible = true
+                gameLevelScene.isVisible = false
+                gameNext.isVisible = false
+                gameNumber.isVisible = false
+                gameFinish.isVisible = true
+                gameStatsCorrect.text =
+                    getString(R.string.game_stats_correct_pattern, state.correct, state.answered)
+                gameStatsSkipped.text = getString(R.string.game_stats_skipped_pattern, state.skipped)
+                gameStatsSkipped.isVisible = state.skipped > 0
+            }
         }
-        // save bitmap for feature transitions
-        gameLevel.doOnPreDraw { levelCopy = it.drawToBitmap() }
         // update current state
         currentState = state
     }
@@ -88,28 +102,40 @@ internal class WordToTranslationView(private val bind: GameWordToTransBinding) :
                     override fun onTransitionStart(transition: Transition) {
                         gamePrev.isEnabled = false
                         gameNext.isEnabled = false
-                        gameFinish.isEnabled = false
                     }
 
                     override fun onTransitionEnd(transition: Transition) {
                         gamePrev.isEnabled = true
                         gameNext.isEnabled = true
-                        gameFinish.isEnabled = true
                     }
                 })
-            TransitionManager.beginDelayedTransition(levelScene, transit)
+            TransitionManager.beginDelayedTransition(gameLevelScene, transit)
             gameLevelCopy.isInvisible = true
             gameLevel.isVisible = true
         }
+        // save bitmap for feature transitions
+        if (gameLevel.isVisible) {
+            gameLevel.doOnPreDraw { levelCopy = it.drawToBitmap() }
+        }
     }
 
-    private fun bindTask(task: Task) = with(bind) {
-        root.isVisible = true
+    private fun renderTask(task: Task) = with(bind) {
+        if (currentState is End) {
+            TransitionManager.beginDelayedTransition(
+                root, MaterialSharedAxis(MaterialSharedAxis.X, false).apply {
+                    excludeTarget(gameBottomBar, true)
+                }
+            )
+        }
+        gameStats.isVisible = false
+        gameLevelScene.isVisible = true
+        gameBottomBar.isVisible = true
         gameWord.text = task.word
+        gameNumber.isVisible = true
         gameNumber.text = getString(R.string.game_number_pattern, task.index + 1, task.totalTaskCount)
-        gameNext.isVisible = task.index < task.totalTaskCount - 1
-        gameFinish.isVisible = task.index == task.totalTaskCount - 1
+        gameNext.isVisible = true
         gamePrev.isVisible = task.index > 0
+        gameFinish.isVisible = false
     }
 
     private fun ItemAnswerBinding.bind(text: String, checked: Boolean, correct: Boolean?) {
