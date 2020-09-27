@@ -13,9 +13,14 @@ internal enum class Game(
         R.string.word_to_translation_desc
     ) {
         override fun getRequirements(words: List<Word>): Pair<Int, Array<out Any>>? {
-            val wordsWithTrans = words.filter { it.translations.isNotEmpty() }
-            return if (wordsWithTrans.size >= 10) null
-            else R.string.word_to_translation_req_pattern to arrayOf(wordsWithTrans.size)
+            val allTranslations = words.flatMap { it.translations }
+            val wordsWithUniqueTrans = words.filter { word ->
+                word.translations.any { trans ->
+                    allTranslations.count { it == trans } == 1
+                }
+            }
+            return if (wordsWithUniqueTrans.size >= 10) null
+            else R.string.word_to_translation_req_pattern to arrayOf(wordsWithUniqueTrans.size)
         }
     };
 

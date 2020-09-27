@@ -25,10 +25,10 @@ internal class WordToTranslationModel(
     init {
         scope.launch(Dispatchers.IO) {
             val words = repo.getAllWords().first().filter { it.translations.isNotEmpty() }.shuffled()
-            val translations = words.flatMap { it.translations }
+            val translations = words.flatMap { it.translations }.distinct()
             tasks = words.mapIndexed { index, word ->
                 val correct = word.translations.random()
-                val incorrect = translations.shuffled().filter { it != correct }.take(3)
+                val incorrect = (translations - word.translations).shuffled().take(3)
                 val answers = (incorrect + correct).shuffled()
                 Task(word.text, answers, correct, index, words.size)
             }
