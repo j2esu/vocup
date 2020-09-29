@@ -6,4 +6,5 @@
     <string name="save">Save</string>
     <string name="delete">Delete</string>
     <string name="word_removed">Word was removed</string>
+    <string name="tts_initializing">Initializing speech service</string>
 </resources>

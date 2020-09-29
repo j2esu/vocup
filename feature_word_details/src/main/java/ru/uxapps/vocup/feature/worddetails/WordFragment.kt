@@ -1,12 +1,12 @@
 package ru.uxapps.vocup.feature.worddetails
 
 import android.view.View
-import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import ru.uxapps.vocup.feature.BaseFragment
+import ru.uxapps.vocup.feature.TtsProvider
 import ru.uxapps.vocup.feature.awaitValue
 import ru.uxapps.vocup.feature.worddetails.databinding.FragmentWordBinding
 import ru.uxapps.vocup.feature.worddetails.di.WordViewModel
@@ -33,6 +33,8 @@ class WordFragment : BaseFragment(R.layout.fragment_word), AddTransDialog.Host, 
 
     @Inject internal lateinit var detailsModel: WordDetails
 
+    private val tts by lazy { (requireActivity() as TtsProvider).tts }
+
     override fun onViewReady(view: View, init: Boolean) {
         vm.getWordComponent(wordId).inject(this)
         val v = WordView(FragmentWordBinding.bind(view), object : WordView.Callback {
@@ -43,8 +45,7 @@ class WordFragment : BaseFragment(R.layout.fragment_word), AddTransDialog.Host, 
             override fun onReorderTrans(newTrans: List<String>) = detailsModel.onReorderTrans(newTrans)
 
             override fun onListen() {
-                Toast.makeText(context, "You're listening ${detailsModel.text.value}", Toast.LENGTH_SHORT)
-                    .show()
+                detailsModel.text.value?.let { tts.speak(it) }
             }
 
             override fun onEditTrans(trans: String) {

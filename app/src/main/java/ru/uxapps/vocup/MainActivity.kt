@@ -1,5 +1,6 @@
 package ru.uxapps.vocup
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
@@ -12,16 +13,22 @@ import androidx.transition.Slide
 import androidx.transition.TransitionSet
 import com.google.android.material.transition.Hold
 import com.google.android.material.transition.MaterialContainerTransform
-import ru.uxapps.vocup.feature.SoftInputImp
-import ru.uxapps.vocup.feature.SoftInputProvider
-import ru.uxapps.vocup.feature.getColorAttr
+import ru.uxapps.vocup.feature.*
 import ru.uxapps.vocup.feature.worddetails.WordFragment
 import ru.uxapps.vocup.workflow.AddWordWorkflow
 import ru.uxapps.vocup.workflow.NavWorkflow
 
-class MainActivity : AppCompatActivity(R.layout.activity_main), NavWorkflow.Router, SoftInputProvider {
+class MainActivity : AppCompatActivity(R.layout.activity_main), NavWorkflow.Router, SoftInputProvider,
+    TtsProvider {
 
     override val softInput by lazy { SoftInputImp(this) }
+    override val tts by lazy {
+        TtsImp(this, this, object : TtsImp.Callback {
+            override fun onStartActivity(intent: Intent, requestCode: Int?) =
+                if (requestCode != null) startActivityForResult(intent, requestCode)
+                else startActivity(intent)
+        })
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +40,11 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), NavWorkflow.Rout
             }
         }
         configureInputMode()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        tts.onActivityResult(resultCode)
     }
 
     private fun configureInputMode() {
