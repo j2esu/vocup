@@ -39,7 +39,7 @@ class TtsImp(
 
     override fun speak(text: String) {
         if (mTts != null) {
-            mTts?.speak(text, TextToSpeech.QUEUE_ADD, null, null)
+            speakInner(text)
         } else {
             pendingText = text
             val checkTts = Intent(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA)
@@ -55,6 +55,10 @@ class TtsImp(
         callback.onStartActivity(Intent(Intent.ACTION_VIEW, Uri.parse(INSTALL_URL)))
     }
 
+    private fun speakInner(text: String) {
+        mTts?.speak(text, TextToSpeech.QUEUE_FLUSH, null, null)
+    }
+
     fun onActivityResult(resultCode: Int) {
         if (resultCode == TextToSpeech.Engine.CHECK_VOICE_DATA_PASS) {
             mTts = TextToSpeech(context, this)
@@ -67,8 +71,8 @@ class TtsImp(
 
     override fun onInit(status: Int) {
         if (status == TextToSpeech.SUCCESS) {
-            if (pendingText != null) {
-                mTts?.speak(pendingText, TextToSpeech.QUEUE_ADD, null, null)
+            pendingText?.let {
+                speakInner(it)
                 pendingText = null
             }
         } else {
