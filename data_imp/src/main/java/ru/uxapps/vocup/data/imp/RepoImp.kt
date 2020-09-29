@@ -2,6 +2,7 @@ package ru.uxapps.vocup.data.imp
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.core.math.MathUtils
 import androidx.core.os.LocaleListCompat
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.channels.sendBlocking
@@ -77,7 +78,7 @@ class RepoImp(
         currentLang = lang
     }
 
-    override suspend fun updateTranslations(wordId: Long, trans: List<String>) =
+    override suspend fun setTranslations(wordId: Long, trans: List<String>) =
         db.updateTranslations(wordId, trans)
 
     override suspend fun addTranslations(wordId: Long, trans: List<String>) {
@@ -85,4 +86,8 @@ class RepoImp(
             db.updateTranslations(wordId, currentTrans + trans)
         }
     }
+
+    override suspend fun updateProgress(word: Word, progressDiff: Int) =
+        db.updateProgress(word.id, MathUtils.clamp(word.progress + progressDiff, 0, 100))
+
 }

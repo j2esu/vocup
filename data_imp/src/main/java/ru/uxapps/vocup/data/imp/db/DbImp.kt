@@ -52,6 +52,10 @@ class DbImp(context: Context) : Db {
         db.trans().updateTranslations(wordId, trans.map { it.toTransEntity(wordId) })
     }
 
+    override suspend fun updateProgress(wordId: Long, progress: Int) {
+        db.words().updateProgress(wordId, progress)
+    }
+
     private fun Word.toEntity() = WordEntity(id, text, pron, progress, created)
     private fun String.toTransEntity(wordId: Long) = TransEntity(0, this, wordId)
     private fun TransEntity.toTrans() = text

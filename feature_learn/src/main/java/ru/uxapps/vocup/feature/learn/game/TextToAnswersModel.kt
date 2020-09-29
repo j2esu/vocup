@@ -11,8 +11,8 @@ import ru.uxapps.vocup.feature.learn.game.TextToAnswersContract.State.*
 import ru.uxapps.vocup.feature.learn.game.TextToAnswersContract.Task
 
 internal abstract class TextToAnswersModel(
-    scope: CoroutineScope,
-    repo: Repo
+    private val scope: CoroutineScope,
+    private val repo: Repo
 ) : GameContract.Model {
 
     override val state = MutableStateFlow<GameContract.State?>(null)
@@ -30,6 +30,7 @@ internal abstract class TextToAnswersModel(
     }
 
     protected abstract suspend fun loadTasks(repo: Repo): List<Task>
+    protected abstract suspend fun updateProgress(task: Task, correct: Boolean, repo: Repo)
 
     override fun proceed(action: GameContract.Action) {
         val state = this.state.value
@@ -41,6 +42,9 @@ internal abstract class TextToAnswersModel(
     }
 
     private fun check(play: Play, pos: Int) {
+        scope.launch(Dispatchers.IO) {
+            updateProgress(play.task, play.task.correct == play.task.answers[pos], repo)
+        }
         val status = play.task.answers.mapIndexed { index, answer ->
             val checked = index == pos
             val correct = play.task.correct == answer

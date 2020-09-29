@@ -11,7 +11,7 @@ internal interface WordDao {
     fun getAllWords(): Flow<List<WordWithTranslations>>
 
     @Transaction
-    @Query("select * from Words where id = :wordId")
+    @Query("select * from Words where id == :wordId")
     fun getWord(wordId: Long): Flow<WordWithTranslations?>
 
     @Insert
@@ -19,6 +19,9 @@ internal interface WordDao {
 
     @Query("delete from Words where id == :wordId")
     suspend fun deleteWord(wordId: Long)
+
+    @Query("update Words set progress = :progress where id == :wordId")
+    suspend fun updateProgress(wordId: Long, progress: Int)
 
 }
 

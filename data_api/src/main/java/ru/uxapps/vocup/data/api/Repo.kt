@@ -12,6 +12,7 @@ interface Repo {
     suspend fun restoreWord(word: Word)
     suspend fun deleteWord(wordId: Long)
     suspend fun setTargetLanguage(lang: Language)
-    suspend fun updateTranslations(wordId: Long, trans: List<String>)
+    suspend fun setTranslations(wordId: Long, trans: List<String>)
     suspend fun addTranslations(wordId: Long, trans: List<String>)
+    suspend fun updateProgress(word: Word, progressDiff: Int)
 }

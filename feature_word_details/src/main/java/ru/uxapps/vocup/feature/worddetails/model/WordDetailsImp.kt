@@ -30,14 +30,14 @@ internal class WordDetailsImp(
 
     override fun onReorderTrans(newTrans: List<String>) {
         scope.launch {
-            repo.updateTranslations(wordId, newTrans)
+            repo.setTranslations(wordId, newTrans)
         }
     }
 
     override fun onAddTrans(text: String) {
         scope.launch {
             translations.value?.let {
-                repo.updateTranslations(wordId, it + text)
+                repo.setTranslations(wordId, it + text)
             }
         }
     }
@@ -46,8 +46,8 @@ internal class WordDetailsImp(
         val currentTrans = translations.value!!
         val newTrans = currentTrans.toMutableList().apply { remove(trans) }
         scope.launch {
-            repo.updateTranslations(wordId, newTrans)
-            onTransDeleted.send { repo.updateTranslations(wordId, currentTrans) }
+            repo.setTranslations(wordId, newTrans)
+            onTransDeleted.send { repo.setTranslations(wordId, currentTrans) }
         }
     }
 
@@ -66,7 +66,7 @@ internal class WordDetailsImp(
             set(indexOfFirst { it == trans }, newText)
         }
         scope.launch {
-            repo.updateTranslations(wordId, newTrans)
+            repo.setTranslations(wordId, newTrans)
         }
     }
 }

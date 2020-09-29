@@ -10,4 +10,5 @@ interface Db {
     suspend fun restoreWord(word: Word)
     suspend fun deleteWord(wordId: Long)
     suspend fun updateTranslations(wordId: Long, trans: List<String>)
+    suspend fun updateProgress(wordId: Long, progress: Int)
 }
