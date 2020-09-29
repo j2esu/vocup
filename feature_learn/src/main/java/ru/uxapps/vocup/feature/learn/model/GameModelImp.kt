@@ -10,7 +10,7 @@ import ru.uxapps.vocup.feature.learn.game.WordToTransModel
 
 internal class GameModelImp(gameId: Int, scope: CoroutineScope, repo: Repo) : GameModel {
 
-    private val game = requireNotNull(MODEL_PROVIDERS[Game.values()[gameId]]).provide(scope, repo)
+    private val game = requireNotNull(MODEL_PROVIDERS[gameId]).provide(scope, repo)
 
     override val state = game.state.asLiveData()
     override fun onAction(action: GameContract.Action) = game.proceed(action)
@@ -21,10 +21,10 @@ private interface ModelProvider {
 }
 
 private val MODEL_PROVIDERS = mapOf(
-    Game.WordToTranslation to object : ModelProvider {
+    Game.WordToTranslation.id to object : ModelProvider {
         override fun provide(scope: CoroutineScope, repo: Repo) = WordToTransModel(scope, repo)
     },
-    Game.TranslationToWord to object : ModelProvider {
+    Game.TranslationToWord.id to object : ModelProvider {
         override fun provide(scope: CoroutineScope, repo: Repo) = TransToWordModel(scope, repo)
     }
 )

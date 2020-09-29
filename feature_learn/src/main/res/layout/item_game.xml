@@ -27,8 +27,8 @@
             android:layout_height="wrap_content"
             android:drawablePadding="16dp"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-            app:drawableStartCompat="@drawable/ic_fitness"
             app:drawableTint="?colorPrimary"
+            tools:drawableStartCompat="@drawable/ic_read"
             tools:text="Word to translation"
             />
 

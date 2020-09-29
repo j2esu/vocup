@@ -12,12 +12,7 @@ internal class GameListModelImp(context: Context, repo: Repo, scope: CoroutineSc
 
     override val games = repo.getAllWords().map { words ->
         Game.values().map { game ->
-            GameItem(
-                game.ordinal,
-                context.getString(game.title),
-                context.getString(game.desc),
-                game.getRequirements(words)?.let { context.getString(it.first, *it.second) }
-            )
+            GameItem(game, game.getRequirements(words)?.let { context.getString(it.first, *it.second) })
         }
     }.asLiveData(scope.coroutineContext + Dispatchers.IO)
 }

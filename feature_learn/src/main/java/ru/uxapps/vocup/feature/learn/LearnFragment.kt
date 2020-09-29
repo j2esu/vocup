@@ -26,7 +26,7 @@ class LearnFragment : BaseFragment(R.layout.fragment_learn) {
     override fun onViewReady(view: View, init: Boolean) {
         vm.learnComponent.inject(this)
         val learnView = LearnView(FragmentLearnBinding.bind(view), object : LearnView.Callback {
-            override fun onStart(item: GameItem, srcView: View) = host<Host>().openGame(item.id, srcView)
+            override fun onStart(item: GameItem, srcView: View) = host<Host>().openGame(item.game.id, srcView)
         })
         gameListModel.games.observe(viewLifecycleOwner, learnView::setGames)
         postponeUntil {

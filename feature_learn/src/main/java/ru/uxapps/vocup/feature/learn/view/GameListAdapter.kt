@@ -17,7 +17,7 @@ internal class GameListAdapter(
     private val onStartClick: (GameItem, View) -> Unit
 ) : ListAdapter<GameItem, GameListAdapter.GameVh>(
     object : DiffUtil.ItemCallback<GameItem>() {
-        override fun areItemsTheSame(oldItem: GameItem, newItem: GameItem) = oldItem.id == newItem.id
+        override fun areItemsTheSame(oldItem: GameItem, newItem: GameItem) = oldItem.game == newItem.game
         override fun areContentsTheSame(oldItem: GameItem, newItem: GameItem) = oldItem == newItem
     }
 ) {
@@ -45,13 +45,14 @@ internal class GameListAdapter(
         }
 
         fun bind(item: GameItem) = with(bind) {
-            gameTitle.text = item.title
-            gameDesc.text = item.desc
+            gameTitle.setText(item.game.title)
+            gameTitle.setCompoundDrawablesRelativeWithIntrinsicBounds(item.game.type.icon, 0, 0, 0)
+            gameDesc.setText(item.game.desc)
             gameError.text = item.error
             gameError.animate().cancel()
             gameError.isVisible = item.error != null
             gameError.alpha = 1f
-            root.transitionName = getString(R.string.transit_game_item_pattern, item.id)
+            root.transitionName = getString(R.string.transit_game_item_pattern, item.game.id)
         }
     }
 }
