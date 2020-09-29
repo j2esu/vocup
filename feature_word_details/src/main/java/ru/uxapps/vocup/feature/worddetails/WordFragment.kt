@@ -6,8 +6,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import ru.uxapps.vocup.feature.BaseFragment
-import ru.uxapps.vocup.feature.TtsProvider
 import ru.uxapps.vocup.feature.awaitValue
+import ru.uxapps.vocup.feature.tts
 import ru.uxapps.vocup.feature.worddetails.databinding.FragmentWordBinding
 import ru.uxapps.vocup.feature.worddetails.di.WordViewModel
 import ru.uxapps.vocup.feature.worddetails.model.WordDetails
@@ -32,8 +32,6 @@ class WordFragment : BaseFragment(R.layout.fragment_word), AddTransDialog.Host, 
     private val vm by viewModels<WordViewModel>()
 
     @Inject internal lateinit var detailsModel: WordDetails
-
-    private val tts by lazy { (requireActivity() as TtsProvider).tts }
 
     override fun onViewReady(view: View, init: Boolean) {
         vm.getWordComponent(wordId).inject(this)

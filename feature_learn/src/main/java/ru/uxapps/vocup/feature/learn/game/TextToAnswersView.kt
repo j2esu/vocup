@@ -14,7 +14,7 @@ import ru.uxapps.vocup.feature.learn.databinding.ItemAnswerBinding
 import ru.uxapps.vocup.feature.learn.game.TextToAnswersContract.Action.*
 import ru.uxapps.vocup.feature.learn.game.TextToAnswersContract.State.*
 import ru.uxapps.vocup.feature.learn.game.TextToAnswersContract.Task
-import ru.uxapps.vocup.feature.transit.ScaleVisibility
+import ru.uxapps.vocup.feature.ScaleVisibility
 
 internal class TextToAnswersView(private val bind: GameTextToAnswersBinding) : GameContract.View {
 

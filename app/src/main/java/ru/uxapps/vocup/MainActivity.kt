@@ -13,8 +13,12 @@ import androidx.transition.Slide
 import androidx.transition.TransitionSet
 import com.google.android.material.transition.Hold
 import com.google.android.material.transition.MaterialContainerTransform
-import ru.uxapps.vocup.feature.*
+import ru.uxapps.vocup.feature.SoftInputProvider
+import ru.uxapps.vocup.feature.TtsProvider
+import ru.uxapps.vocup.feature.getColorAttr
 import ru.uxapps.vocup.feature.worddetails.WordFragment
+import ru.uxapps.vocup.helper.SoftInputImp
+import ru.uxapps.vocup.helper.TtsImp
 import ru.uxapps.vocup.workflow.AddWordWorkflow
 import ru.uxapps.vocup.workflow.NavWorkflow
 
@@ -25,8 +29,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), NavWorkflow.Rout
     override val tts by lazy {
         TtsImp(this, this, object : TtsImp.Callback {
             override fun onStartActivity(intent: Intent, requestCode: Int?) =
-                if (requestCode != null) startActivityForResult(intent, requestCode)
-                else startActivity(intent)
+                startActivityForResult(intent, requestCode ?: -1)
         })
     }
 

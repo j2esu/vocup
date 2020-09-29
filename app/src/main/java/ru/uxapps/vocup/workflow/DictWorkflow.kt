@@ -14,7 +14,7 @@ import ru.uxapps.vocup.feature.awaitReady
 import ru.uxapps.vocup.feature.dictionary.DictFragment
 import ru.uxapps.vocup.feature.getColorAttr
 import ru.uxapps.vocup.feature.worddetails.WordFragment
-import ru.uxapps.vocup.feature.transit.ScaleVisibility
+import ru.uxapps.vocup.feature.ScaleVisibility
 import ru.uxapps.vocup.util.host
 
 class DictWorkflow : BaseFragment(R.layout.workflow_dict), DictFragment.Router, WordFragment.Router {
