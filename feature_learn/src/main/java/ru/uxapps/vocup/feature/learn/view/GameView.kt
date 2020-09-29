@@ -4,10 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import ru.uxapps.vocup.feature.learn.databinding.FragmentGameBinding
-import ru.uxapps.vocup.feature.learn.databinding.GameWordToTransBinding
+import ru.uxapps.vocup.feature.learn.databinding.GameTextToAnswersBinding
 import ru.uxapps.vocup.feature.learn.game.GameContract
-import ru.uxapps.vocup.feature.learn.game.WordToTranslationContract
-import ru.uxapps.vocup.feature.learn.game.WordToTranslationView
+import ru.uxapps.vocup.feature.learn.game.TextToAnswersContract
+import ru.uxapps.vocup.feature.learn.game.TextToAnswersView
 import ru.uxapps.vocup.feature.setNavAsBack
 
 internal class GameView(
@@ -51,9 +51,9 @@ private interface ViewProvider {
 
 private val VIEW_PROVIDERS = listOf<ViewProvider>(
     object : ViewProvider {
-        override fun accept(state: GameContract.State) = state is WordToTranslationContract.State
-        override fun attach(parent: ViewGroup) = WordToTranslationView(
-            GameWordToTransBinding.inflate(LayoutInflater.from(parent.context), parent, true)
+        override fun accept(state: GameContract.State) = state is TextToAnswersContract.State
+        override fun attach(parent: ViewGroup) = TextToAnswersView(
+            GameTextToAnswersBinding.inflate(LayoutInflater.from(parent.context), parent, true)
         )
     }
 )

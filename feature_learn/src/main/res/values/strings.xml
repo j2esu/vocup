@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="title_learn">Learn</string>
+
     <string name="word_to_translation_title">Word -> Translation</string>
     <string name="word_to_translation_desc">Choose the right translations for a given word</string>
-    <string name="word_to_translation_req_pattern">Add at least 10 words with unique translations (%s)</string>
-    <string name="game_number_pattern" translatable="false">%d / %d</string>
 
-    <string name="transit_game_root" translatable="false">game_root</string>
-    <string name="transit_game_item_pattern" translatable="false">game_item_%s</string>
+    <string name="words_with_unique_trans_req_pattern">Add at least %d words with unique translations (%d)</string>
+
+    <string name="translation_to_word_title">Translation -> Word</string>
+    <string name="translation_to_word_desc">Choose the right word for a given translation</string>
+
+    <string name="game_number_pattern" translatable="false">%d / %d</string>
     <string name="game_completed">Game completed</string>
     <string name="game_stats_correct_pattern">Correct: %d / %d</string>
     <string name="game_stats_skipped_pattern">Skipped: %d</string>
+
+    <string name="transit_game_root" translatable="false">game_root</string>
+    <string name="transit_game_item_pattern" translatable="false">game_item_%s</string>
 </resources>

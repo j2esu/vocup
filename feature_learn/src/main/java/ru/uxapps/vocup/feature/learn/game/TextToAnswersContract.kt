@@ -1,6 +1,6 @@
 package ru.uxapps.vocup.feature.learn.game
 
-internal interface WordToTranslationContract {
+internal interface TextToAnswersContract {
 
     sealed class State : GameContract.State {
         data class Play(val task: Task, val checked: Int) : State()
@@ -14,7 +14,7 @@ internal interface WordToTranslationContract {
     }
 
     data class Task(
-        val word: String,
+        val text: String,
         val answers: List<String>,
         val correct: String,
         val index: Int,

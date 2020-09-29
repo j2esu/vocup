@@ -9,14 +9,14 @@ import com.google.android.material.transition.MaterialSharedAxis
 import ru.uxapps.vocup.feature.back
 import ru.uxapps.vocup.feature.getString
 import ru.uxapps.vocup.feature.learn.R
-import ru.uxapps.vocup.feature.learn.databinding.GameWordToTransBinding
+import ru.uxapps.vocup.feature.learn.databinding.GameTextToAnswersBinding
 import ru.uxapps.vocup.feature.learn.databinding.ItemAnswerBinding
-import ru.uxapps.vocup.feature.learn.game.WordToTranslationContract.Action.*
-import ru.uxapps.vocup.feature.learn.game.WordToTranslationContract.State.*
-import ru.uxapps.vocup.feature.learn.game.WordToTranslationContract.Task
+import ru.uxapps.vocup.feature.learn.game.TextToAnswersContract.Action.*
+import ru.uxapps.vocup.feature.learn.game.TextToAnswersContract.State.*
+import ru.uxapps.vocup.feature.learn.game.TextToAnswersContract.Task
 import ru.uxapps.vocup.feature.transit.ScaleVisibility
 
-internal class WordToTranslationView(private val bind: GameWordToTransBinding) : GameContract.View {
+internal class TextToAnswersView(private val bind: GameTextToAnswersBinding) : GameContract.View {
 
     override var onAction: ((GameContract.Action) -> Unit)? = null
 
@@ -130,7 +130,7 @@ internal class WordToTranslationView(private val bind: GameWordToTransBinding) :
         gameStats.isVisible = false
         gameLevelScene.isVisible = true
         gameBottomBar.isVisible = true
-        gameWord.text = task.word
+        gameText.text = task.text
         gameNumber.isVisible = true
         gameNumber.text = getString(R.string.game_number_pattern, task.index + 1, task.totalTaskCount)
         gameNext.isVisible = true
