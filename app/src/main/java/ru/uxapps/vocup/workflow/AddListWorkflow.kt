@@ -5,11 +5,14 @@ import androidx.fragment.app.commit
 import androidx.fragment.app.commitNow
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.transition.MaterialContainerTransform
+import com.google.android.material.transition.MaterialElevationScale
 import kotlinx.coroutines.launch
 import ru.uxapps.vocup.R
 import ru.uxapps.vocup.feature.BaseFragment
 import ru.uxapps.vocup.feature.addword.AddListFragment
 import ru.uxapps.vocup.feature.dictionary.WordFragment
+import ru.uxapps.vocup.feature.getColorAttr
 
 class AddListWorkflow : BaseFragment(R.layout.workflow_add_list), AddListFragment.Router, WordFragment.Router {
 
@@ -26,10 +29,24 @@ class AddListWorkflow : BaseFragment(R.layout.workflow_add_list), AddListFragmen
     }
 
     override fun openWord(wordId: Long, srcView: View) {
+        // exit
+        val addListFragment = childFragmentManager.findFragmentById(R.id.add_list_container) as AddListFragment
+        addListFragment.exitTransition = MaterialElevationScale(false).apply {
+            duration = 400
+        }
+        addListFragment.postpone()
+        // enter
         val wordFragment = WordFragment().apply { arguments = WordFragment.argsOf(wordId) }
+        wordFragment.sharedElementEnterTransition = MaterialContainerTransform().apply {
+            duration = 400
+            setAllContainerColors(requireContext().getColorAttr(android.R.attr.colorBackground))
+        }
+        // transition
         childFragmentManager.commit {
             replace(R.id.add_list_container, wordFragment)
+            addSharedElement(srcView, getString(R.string.transit_word_root))
             addToBackStack(null)
+            setReorderingAllowed(true)
         }
     }
 

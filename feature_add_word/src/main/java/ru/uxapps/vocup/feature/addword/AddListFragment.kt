@@ -11,6 +11,7 @@ import ru.uxapps.vocup.feature.addword.di.AddListViewModel
 import ru.uxapps.vocup.feature.addword.model.AddList
 import ru.uxapps.vocup.feature.addword.model.DefItem
 import ru.uxapps.vocup.feature.addword.view.AddListView
+import ru.uxapps.vocup.feature.awaitValue
 import ru.uxapps.vocup.util.host
 import javax.inject.Inject
 
@@ -52,6 +53,9 @@ class AddListFragment : BaseFragment(R.layout.fragment_add_list) {
         with(addListModel) {
             state.observe(viewLifecycleOwner, addListView::setState)
             languages.observe(viewLifecycleOwner, addListView::setLanguages)
+        }
+        postponeUntil {
+            addListModel.state.awaitValue()
         }
     }
 }

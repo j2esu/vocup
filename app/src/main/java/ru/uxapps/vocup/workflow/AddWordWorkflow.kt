@@ -11,8 +11,8 @@ import kotlinx.coroutines.launch
 import ru.uxapps.vocup.R
 import ru.uxapps.vocup.feature.BaseFragment
 import ru.uxapps.vocup.feature.addword.AddWordFragment
-import ru.uxapps.vocup.feature.getColorAttr
 import ru.uxapps.vocup.feature.dictionary.WordFragment
+import ru.uxapps.vocup.feature.getColorAttr
 
 class AddWordWorkflow : BaseFragment(R.layout.workflow_add_word), AddWordFragment.Router, WordFragment.Router {
 
@@ -35,7 +35,6 @@ class AddWordWorkflow : BaseFragment(R.layout.workflow_add_word), AddWordFragmen
         val wordFragment = WordFragment().apply { arguments = WordFragment.argsOf(wordId) }
         wordFragment.sharedElementEnterTransition = MaterialContainerTransform().apply {
             duration = 400
-            drawingViewId = R.id.add_word_container
             setAllContainerColors(requireContext().getColorAttr(android.R.attr.colorBackground))
         }
         // transition
