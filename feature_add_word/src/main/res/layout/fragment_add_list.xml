@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:transitionName="@string/transit_add_word_root"
+    android:transitionName="@string/transit_add_list_root"
     >
 
     <com.google.android.material.appbar.AppBarLayout
@@ -15,31 +15,13 @@
         >
 
         <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/add_word_toolbar"
+            android:id="@+id/add_list_toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:menu="@menu/lang"
             app:navigationIcon="?homeAsUpIndicator"
-            >
-
-            <EditText
-                android:id="@+id/add_word_input"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@android:color/transparent"
-                android:hint="@string/add_word_hint"
-                android:imeOptions="actionSearch"
-                android:inputType="textCapSentences"
-                android:lines="1"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-                tools:ignore="Autofill,LabelFor"
-                >
-
-                <requestFocus />
-
-            </EditText>
-
-        </com.google.android.material.appbar.MaterialToolbar>
+            tools:title="Top words"
+            />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -50,32 +32,51 @@
         >
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/add_word_def_list"
+            android:id="@+id/add_list_def_rv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
             android:paddingHorizontal="16dp"
             android:paddingTop="8dp"
-            android:visibility="invisible"
+            android:transitionGroup="true"
             tools:listitem="@layout/item_def"
-            tools:visibility="visible"
-            />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/add_word_comp_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="invisible"
-            tools:itemCount="2"
-            tools:listitem="@layout/item_completion"
             />
 
         <ProgressBar
-            android:id="@+id/add_word_progress"
+            android:id="@+id/add_list_progress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:visibility="invisible"
             />
+
+        <LinearLayout
+            android:id="@+id/add_list_error_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:visibility="invisible"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:text="@string/cant_load_translations"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/add_list_retry"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/retry"
+                />
+
+        </LinearLayout>
 
     </FrameLayout>
 

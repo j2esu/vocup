@@ -1,6 +1,5 @@
 package ru.uxapps.vocup.feature.addword.model
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -29,6 +28,8 @@ internal class AddWordImp(
         private val WORD_RANGE = 2..30
     }
 
+    private val lang = Lang(scope, repo)
+    private val saveDef = SaveDef(repo)
     private val actions = Channel<Action>()
     private val allWords = repo.getAllWords().toStateFlow(scope)
     private val retry = Channel<Unit>()
@@ -60,7 +61,7 @@ internal class AddWordImp(
         }
     }
 
-    private fun defItemsFlow(input: String, loadDefResult: List<Def>?): Flow<List<AddWord.DefItem>> =
+    private fun defItemsFlow(input: String, loadDefResult: List<Def>?): Flow<List<DefItem>> =
         allWords
             .filterNotNull()
             .map { words ->
@@ -69,14 +70,14 @@ internal class AddWordImp(
                     val savedWord = words.find { it.text == def.text }
                     if (loadDefResult != null) {
                         if (savedWord != null) {
-                            AddWord.DefItem(def.text, savedWord.id, def.translations.map {
+                            DefItem(def.text, savedWord.id, def.translations.map {
                                 it to savedWord.translations.contains(it)
                             })
                         } else {
-                            AddWord.DefItem(def.text, null, def.translations.map { it to false })
+                            DefItem(def.text, null, def.translations.map { it to false })
                         }
                     } else {
-                        AddWord.DefItem(def.text, savedWord?.id, null)
+                        DefItem(def.text, savedWord?.id, null)
                     }
                 }
             }
@@ -99,33 +100,17 @@ internal class AddWordImp(
             }
 
     override val maxWordLength = WORD_RANGE.last
-
-    override val languages: LiveData<List<Language>> =
-        repo.getTargetLanguage().map {
-            listOf(it) + (Language.values().toList() - it)
-        }.asLiveData(Dispatchers.IO)
+    override val languages = lang.languages
 
     override fun onInput(text: String) {
         actions.offer(Action.Input(text))
     }
 
-    override fun onSave(item: AddWord.DefItem) {
-        scope.launch {
-            if (item.wordId == null) {
-                repo.addWord(item.text, item.trans?.map { it.first } ?: emptyList())
-            } else {
-                repo.addTranslations(
-                    item.wordId, (item.trans ?: emptyList()).filter { !it.second }.map { it.first }
-                )
-            }
-        }
+    override fun onSave(item: DefItem) {
+        scope.launch { saveDef.run(item) }
     }
 
-    override fun onChooseLang(lang: Language) {
-        scope.launch {
-            repo.setTargetLanguage(lang)
-        }
-    }
+    override fun onChooseLang(lang: Language) = this.lang.onChooseLang(lang)
 
     override fun onRetry() {
         retry.offer(Unit)

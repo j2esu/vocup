@@ -7,6 +7,7 @@ interface Repo {
     fun getWord(wordId: Long): Flow<Word?>
     fun getTargetLanguage(): Flow<Language>
     suspend fun getDefinitions(word: String): List<Def>
+    suspend fun getDefinitions(words: List<String>): List<Def>
     suspend fun getCompletions(word: String): List<String>
     suspend fun addWord(text: String, trans: List<String>)
     suspend fun restoreWord(word: Word)

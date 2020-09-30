@@ -20,8 +20,8 @@ internal class ExploreView(
 
     interface Callback {
         fun onRetry()
-        fun onClick(kit: KitItem, srcView: View)
-        fun onSwipe(kit: KitItem)
+        fun onClick(item: KitItem, srcView: View)
+        fun onSwipe(item: KitItem)
     }
 
     private val listAdapter = KitListAdapter(callback::onClick)
@@ -48,7 +48,6 @@ internal class ExploreView(
     fun setState(state: State) = with(bind) {
         exploreProgress.isVisible = state is Loading
         exploreErrorLayout.isVisible = state is Error
-        exploreRv.isVisible = state is Data
         exploreEmpty.isVisible = state is Data && state.kits.isEmpty()
         listAdapter.submitList((state as? Data)?.kits ?: emptyList())
     }

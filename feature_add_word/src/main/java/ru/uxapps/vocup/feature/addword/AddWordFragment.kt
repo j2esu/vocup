@@ -8,7 +8,7 @@ import ru.uxapps.vocup.feature.BaseFragment
 import ru.uxapps.vocup.feature.addword.databinding.FragmentAddWordBinding
 import ru.uxapps.vocup.feature.addword.di.AddWordViewModel
 import ru.uxapps.vocup.feature.addword.model.AddWord
-import ru.uxapps.vocup.feature.addword.model.AddWord.DefItem
+import ru.uxapps.vocup.feature.addword.model.DefItem
 import ru.uxapps.vocup.feature.addword.view.AddWordView
 import ru.uxapps.vocup.feature.awaitValue
 import ru.uxapps.vocup.util.host

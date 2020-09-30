@@ -8,17 +8,19 @@ import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.transition.MaterialFadeThrough
 import ru.uxapps.vocup.R
+import ru.uxapps.vocup.data.api.Kit
 import ru.uxapps.vocup.databinding.WorkflowNavBinding
 import ru.uxapps.vocup.feature.BaseFragment
+import ru.uxapps.vocup.feature.ScaleVisibility
 import ru.uxapps.vocup.feature.awaitReady
 import ru.uxapps.vocup.feature.explore.ExploreFragment
-import ru.uxapps.vocup.feature.ScaleVisibility
 import ru.uxapps.vocup.util.host
 
-class NavWorkflow : BaseFragment(R.layout.workflow_nav), DictWorkflow.Router {
+class NavWorkflow : BaseFragment(R.layout.workflow_nav), DictWorkflow.Router, ExploreFragment.Router {
 
     interface Router {
         fun openAddWord(srcView: View)
+        fun openAddWordList(title: String, list: List<String>, srcView: View)
     }
 
     override fun onViewReady(view: View, init: Boolean) {
@@ -73,4 +75,7 @@ class NavWorkflow : BaseFragment(R.layout.workflow_nav), DictWorkflow.Router {
     }
 
     override fun openAddWord(srcView: View) = host<Router>().openAddWord(srcView)
+
+    override fun openAddKit(kit: Kit, srcView: View) =
+        host<Router>().openAddWordList(kit.title, kit.words.map { it.text }, srcView)
 }

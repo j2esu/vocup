@@ -74,6 +74,9 @@ class RepoImp(
         return api.getDefinitions((listOf(word) + predictions).distinct(), currentLang)
     }
 
+    override suspend fun getDefinitions(words: List<String>): List<Def> =
+        words.chunked(10).flatMap { api.getDefinitions(it, currentLang) }
+
     override suspend fun getCompletions(word: String): List<String> = api.getCompletions(word)
     override suspend fun addWord(text: String, trans: List<String>) =
         db.addWord(text, trans, api.getPronunciations(text).firstOrNull())

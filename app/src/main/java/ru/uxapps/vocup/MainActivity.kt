@@ -15,8 +15,9 @@ import com.google.android.material.transition.Hold
 import com.google.android.material.transition.MaterialContainerTransform
 import ru.uxapps.vocup.feature.SoftInputProvider
 import ru.uxapps.vocup.feature.TtsProvider
-import ru.uxapps.vocup.feature.getColorAttr
+import ru.uxapps.vocup.feature.addword.AddListFragment
 import ru.uxapps.vocup.feature.dictionary.WordFragment
+import ru.uxapps.vocup.feature.getColorAttr
 import ru.uxapps.vocup.helper.SoftInputImp
 import ru.uxapps.vocup.helper.TtsImp
 import ru.uxapps.vocup.workflow.AddWordWorkflow
@@ -93,6 +94,14 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), NavWorkflow.Rout
             addSharedElement(srcView, getString(R.string.transit_add_word_root))
             addToBackStack(null)
             setReorderingAllowed(true)
+        }
+    }
+
+    override fun openAddWordList(title: String, list: List<String>, srcView: View) {
+        val addListFragment = AddListFragment().apply { arguments = AddListFragment.argsOf(title, list) }
+        supportFragmentManager.commit {
+            replace(R.id.main_container, addListFragment)
+            addToBackStack(null)
         }
     }
 

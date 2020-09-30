@@ -3,7 +3,6 @@ package ru.uxapps.vocup.feature.addword.view
 import android.text.InputFilter
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import androidx.core.content.ContextCompat
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
@@ -12,9 +11,9 @@ import com.google.android.material.snackbar.Snackbar
 import ru.uxapps.vocup.data.api.Language
 import ru.uxapps.vocup.feature.addword.R
 import ru.uxapps.vocup.feature.addword.databinding.FragmentAddWordBinding
-import ru.uxapps.vocup.feature.addword.model.AddWord.DefItem
 import ru.uxapps.vocup.feature.addword.model.AddWord.State
 import ru.uxapps.vocup.feature.addword.model.AddWord.State.*
+import ru.uxapps.vocup.feature.addword.model.DefItem
 import ru.uxapps.vocup.feature.setNavAsBack
 import ru.uxapps.vocup.feature.softInput
 
@@ -34,15 +33,10 @@ internal class AddWordView(
         fun onCompClick(text: String)
     }
 
-    private val defAdapter = DefListAdapter { item, srcView ->
-        if (item.wordId == null || item.trans?.any { !it.second } == true) {
-            callback.onSave(item)
-        } else {
-            callback.onOpen(item, srcView)
-        }
-    }
-    private var errorSnack: Snackbar? = null
+    private val langView = LangView(bind.addWordToolbar, callback::onLangClick)
+    private val defAdapter = DefListAdapter(callback::onOpen, callback::onSave)
 
+    private var errorSnack: Snackbar? = null
     private var handlingCompletion = false
     private val compAdapter = CompletionAdapter {
         handlingCompletion = true
@@ -117,21 +111,5 @@ internal class AddWordView(
         addWordInput.filters = arrayOf(InputFilter.LengthFilter(length))
     }
 
-    fun setLanguages(languages: List<Language>) = with(bind) {
-        val langItem = addWordToolbar.menu.findItem(R.id.menu_lang)
-        langItem.subMenu.clear()
-        languages.forEachIndexed { i, lang ->
-            val item = langItem.subMenu.add(lang.nativeName).setOnMenuItemClickListener {
-                callback.onLangClick(lang)
-                true
-            }
-            if (i == 0) {
-                item.icon = root.context.getDrawable(R.drawable.ic_done)?.apply {
-                    setTintList(
-                        ContextCompat.getColorStateList(root.context, R.color.target_lang_tint)
-                    )
-                }
-            }
-        }
-    }
+    fun setLanguages(languages: List<Language>) = langView.setLanguages(languages)
 }

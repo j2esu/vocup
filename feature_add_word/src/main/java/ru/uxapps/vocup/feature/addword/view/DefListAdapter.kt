@@ -8,12 +8,13 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import ru.uxapps.vocup.feature.addword.R
 import ru.uxapps.vocup.feature.addword.databinding.ItemDefBinding
-import ru.uxapps.vocup.feature.addword.model.AddWord.DefItem
+import ru.uxapps.vocup.feature.addword.model.DefItem
 import ru.uxapps.vocup.feature.getString
 import ru.uxapps.vocup.feature.inflateBind
 
 internal class DefListAdapter(
-    private val onClick: (DefItem, View) -> Unit
+    private val onOpen: (DefItem, View) -> Unit,
+    private val onSave: (DefItem) -> Unit
 ) :
     ListAdapter<DefItem, DefListAdapter.DefVh>(
         object : DiffUtil.ItemCallback<DefItem>() {
@@ -32,7 +33,14 @@ internal class DefListAdapter(
     inner class DefVh(private val bind: ItemDefBinding) : ViewHolder(bind.root) {
 
         init {
-            bind.defBg.setOnClickListener { onClick(getItem(adapterPosition), itemView) }
+            bind.defBg.setOnClickListener {
+                val item = getItem(adapterPosition)
+                if (item.wordId == null || item.trans?.any { !it.second } == true) {
+                    onSave(item)
+                } else {
+                    onOpen(item, bind.root)
+                }
+            }
         }
 
         fun bind(item: DefItem) = with(bind) {
