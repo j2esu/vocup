@@ -13,7 +13,7 @@ import ru.uxapps.vocup.feature.BaseFragment
 import ru.uxapps.vocup.feature.awaitReady
 import ru.uxapps.vocup.feature.dictionary.DictFragment
 import ru.uxapps.vocup.feature.getColorAttr
-import ru.uxapps.vocup.feature.worddetails.WordFragment
+import ru.uxapps.vocup.feature.dictionary.WordFragment
 import ru.uxapps.vocup.feature.ScaleVisibility
 import ru.uxapps.vocup.util.host
 

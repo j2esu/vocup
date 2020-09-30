@@ -1,4 +1,4 @@
-package ru.uxapps.vocup.feature.worddetails.model
+package ru.uxapps.vocup.feature.dictionary.model
 
 import androidx.lifecycle.asLiveData
 import kotlinx.coroutines.CoroutineScope

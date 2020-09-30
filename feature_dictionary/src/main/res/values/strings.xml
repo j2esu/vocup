@@ -4,7 +4,15 @@
     <string name="no_translations">No translations</string>
     <string name="no_words">No words yet</string>
     <string name="add_word">Add word</string>
+    <string name="translations">Translations</string>
+    <string name="delete_word">Delete word</string>
+    <string name="add_translation">Add translation</string>
+    <string name="enter_text">Enter text</string>
+    <string name="edit_translation">Edit translation</string>
+    <string name="translation_deleted">Translation was deleted</string>
+    <string name="listen_pron">Listen</string>
 
+    <string name="transit_word_root" translatable="false">word_root</string>
     <string name="transit_dict_add" translatable="false">dict_add</string>
     <string name="transit_word_item_pattern" translatable="false">word_item_%s</string>
 </resources>

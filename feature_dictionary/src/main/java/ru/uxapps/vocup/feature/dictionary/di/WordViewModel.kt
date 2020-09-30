@@ -1,4 +1,4 @@
-package ru.uxapps.vocup.feature.worddetails.di
+package ru.uxapps.vocup.feature.dictionary.di
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

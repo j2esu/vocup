@@ -1,4 +1,4 @@
-package ru.uxapps.vocup.feature.worddetails.model
+package ru.uxapps.vocup.feature.dictionary.model
 
 import androidx.lifecycle.LiveData
 import ru.uxapps.vocup.util.LiveEvent

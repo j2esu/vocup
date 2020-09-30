@@ -1,4 +1,4 @@
-package ru.uxapps.vocup.feature.worddetails.di
+package ru.uxapps.vocup.feature.dictionary.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -9,9 +9,9 @@ import dagger.Provides
 import ru.uxapps.vocup.data.RepoProvider
 import ru.uxapps.vocup.data.api.Repo
 import ru.uxapps.vocup.feature.ViewModelScope
-import ru.uxapps.vocup.feature.worddetails.WordFragment
-import ru.uxapps.vocup.feature.worddetails.model.WordDetails
-import ru.uxapps.vocup.feature.worddetails.model.WordDetailsImp
+import ru.uxapps.vocup.feature.dictionary.WordFragment
+import ru.uxapps.vocup.feature.dictionary.model.WordDetails
+import ru.uxapps.vocup.feature.dictionary.model.WordDetailsImp
 
 @ViewModelScope
 @Component(dependencies = [RepoProvider::class], modules = [WordModule::class])

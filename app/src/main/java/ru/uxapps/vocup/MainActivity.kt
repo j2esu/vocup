@@ -16,7 +16,7 @@ import com.google.android.material.transition.MaterialContainerTransform
 import ru.uxapps.vocup.feature.SoftInputProvider
 import ru.uxapps.vocup.feature.TtsProvider
 import ru.uxapps.vocup.feature.getColorAttr
-import ru.uxapps.vocup.feature.worddetails.WordFragment
+import ru.uxapps.vocup.feature.dictionary.WordFragment
 import ru.uxapps.vocup.helper.SoftInputImp
 import ru.uxapps.vocup.helper.TtsImp
 import ru.uxapps.vocup.workflow.AddWordWorkflow

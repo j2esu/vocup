@@ -12,7 +12,7 @@ import ru.uxapps.vocup.R
 import ru.uxapps.vocup.feature.BaseFragment
 import ru.uxapps.vocup.feature.addword.AddWordFragment
 import ru.uxapps.vocup.feature.getColorAttr
-import ru.uxapps.vocup.feature.worddetails.WordFragment
+import ru.uxapps.vocup.feature.dictionary.WordFragment
 
 class AddWordWorkflow : BaseFragment(R.layout.workflow_add_word), AddWordFragment.Router, WordFragment.Router {
 
