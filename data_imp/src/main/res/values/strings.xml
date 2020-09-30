@@ -2,13 +2,29 @@
 <resources>
     <string name="top_1_title">Top words (part 1)</string>
     <string-array name="top_1_words">
-        <item>Hello</item>
-        <item>World</item>
+        <item>who</item>
+        <item>get</item>
+        <item>all</item>
+        <item>make</item>
+        <item>about</item>
+        <item>know</item>
+        <item>one</item>
+        <item>time</item>
+        <item>year</item>
+        <item>think</item>
     </string-array>
 
     <string name="top_2_title">Top words (part 2)</string>
     <string-array name="top_2_words">
-        <item>Nice</item>
-        <item>Day</item>
+        <item>when</item>
+        <item>some</item>
+        <item>people</item>
+        <item>take</item>
+        <item>just</item>
+        <item>come</item>
+        <item>now</item>
+        <item>other</item>
+        <item>two</item>
+        <item>more</item>
     </string-array>
 </resources>
