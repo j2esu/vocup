@@ -77,5 +77,5 @@ class NavWorkflow : BaseFragment(R.layout.workflow_nav), DictWorkflow.Router, Ex
     override fun openAddWord(srcView: View) = host<Router>().openAddWord(srcView)
 
     override fun openAddKit(kit: Kit, srcView: View) =
-        host<Router>().openAddWordList(kit.title, kit.words.map { it.text }, srcView)
+        host<Router>().openAddWordList(kit.title, kit.words, srcView)
 }

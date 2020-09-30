@@ -36,7 +36,7 @@ internal class KitListAdapter(
             if (item.newWords.isEmpty()) {
                 kitWords.setText(R.string.no_new_words)
             } else {
-                val words = item.newWords.joinToString(", ") { it.text }
+                val words = item.newWords.joinToString(", ")
                 kitWords.text = getString(R.string.new_words_pattern, words)
             }
         }

@@ -1,7 +1,6 @@
 package ru.uxapps.vocup.feature.explore.model
 
 import androidx.lifecycle.LiveData
-import ru.uxapps.vocup.data.api.Def
 import ru.uxapps.vocup.data.api.Kit
 import ru.uxapps.vocup.util.LiveEvent
 
@@ -21,5 +20,5 @@ internal interface Explore {
 
 internal data class KitItem(
     val kit: Kit,
-    val newWords: List<Def>
+    val newWords: List<String>
 )

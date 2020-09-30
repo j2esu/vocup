@@ -102,10 +102,8 @@ class ApiImp(private val context: Context) : Api {
 
     override suspend fun getWordKits(userLang: Language): List<Kit> {
         return kitsCache ?: KitRes.values().map {
-            val defs = context.resources.getStringArray(it.words).asList()
-                .chunked(10)
-                .flatMap { words -> getDefinitions(words, userLang) }
-            Kit(it.id, context.getString(it.title), defs)
+            val words = context.resources.getStringArray(it.words).asList()
+            Kit(it.id, context.getString(it.title), words)
         }.also { kitsCache = it }
     }
 
