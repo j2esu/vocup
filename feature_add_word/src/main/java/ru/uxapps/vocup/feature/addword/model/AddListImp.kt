@@ -14,6 +14,7 @@ import ru.uxapps.vocup.data.api.Repo
 import ru.uxapps.vocup.feature.addword.model.AddList.State.*
 import ru.uxapps.vocup.util.repeatWhen
 import java.io.IOException
+import java.util.concurrent.TimeUnit
 
 internal class AddListImp(
     private val inputList: List<String>,
@@ -25,24 +26,25 @@ internal class AddListImp(
     private val saveDef = SaveDef(repo)
     private val load = Channel<Unit>()
 
-    override val state = repo.getTargetLanguage().repeatWhen(load.receiveAsFlow()).transformLatest {
-        emit(Loading)
-        try {
-            val defs = repo.getDefinitions(inputList)
-            val itemsFlow = repo.getAllWords().map { words ->
-                defs.map { def ->
-                    val word = words.find { it.text.equals(def.text, true) }
-                    DefItem(def.text, word?.id, def.translations.map { trans ->
-                        val saved = word?.translations?.any { it.equals(trans, true) } == true
-                        trans to saved
-                    })
+    override val state = repo.getTargetLanguage().repeatWhen(load.receiveAsFlow())
+        .transformLatest {
+            emit(Loading)
+            try {
+                val defs = repo.getDefinitions(inputList)
+                val itemsFlow = repo.getAllWords().map { words ->
+                    defs.map { def ->
+                        val word = words.find { it.text.equals(def.text, true) }
+                        DefItem(def.text, word?.id, def.translations.map { trans ->
+                            val saved = word?.translations?.any { it.equals(trans, true) } == true
+                            trans to saved
+                        })
+                    }
                 }
+                emitAll(itemsFlow.map { Data(it) })
+            } catch (e: IOException) {
+                emit(Error)
             }
-            emitAll(itemsFlow.map { Data(it) })
-        } catch (e: IOException) {
-            emit(Error)
-        }
-    }.asLiveData(scope.coroutineContext + Dispatchers.IO)
+        }.asLiveData(scope.coroutineContext + Dispatchers.IO, TimeUnit.MINUTES.toMillis(5))
 
     override val languages = lang.languages
 

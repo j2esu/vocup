@@ -15,11 +15,11 @@ import com.google.android.material.transition.Hold
 import com.google.android.material.transition.MaterialContainerTransform
 import ru.uxapps.vocup.feature.SoftInputProvider
 import ru.uxapps.vocup.feature.TtsProvider
-import ru.uxapps.vocup.feature.addword.AddListFragment
 import ru.uxapps.vocup.feature.dictionary.WordFragment
 import ru.uxapps.vocup.feature.getColorAttr
 import ru.uxapps.vocup.helper.SoftInputImp
 import ru.uxapps.vocup.helper.TtsImp
+import ru.uxapps.vocup.workflow.AddListWorkflow
 import ru.uxapps.vocup.workflow.AddWordWorkflow
 import ru.uxapps.vocup.workflow.NavWorkflow
 
@@ -98,9 +98,10 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), NavWorkflow.Rout
     }
 
     override fun openAddWordList(title: String, list: List<String>, srcView: View) {
-        val addListFragment = AddListFragment().apply { arguments = AddListFragment.argsOf(title, list) }
+        val addListWorkflow = AddListWorkflow().apply { arguments = AddListWorkflow.argsOf(title, list) }
         supportFragmentManager.commit {
-            replace(R.id.main_container, addListFragment)
+            replace(R.id.main_container, addListWorkflow)
+            setPrimaryNavigationFragment(addListWorkflow)
             addToBackStack(null)
         }
     }

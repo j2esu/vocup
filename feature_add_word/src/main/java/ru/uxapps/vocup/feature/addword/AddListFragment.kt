@@ -12,8 +12,13 @@ import ru.uxapps.vocup.feature.addword.model.AddList
 import ru.uxapps.vocup.feature.addword.model.AddListImp
 import ru.uxapps.vocup.feature.addword.model.DefItem
 import ru.uxapps.vocup.feature.addword.view.AddListView
+import ru.uxapps.vocup.util.host
 
 class AddListFragment : BaseFragment(R.layout.fragment_add_list) {
+
+    interface Router {
+        fun openWord(wordId: Long, srcView: View)
+    }
 
     companion object {
         private const val ARG_TITLE = "ARG_TITLE"
@@ -34,7 +39,7 @@ class AddListFragment : BaseFragment(R.layout.fragment_add_list) {
         addListModel = AddListImp(list, lifecycleScope, (activity?.application as RepoProvider).provideRepo())
         val addListView = AddListView(FragmentAddListBinding.bind(view), object : AddListView.Callback {
             override fun onOpen(item: DefItem, srcView: View) {
-                // TODO: 9/30/2020
+                item.wordId?.let { host<Router>().openWord(it, srcView) }
             }
 
             override fun onSave(item: DefItem) = addListModel.onSave(item)
