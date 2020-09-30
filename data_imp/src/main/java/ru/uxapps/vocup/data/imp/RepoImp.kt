@@ -4,13 +4,11 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.math.MathUtils
 import androidx.core.os.LocaleListCompat
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.channels.sendBlocking
 import kotlinx.coroutines.flow.*
-import ru.uxapps.vocup.data.api.Def
-import ru.uxapps.vocup.data.api.Language
-import ru.uxapps.vocup.data.api.Repo
-import ru.uxapps.vocup.data.api.Word
+import ru.uxapps.vocup.data.api.*
 import ru.uxapps.vocup.data.imp.api.Api
 import ru.uxapps.vocup.data.imp.db.Db
 import java.io.IOException
@@ -24,6 +22,7 @@ class RepoImp(
     companion object {
         private const val PREFS_NAME = "vocup.prefs"
         private const val KEY_LANG = "lang"
+        private const val KEY_DISMISSED_KITS = "dismissed_kits"
     }
 
     private val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
@@ -47,6 +46,14 @@ class RepoImp(
             prefs.edit().putString(KEY_LANG, value.code).apply()
         }
 
+    private var dismissedKits: Set<Long>
+        get() = prefs.getStringSet(KEY_DISMISSED_KITS, null)?.map { it.toLong() }?.toSet() ?: emptySet()
+        set(value) {
+            prefs.edit().putStringSet(KEY_DISMISSED_KITS, value.map { it.toString() }.toSet()).apply()
+        }
+
+    private val dismissedKitsChanged = Channel<Unit>()
+
     private fun suggestTargetLang(): Language {
         val userLocales = LocaleListCompat.getAdjustedDefault()
         for (i in 0 until userLocales.size()) {
@@ -58,13 +65,13 @@ class RepoImp(
         return Language.Russian
     }
 
-    override suspend fun getDefinitions(word: String, lang: Language): List<Def> {
+    override suspend fun getDefinitions(word: String): List<Def> {
         val predictions = try {
-            api.getPredictions(word, lang).take(2)
+            api.getPredictions(word, currentLang).take(2)
         } catch (e: IOException) {
             emptyList<String>()
         }
-        return api.getDefinitions((listOf(word) + predictions).distinct(), lang)
+        return api.getDefinitions((listOf(word) + predictions).distinct(), currentLang)
     }
 
     override suspend fun getCompletions(word: String): List<String> = api.getCompletions(word)
@@ -90,4 +97,21 @@ class RepoImp(
     override suspend fun updateProgress(word: Word, progressDiff: Int) =
         db.updateProgress(word.id, MathUtils.clamp(word.progress + progressDiff, 0, 100))
 
+    override suspend fun getWordKits(): Flow<List<Kit>> {
+        return dismissedKitsChanged.receiveAsFlow().onStart { emit(Unit) }
+            .mapLatest {
+                val dismissed = dismissedKits
+                api.getWordKits(currentLang).filterNot { dismissed.contains(it.id) }
+            }
+    }
+
+    override suspend fun dismissKit(kit: Kit) {
+        dismissedKits = dismissedKits + kit.id
+        dismissedKitsChanged.offer(Unit)
+    }
+
+    override suspend fun restoreKit(kit: Kit) {
+        dismissedKits = dismissedKits - kit.id
+        dismissedKitsChanged.offer(Unit)
+    }
 }

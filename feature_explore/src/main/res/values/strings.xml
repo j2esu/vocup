@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="title_explore">Explore</string>
+    <string name="load_error">Can\'t load content</string>
+    <string name="retry">Retry</string>
+    <string name="no_new_words">No new words</string>
+    <string name="new_words_pattern">New words: %s</string>
+    <string name="kit_was_dismissed">List was dismissed</string>
+    <string name="empty_explore_text">Nothing new to explore</string>
 </resources>

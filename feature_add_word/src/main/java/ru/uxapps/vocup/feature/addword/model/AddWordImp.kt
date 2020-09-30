@@ -84,11 +84,11 @@ internal class AddWordImp(
     private fun definitionFlow(input: String): Flow<AddWord.State> =
         repo.getTargetLanguage()
             .repeatWhen(retry.receiveAsFlow())
-            .transformLatest { lang ->
+            .transformLatest {
                 if (input.length in WORD_RANGE) {
                     emit(AddWord.State.Loading)
                     val result = try {
-                        repo.getDefinitions(input, lang)
+                        repo.getDefinitions(input)
                     } catch (e: IOException) {
                         null
                     }

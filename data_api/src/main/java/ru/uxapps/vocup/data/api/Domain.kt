@@ -13,6 +13,8 @@ data class Word(
 
 data class Def(val text: String, val translations: List<String>)
 
+data class Kit(val id: Long, val title: String, val words: List<Def>)
+
 enum class Language(val code: String, val nativeName: String) {
     Afrikaans("af", "Afrikaans"),
     Arabic("ar", "العربية"),

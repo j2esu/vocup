@@ -2,6 +2,7 @@
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
@@ -19,13 +20,59 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/explore_rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Some content to explore"
-        android:gravity="center"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline2"
-        android:padding="16dp"
+        android:layout_marginTop="?actionBarSize"
+        android:clipToPadding="false"
+        android:paddingTop="8dp"
+        android:paddingBottom="80dp"
+        android:transitionGroup="true"
+        tools:listitem="@layout/item_kit"
         />
+
+    <TextView
+        android:id="@+id/explore_empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/empty_explore_text"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+        />
+
+    <ProgressBar
+        android:id="@+id/explore_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        />
+
+    <LinearLayout
+        android:id="@+id/explore_error_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="@string/load_error"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+            />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/explore_retry"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/retry"
+            />
+
+    </LinearLayout>
 
 </FrameLayout>

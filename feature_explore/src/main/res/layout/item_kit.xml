@@ -7,6 +7,7 @@
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="16dp"
     android:layout_marginVertical="8dp"
+    android:background="?selectableItemBackground"
     android:minHeight="?listPreferredItemHeight"
     app:contentPadding="16dp"
     tools:cardForegroundColor="@android:color/transparent"
@@ -19,36 +20,25 @@
         >
 
         <TextView
-            android:id="@+id/game_title"
+            android:id="@+id/kit_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawablePadding="16dp"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+            app:drawableStartCompat="@drawable/ic_list"
             app:drawableTint="?colorPrimary"
-            tools:drawableStartCompat="@drawable/ic_read"
-            tools:text="Word to translation"
+            tools:text="Popular words (part 1)"
             />
 
         <TextView
-            android:id="@+id/game_desc"
+            android:id="@+id/kit_words"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-            tools:text="Find a translations for a given word, if any"
-            />
-
-        <TextView
-            android:id="@+id/game_error"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:drawablePadding="8dp"
-            android:gravity="center_vertical"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-            app:drawableStartCompat="@drawable/ic_not_available"
-            app:drawableTint="?colorError"
-            tools:text="Not available because..."
+            tools:text="New words: hello, world"
             />
 
     </LinearLayout>

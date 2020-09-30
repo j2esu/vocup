@@ -8,7 +8,9 @@ import retrofit2.HttpException
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import ru.uxapps.vocup.data.api.Def
+import ru.uxapps.vocup.data.api.Kit
 import ru.uxapps.vocup.data.api.Language
+import ru.uxapps.vocup.data.imp.api.local.KitRes
 import ru.uxapps.vocup.data.imp.api.local.LocalApiDb
 import ru.uxapps.vocup.data.imp.api.web.DictionaryApi
 import ru.uxapps.vocup.data.imp.api.web.LookupRequest
@@ -16,7 +18,7 @@ import ru.uxapps.vocup.data.imp.api.web.PredictorService
 import java.io.IOException
 import java.util.*
 
-class ApiImp(context: Context) : Api {
+class ApiImp(private val context: Context) : Api {
 
     private val dictionary = Retrofit.Builder()
         .baseUrl("https://api.cognitive.microsofttranslator.com/dictionary/")
@@ -36,6 +38,8 @@ class ApiImp(context: Context) : Api {
         .fallbackToDestructiveMigration()
         .createFromAsset("local_api.db")
         .build()
+
+    private var kitsCache: List<Kit>? = null
 
     private fun createOkHttpWithLogging(): OkHttpClient {
         return OkHttpClient.Builder()
@@ -94,6 +98,15 @@ class ApiImp(context: Context) : Api {
         } else {
             listOf(input)
         }
+    }
+
+    override suspend fun getWordKits(userLang: Language): List<Kit> {
+        return kitsCache ?: KitRes.values().map {
+            val defs = context.resources.getStringArray(it.words).asList()
+                .chunked(10)
+                .flatMap { words -> getDefinitions(words, userLang) }
+            Kit(it.id, context.getString(it.title), defs)
+        }.also { kitsCache = it }
     }
 
     private fun String.isAscii() = toCharArray().all { it.toInt() < 128 }

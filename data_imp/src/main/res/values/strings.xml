@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="top_1_title">Top words (part 1)</string>
+    <string-array name="top_1_words">
+        <item>Hello</item>
+        <item>World</item>
+    </string-array>
+
+    <string name="top_2_title">Top words (part 2)</string>
+    <string-array name="top_2_words">
+        <item>Nice</item>
+        <item>Day</item>
+    </string-array>
+</resources>
