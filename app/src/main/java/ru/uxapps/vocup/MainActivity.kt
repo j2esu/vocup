@@ -98,10 +98,26 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), NavWorkflow.Rout
     }
 
     override fun openAddWordList(title: String, list: List<String>, srcView: View) {
+        // exit
+        val navWorkflow = supportFragmentManager.findFragmentById(R.id.main_container) as NavWorkflow
+        navWorkflow.exitTransition = TransitionSet()
+            .addTransition(Hold())
+            .addTransition(Slide(Gravity.BOTTOM).apply {
+                addTarget(getString(R.string.transit_nav_bar))
+            })
+        navWorkflow.postpone()
+        // enter
         val addListWorkflow = AddListWorkflow().apply { arguments = AddListWorkflow.argsOf(title, list) }
+        addListWorkflow.sharedElementEnterTransition = MaterialContainerTransform().apply {
+            duration = 400
+            setAllContainerColors(getColorAttr(android.R.attr.colorBackground))
+        }
+        // transaction
         supportFragmentManager.commit {
             replace(R.id.main_container, addListWorkflow)
             setPrimaryNavigationFragment(addListWorkflow)
+            addSharedElement(srcView, getString(R.string.transit_add_list_root))
+            setReorderingAllowed(true)
             addToBackStack(null)
         }
     }

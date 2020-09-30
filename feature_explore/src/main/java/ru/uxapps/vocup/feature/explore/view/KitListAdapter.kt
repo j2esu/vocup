@@ -39,6 +39,7 @@ internal class KitListAdapter(
                 val words = item.newWords.joinToString(", ")
                 kitWords.text = getString(R.string.new_words_pattern, words)
             }
+            root.transitionName = getString(R.string.transit_kit_item, item.kit.id)
         }
     }
 }

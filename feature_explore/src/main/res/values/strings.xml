@@ -7,4 +7,6 @@
     <string name="new_words_pattern">New words: %s</string>
     <string name="kit_was_dismissed">List was dismissed</string>
     <string name="empty_explore_text">Nothing new to explore</string>
+
+    <string name="transit_kit_item" translatable="false">kit_item_%d</string>
 </resources>
