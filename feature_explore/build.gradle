@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion rootProject.ext.sdk_version
@@ -42,4 +43,5 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
 
     api project(path: ':base_feature')
+    kapt "com.google.dagger:dagger-compiler:${rootProject.ext.dagger_version}"
 }
