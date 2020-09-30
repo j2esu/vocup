@@ -2,17 +2,17 @@ package ru.uxapps.vocup.feature.addword
 
 import android.view.View
 import androidx.core.os.bundleOf
-import androidx.lifecycle.lifecycleScope
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
-import ru.uxapps.vocup.data.RepoProvider
 import ru.uxapps.vocup.data.api.Language
 import ru.uxapps.vocup.feature.BaseFragment
 import ru.uxapps.vocup.feature.addword.databinding.FragmentAddListBinding
+import ru.uxapps.vocup.feature.addword.di.AddListViewModel
 import ru.uxapps.vocup.feature.addword.model.AddList
-import ru.uxapps.vocup.feature.addword.model.AddListImp
 import ru.uxapps.vocup.feature.addword.model.DefItem
 import ru.uxapps.vocup.feature.addword.view.AddListView
 import ru.uxapps.vocup.util.host
+import javax.inject.Inject
 
 class AddListFragment : BaseFragment(R.layout.fragment_add_list) {
 
@@ -33,10 +33,12 @@ class AddListFragment : BaseFragment(R.layout.fragment_add_list) {
             get() = requireArguments()[ARG_LIST] as List<String>
     }
 
-    private lateinit var addListModel: AddList
+    private val vm by viewModels<AddListViewModel>()
+
+    @Inject internal lateinit var addListModel: AddList
 
     override fun onViewReady(view: View, init: Boolean) {
-        addListModel = AddListImp(list, lifecycleScope, (activity?.application as RepoProvider).provideRepo())
+        vm.getAddListComponent(list).inject(this)
         val addListView = AddListView(FragmentAddListBinding.bind(view), object : AddListView.Callback {
             override fun onOpen(item: DefItem, srcView: View) {
                 item.wordId?.let { host<Router>().openWord(it, srcView) }
