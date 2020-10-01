@@ -5,6 +5,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import ru.uxapps.vocup.feature.BaseFragment
+import ru.uxapps.vocup.feature.awaitValue
 import ru.uxapps.vocup.feature.learn.databinding.FragmentGameBinding
 import ru.uxapps.vocup.feature.learn.di.GameViewModel
 import ru.uxapps.vocup.feature.learn.game.GameContract
@@ -21,13 +22,16 @@ class GameFragment : BaseFragment(R.layout.fragment_game) {
 
     private val vm by viewModels<GameViewModel>()
 
-    @Inject internal lateinit var game: GameModel
+    @Inject internal lateinit var gameModel: GameModel
 
     override fun onViewReady(view: View, init: Boolean) {
         vm.getGameComponent(gameId).inject(this)
         val gameView = GameView(FragmentGameBinding.bind(view), object : GameView.Callback {
-            override fun onAction(action: GameContract.Action) = game.onAction(action)
+            override fun onAction(action: GameContract.Action) = gameModel.onAction(action)
         })
-        game.state.observe(viewLifecycleOwner, gameView::setState)
+        gameModel.state.observe(viewLifecycleOwner, gameView::setState)
+        postponeUntil {
+            gameModel.state.awaitValue()
+        }
     }
 }

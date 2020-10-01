@@ -2,7 +2,6 @@ package ru.uxapps.vocup.workflow
 
 import android.view.View
 import androidx.fragment.app.commit
-import androidx.fragment.app.commitNow
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialContainerTransform
@@ -11,6 +10,7 @@ import kotlinx.coroutines.launch
 import ru.uxapps.vocup.R
 import ru.uxapps.vocup.feature.BaseFragment
 import ru.uxapps.vocup.feature.addword.AddListFragment
+import ru.uxapps.vocup.feature.awaitReady
 import ru.uxapps.vocup.feature.dictionary.WordFragment
 import ru.uxapps.vocup.feature.getColorAttr
 
@@ -22,8 +22,12 @@ class AddListWorkflow : BaseFragment(R.layout.workflow_add_list), AddListFragmen
 
     override fun onViewReady(view: View, init: Boolean) {
         if (init) {
-            childFragmentManager.commitNow {
-                add(R.id.add_list_container, AddListFragment::class.java, arguments)
+            val addListFragment = AddListFragment().apply { arguments = this@AddListWorkflow.arguments }
+            childFragmentManager.commit {
+                add(R.id.add_list_container, addListFragment)
+            }
+            postponeUntil {
+                addListFragment.awaitReady()
             }
         }
     }
@@ -31,14 +35,11 @@ class AddListWorkflow : BaseFragment(R.layout.workflow_add_list), AddListFragmen
     override fun openWord(wordId: Long, srcView: View) {
         // exit
         val addListFragment = childFragmentManager.findFragmentById(R.id.add_list_container) as AddListFragment
-        addListFragment.exitTransition = MaterialElevationScale(false).apply {
-            duration = 400
-        }
+        addListFragment.exitTransition = MaterialElevationScale(false)
         addListFragment.postpone()
         // enter
         val wordFragment = WordFragment().apply { arguments = WordFragment.argsOf(wordId) }
         wordFragment.sharedElementEnterTransition = MaterialContainerTransform().apply {
-            duration = 400
             setAllContainerColors(requireContext().getColorAttr(android.R.attr.colorBackground))
         }
         // transition

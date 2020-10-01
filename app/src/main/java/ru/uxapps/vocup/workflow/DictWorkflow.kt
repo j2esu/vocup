@@ -10,11 +10,11 @@ import com.google.android.material.transition.MaterialElevationScale
 import kotlinx.coroutines.launch
 import ru.uxapps.vocup.R
 import ru.uxapps.vocup.feature.BaseFragment
+import ru.uxapps.vocup.feature.ScaleVisibility
 import ru.uxapps.vocup.feature.awaitReady
 import ru.uxapps.vocup.feature.dictionary.DictFragment
-import ru.uxapps.vocup.feature.getColorAttr
 import ru.uxapps.vocup.feature.dictionary.WordFragment
-import ru.uxapps.vocup.feature.ScaleVisibility
+import ru.uxapps.vocup.feature.getColorAttr
 import ru.uxapps.vocup.util.host
 
 class DictWorkflow : BaseFragment(R.layout.workflow_dict), DictFragment.Router, WordFragment.Router {
@@ -62,7 +62,6 @@ class DictWorkflow : BaseFragment(R.layout.workflow_dict), DictFragment.Router, 
         // setup enter
         val wordFrag = WordFragment().apply { arguments = WordFragment.argsOf(wordId) }
         wordFrag.sharedElementEnterTransition = MaterialContainerTransform().apply {
-            duration = 400
             drawingViewId = R.id.dict_container
             setAllContainerColors(requireContext().getColorAttr(android.R.attr.colorBackground))
         }

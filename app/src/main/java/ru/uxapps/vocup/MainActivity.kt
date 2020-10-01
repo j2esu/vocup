@@ -13,6 +13,7 @@ import androidx.transition.Slide
 import androidx.transition.TransitionSet
 import com.google.android.material.transition.Hold
 import com.google.android.material.transition.MaterialContainerTransform
+import com.google.android.material.transition.MaterialElevationScale
 import ru.uxapps.vocup.feature.SoftInputProvider
 import ru.uxapps.vocup.feature.TtsProvider
 import ru.uxapps.vocup.feature.dictionary.WordFragment
@@ -101,7 +102,9 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), NavWorkflow.Rout
         // exit
         val navWorkflow = supportFragmentManager.findFragmentById(R.id.main_container) as NavWorkflow
         navWorkflow.exitTransition = TransitionSet()
-            .addTransition(Hold())
+            .addTransition(MaterialElevationScale(false).apply {
+                excludeTarget(getString(R.string.transit_nav_bar), true)
+            })
             .addTransition(Slide(Gravity.BOTTOM).apply {
                 addTarget(getString(R.string.transit_nav_bar))
             })
@@ -109,7 +112,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), NavWorkflow.Rout
         // enter
         val addListWorkflow = AddListWorkflow().apply { arguments = AddListWorkflow.argsOf(title, list) }
         addListWorkflow.sharedElementEnterTransition = MaterialContainerTransform().apply {
-            duration = 400
             setAllContainerColors(getColorAttr(android.R.attr.colorBackground))
         }
         // transaction

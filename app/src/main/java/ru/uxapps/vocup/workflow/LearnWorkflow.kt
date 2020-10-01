@@ -29,14 +29,11 @@ class LearnWorkflow : BaseFragment(R.layout.workflow_learn), LearnFragment.Host 
     override fun openGame(gameId: Int, srcView: View) {
         // exit
         val learnFragment = childFragmentManager.findFragmentById(R.id.learn_container) as LearnFragment
-        learnFragment.exitTransition = MaterialElevationScale(false).apply {
-            duration = 400
-        }
+        learnFragment.exitTransition = MaterialElevationScale(false)
         learnFragment.postpone()
         // enter
         val gameFragment = GameFragment().apply { arguments = GameFragment.argsOf(gameId) }
         gameFragment.sharedElementEnterTransition = MaterialContainerTransform().apply {
-            duration = 400
             drawingViewId = R.id.learn_container
             setAllContainerColors(requireContext().getColorAttr(android.R.attr.colorBackground))
         }

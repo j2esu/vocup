@@ -7,6 +7,7 @@ import androidx.lifecycle.observe
 import kotlinx.coroutines.launch
 import ru.uxapps.vocup.data.api.Kit
 import ru.uxapps.vocup.feature.BaseFragment
+import ru.uxapps.vocup.feature.awaitValue
 import ru.uxapps.vocup.feature.explore.databinding.FragmentExploreBinding
 import ru.uxapps.vocup.feature.explore.di.ExploreViewModel
 import ru.uxapps.vocup.feature.explore.model.Explore
@@ -40,6 +41,9 @@ class ExploreFragment : BaseFragment(R.layout.fragment_explore) {
                     lifecycleScope.launch { undo() }
                 }
             }
+        }
+        postponeUntil {
+            exploreModel.kits.awaitValue()
         }
     }
 }
