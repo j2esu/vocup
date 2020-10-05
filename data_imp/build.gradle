@@ -22,6 +22,13 @@ android {
                         "room.expandProjection": "true"]
             }
         }
+
+        // import api keys
+        def localProps = new Properties()
+        localProps.load(new FileInputStream(rootProject.file("local.properties")))
+        buildConfigField("String", "PREDICTOR_API_KEY", "\"" + localProps['predictor.key'] + "\"")
+        buildConfigField("String", "DICTIONARY_API_KEY", "\"" + localProps['dictionary.key'] + "\"")
+        buildConfigField("String", "DICTIONARY_API_REGION", "\"" + localProps['dictionary.region'] + "\"")
     }
 
     buildTypes {

@@ -2,6 +2,7 @@ package ru.uxapps.vocup.data.imp.api.web
 
 import retrofit2.http.GET
 import retrofit2.http.Query
+import ru.uxapps.vocup.data.imp.BuildConfig
 
 /**
  * https://yandex.com/dev/predictor/doc/dg/concepts/api-overview-docpage/
@@ -17,7 +18,7 @@ internal interface PredictorService {
         )
     }
 
-    @GET("complete?key=pdct.1.1.20200812T134518Z.0d0be6862667e89f.df9b165743a57de04d4a7e24ea15ba580dc900a8")
+    @GET("complete?key=${BuildConfig.PREDICTOR_API_KEY}")
     suspend fun complete(
         @Query("q") text: String,
         @Query("lang") lang: String
