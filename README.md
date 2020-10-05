@@ -15,9 +15,9 @@
 ## API keys
 
 Add following keys to your **local.properties**:
-- dictionary.key=<your_key>
-- dictionary.region=<your_region>
-- predictor.key=pdct.1.1.20200812T134518Z.0d0be6862667e89f.df9b165743a57de04d4a7e24ea15ba580dc900a8
+- **dictionary.key**=*<your_key>*
+- **dictionary.region**=*<your_region>*
+- **predictor.key**=*<your_key>*
 
 Otherwise, *ApiStub* will be used
 
