@@ -5,3 +5,8 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     api "org.jetbrains.kotlinx:kotlinx-coroutines-core:${rootProject.ext.coroutines_version}"
 }
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}

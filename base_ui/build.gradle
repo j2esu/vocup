@@ -24,7 +24,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    testImplementation 'junit:junit:4.13'
+    testImplementation "junit:junit:${rootProject.ext.junit_version}"
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
 
     api 'com.google.android.material:material:1.2.1'
