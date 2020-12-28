@@ -74,7 +74,7 @@ class ApiImp(private val context: Context) : Api {
         val inputLang = if (input.isAscii()) "en" else userLang.code
         if (PredictorService.SUPPORTED_LANGUAGES.contains(inputLang)) {
             val response = predictor.complete(input, inputLang)
-            if (!response.endOfWord && response.pos <= 0) {
+            if (response.pos <= 0) {
                 return response.text.map { input.substring(0, input.length + response.pos) + it }
             }
         }

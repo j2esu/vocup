@@ -67,11 +67,13 @@ class RepoImp(
 
     override suspend fun getDefinitions(word: String): List<Def> {
         val predictions = try {
-            api.getPredictions(word, currentLang).take(2)
+            api.getPredictions(word, currentLang)
         } catch (e: IOException) {
-            emptyList<String>()
+            emptyList()
         }
-        return api.getDefinitions((listOf(word) + predictions).distinct(), currentLang)
+        return api.getDefinitions((listOf(word) + predictions).distinct(), currentLang).sortedBy {
+            !it.text.equals(word, true) && it.translations.isEmpty()
+        }
     }
 
     override suspend fun getDefinitions(words: List<String>): List<Def> =

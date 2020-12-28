@@ -18,7 +18,7 @@ internal interface PredictorService {
         )
     }
 
-    @GET("complete?key=${BuildConfig.PREDICTOR_API_KEY}")
+    @GET("complete?limit=5&key=${BuildConfig.PREDICTOR_API_KEY}")
     suspend fun complete(
         @Query("q") text: String,
         @Query("lang") lang: String
