@@ -1,5 +1,10 @@
 # VocUp - Personal dictionary & Vocabulary builder
 
+#### Download it from Google Play:
+https://play.google.com/store/apps/details?id=ru.uxapps.vocup
+
+*NOTE: Development now moved to private fork*
+
 ## Architecture highlights
 
 - Flow / channel (state & events) if possible
