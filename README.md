@@ -5,6 +5,8 @@ https://play.google.com/store/apps/details?id=ru.uxapps.vocup
 
 *NOTE: Development now moved to private fork*
 
+[See presentation slides](https://docs.google.com/presentation/d/1edAKGaSarXKcX2ywEOGfAZ38ZScnGRAbYVjndpPGDt0/edit?usp=sharing)
+
 ## Architecture highlights
 
 - Flow / channel (state & events) if possible
