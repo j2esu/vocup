@@ -4,7 +4,6 @@ apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion rootProject.ext.sdk_version
-    buildToolsVersion "30.0.2"
 
     defaultConfig {
         minSdkVersion 21
@@ -14,12 +13,11 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments += [
-                        "room.schemaLocation"  : "$projectDir/schemas".toString(),
-                        "room.incremental"     : "true",
-                        "room.expandProjection": "true"]
+        kapt {
+            arguments {
+                arg("room.schemaLocation", "$projectDir/schemas".toString())
+                arg("room.incremental", "true")
+                arg("room.expandProjection", "true")
             }
         }
 
@@ -38,21 +36,15 @@ android {
         }
     }
 
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-
     kotlinOptions {
-        jvmTarget = "1.8"
-        freeCompilerArgs += kotlin_args
+        freeCompilerArgs += rootProject.ext.kotlin_args
     }
 }
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     testImplementation "junit:junit:${rootProject.ext.junit_version}"
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation "androidx.test.ext:junit:${rootProject.ext.android_junit_version}"
 
     implementation project(path: ':data_api')
     implementation project(path: ':base_util')
@@ -61,7 +53,8 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-moshi:2.9.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
 
-    implementation 'androidx.room:room-runtime:2.2.6'
-    kapt 'androidx.room:room-compiler:2.2.6'
-    implementation 'androidx.room:room-ktx:2.2.6'
+    def room_version = '2.3.0'
+    implementation "androidx.room:room-runtime:${room_version}"
+    kapt "androidx.room:room-compiler:${room_version}"
+    implementation "androidx.room:room-ktx:${room_version}"
 }
