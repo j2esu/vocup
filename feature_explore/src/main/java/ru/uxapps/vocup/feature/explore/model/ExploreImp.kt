@@ -11,7 +11,6 @@ import ru.uxapps.vocup.feature.explore.model.Explore.State.*
 import ru.uxapps.vocup.util.MutableLiveEvent
 import ru.uxapps.vocup.util.send
 import java.io.IOException
-import java.util.*
 
 internal class ExploreImp(
     private val scope: CoroutineScope,
@@ -23,10 +22,10 @@ internal class ExploreImp(
     override val kits = retry.receiveAsFlow().onStart { emit(Unit) }.transformLatest {
         emit(Loading)
         try {
-            val lowerWordsSet = repo.getAllWords().map { words -> words.map { it.text.toLowerCase() }.toSet() }
+            val lowerWordsSet = repo.getAllWords().map { words -> words.map { it.text.lowercase() }.toSet() }
             emitAll(lowerWordsSet.combine(repo.getWordKits()) { wordsSet, kits ->
                 Data(kits.map { kit ->
-                    KitItem(kit, kit.words.filterNot { wordsSet.contains(it.toLowerCase(Locale.ROOT)) })
+                    KitItem(kit, kit.words.filterNot { wordsSet.contains(it.lowercase()) })
                 })
             })
         } catch (e: IOException) {
@@ -37,7 +36,7 @@ internal class ExploreImp(
     override val onKitDismissed = MutableLiveEvent<suspend () -> Unit>()
 
     override fun onRetry() {
-        retry.offer(Unit)
+        retry.trySend(Unit)
     }
 
     override fun onDismiss(kitItem: KitItem) {

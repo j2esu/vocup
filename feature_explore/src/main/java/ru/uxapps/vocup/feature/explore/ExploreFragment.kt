@@ -3,7 +3,6 @@ package ru.uxapps.vocup.feature.explore
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.observe
 import kotlinx.coroutines.launch
 import ru.uxapps.vocup.data.api.Kit
 import ru.uxapps.vocup.feature.BaseFragment
@@ -25,7 +24,8 @@ class ExploreFragment : BaseFragment(R.layout.fragment_explore) {
 
     private val vm by viewModels<ExploreViewModel>()
 
-    @Inject internal lateinit var exploreModel: Explore
+    @Inject
+    internal lateinit var exploreModel: Explore
 
     override fun onViewReady(view: View, init: Boolean) {
         vm.exploreComponent.inject(this)
