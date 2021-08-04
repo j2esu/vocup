@@ -6,6 +6,7 @@ import androidx.transition.Transition
 import androidx.transition.TransitionListenerAdapter
 import androidx.transition.TransitionManager
 import com.google.android.material.transition.MaterialSharedAxis
+import ru.uxapps.vocup.feature.ScaleVisibility
 import ru.uxapps.vocup.feature.back
 import ru.uxapps.vocup.feature.getString
 import ru.uxapps.vocup.feature.learn.R
@@ -14,7 +15,6 @@ import ru.uxapps.vocup.feature.learn.databinding.ItemAnswerBinding
 import ru.uxapps.vocup.feature.learn.game.TextToAnswersContract.Action.*
 import ru.uxapps.vocup.feature.learn.game.TextToAnswersContract.State.*
 import ru.uxapps.vocup.feature.learn.game.TextToAnswersContract.Task
-import ru.uxapps.vocup.feature.ScaleVisibility
 
 internal class TextToAnswersView(private val bind: GameTextToAnswersBinding) : GameContract.View {
 

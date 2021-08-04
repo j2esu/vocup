@@ -2,7 +2,6 @@ package ru.uxapps.vocup.feature.learn
 
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.observe
 import ru.uxapps.vocup.feature.BaseFragment
 import ru.uxapps.vocup.feature.awaitValue
 import ru.uxapps.vocup.feature.learn.databinding.FragmentLearnBinding
@@ -21,7 +20,8 @@ class LearnFragment : BaseFragment(R.layout.fragment_learn) {
 
     private val vm by viewModels<LearnViewModel>()
 
-    @Inject internal lateinit var gameListModel: GameListModel
+    @Inject
+    internal lateinit var gameListModel: GameListModel
 
     override fun onViewReady(view: View, init: Boolean) {
         vm.learnComponent.inject(this)
