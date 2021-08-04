@@ -10,7 +10,6 @@ import androidx.annotation.StringRes
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.FragmentActivity
 import androidx.viewbinding.ViewBinding
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 fun <T : ViewBinding> ViewGroup.inflateBind(inflateFunc: (LayoutInflater, ViewGroup, Boolean) -> T) =
     inflateFunc(LayoutInflater.from(context), this, false)
@@ -29,14 +28,6 @@ fun Context.getColorAttr(@AttrRes colorAttr: Int): Int {
     val value = TypedValue()
     theme.resolveAttribute(colorAttr, value, true)
     return value.data
-}
-
-fun FloatingActionButton.animateVisible(visible: Boolean) {
-    if (!visible && !isOrWillBeHidden) {
-        hide()
-    } else if (visible && !isOrWillBeShown) {
-        show()
-    }
 }
 
 fun ViewBinding.getString(@StringRes resId: Int) = root.context.getString(resId)

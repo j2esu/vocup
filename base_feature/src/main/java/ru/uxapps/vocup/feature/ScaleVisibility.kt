@@ -3,9 +3,7 @@ package ru.uxapps.vocup.feature
 import android.animation.Animator
 import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
-import android.content.Context
 import android.graphics.Outline
-import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewOutlineProvider
@@ -15,19 +13,16 @@ import android.widget.ImageView
 import androidx.transition.TransitionValues
 import androidx.transition.Visibility
 
-class ScaleVisibility : Visibility {
+class ScaleVisibility : Visibility() {
 
     companion object {
         private const val DEF_DURATION = 200L
     }
 
-    constructor() : super()
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
-
     override fun onAppear(
         sceneRoot: ViewGroup, view: View,
         startValues: TransitionValues?, endValues: TransitionValues?
-    ): Animator? {
+    ): Animator {
         val scaleX = PropertyValuesHolder.ofFloat(View.SCALE_X, 0f, 1f)
         val scaleY = PropertyValuesHolder.ofFloat(View.SCALE_Y, 0f, 1f)
         // need to immediately set scale to avoid blink until start
