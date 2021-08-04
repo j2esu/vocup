@@ -1,6 +1,5 @@
 package ru.uxapps.vocup
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
@@ -28,12 +27,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), NavWorkflow.Rout
     TtsProvider {
 
     override val softInput by lazy { SoftInputImp(this) }
-    override val tts by lazy {
-        TtsImp(this, this, object : TtsImp.Callback {
-            override fun onStartActivity(intent: Intent, requestCode: Int?) =
-                startActivityForResult(intent, requestCode ?: -1)
-        })
-    }
+    override val tts by lazy { TtsImp(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,12 +38,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), NavWorkflow.Rout
                 setPrimaryNavigationFragment(navWorkflow)
             }
         }
+        tts // init tts here, cause it uses activity result system
         configureInputMode()
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        tts.onActivityResult(resultCode)
     }
 
     private fun configureInputMode() {
