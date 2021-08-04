@@ -3,7 +3,6 @@ package ru.uxapps.vocup.util
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.observe
 
 class Event<T>(val data: T) {
 

@@ -49,7 +49,7 @@ internal class AddListImp(
     override val languages = lang.languages
 
     override fun onRetry() {
-        load.offer(Unit)
+        load.trySend(Unit)
     }
 
     override fun onSave(item: DefItem) {
