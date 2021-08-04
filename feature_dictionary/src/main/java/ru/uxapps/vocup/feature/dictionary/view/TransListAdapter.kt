@@ -78,9 +78,7 @@ internal class TransListAdapter(
             }
         }
 
-        override fun onSwiped(viewHolder: ViewHolder, direction: Int) {
-            // TODO: 8/16/2020
-        }
+        override fun onSwiped(viewHolder: ViewHolder, direction: Int) {}
     })
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {

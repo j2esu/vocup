@@ -1,6 +1,7 @@
 package ru.uxapps.vocup.feature.dictionary.view
 
 import android.view.View
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
@@ -28,7 +29,7 @@ internal class DictView(
             adapter = listAdapter
             layoutManager = LinearLayoutManager(context)
             val swipeDecor =
-                SwipeDismissDecor(context.getDrawable(R.drawable.delete_item_hint_bg)!!) {
+                SwipeDismissDecor(AppCompatResources.getDrawable(context, R.drawable.delete_item_hint_bg)!!) {
                     callback.onSwipe(listAdapter.currentList[it.adapterPosition])
                 }
             addItemDecoration(swipeDecor.also { it.attachToRecyclerView(this) })

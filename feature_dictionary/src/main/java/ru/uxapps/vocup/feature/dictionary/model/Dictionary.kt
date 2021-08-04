@@ -12,4 +12,3 @@ internal interface Dictionary {
 
     fun onRemove(word: Word)
 }
-

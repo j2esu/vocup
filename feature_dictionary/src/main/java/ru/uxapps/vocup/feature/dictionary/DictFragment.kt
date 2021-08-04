@@ -3,7 +3,6 @@ package ru.uxapps.vocup.feature.dictionary
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.observe
 import kotlinx.coroutines.launch
 import ru.uxapps.vocup.data.api.Word
 import ru.uxapps.vocup.feature.BaseFragment
@@ -25,7 +24,8 @@ class DictFragment : BaseFragment(R.layout.fragment_dict) {
 
     private val vm by viewModels<DictViewModel>()
 
-    @Inject internal lateinit var dictModel: Dictionary
+    @Inject
+    internal lateinit var dictModel: Dictionary
 
     override fun onViewReady(view: View, init: Boolean) {
         vm.dictComponent.inject(this)

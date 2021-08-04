@@ -4,7 +4,6 @@ import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.observe
 import ru.uxapps.vocup.feature.BaseFragment
 import ru.uxapps.vocup.feature.awaitValue
 import ru.uxapps.vocup.feature.dictionary.databinding.FragmentWordBinding
@@ -31,7 +30,8 @@ class WordFragment : BaseFragment(R.layout.fragment_word), AddTransDialog.Host, 
 
     private val vm by viewModels<WordViewModel>()
 
-    @Inject internal lateinit var detailsModel: WordDetails
+    @Inject
+    internal lateinit var detailsModel: WordDetails
 
     override fun onViewReady(view: View, init: Boolean) {
         vm.getWordComponent(wordId).inject(this)

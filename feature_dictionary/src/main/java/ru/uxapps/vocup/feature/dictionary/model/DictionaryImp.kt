@@ -21,7 +21,7 @@ internal class DictionaryImp(
     override val words: LiveData<List<Word>> = repo.getAllWords().asLiveData(Dispatchers.IO)
     override val loading: LiveData<Boolean> =
         repo.getAllWords()
-            .map { it as List<Word>? }
+            .map<List<Word>, List<Word>?> { it }
             .onStart { emit(null) }
             .map { it == null }
             .asLiveData(Dispatchers.IO)
