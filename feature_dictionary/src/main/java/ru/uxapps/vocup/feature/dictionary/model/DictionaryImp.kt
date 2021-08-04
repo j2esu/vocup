@@ -2,10 +2,10 @@ package ru.uxapps.vocup.feature.dictionary.model
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.liveData
+import androidx.lifecycle.map
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import ru.uxapps.vocup.data.api.Repo
 import ru.uxapps.vocup.data.api.Word
@@ -19,12 +19,10 @@ internal class DictionaryImp(
 
     override val onWordRemoved = MutableLiveEvent<suspend () -> Unit>()
     override val words: LiveData<List<Word>> = repo.getAllWords().asLiveData(Dispatchers.IO)
-    override val loading: LiveData<Boolean> =
-        repo.getAllWords()
-            .map<List<Word>, List<Word>?> { it }
-            .onStart { emit(null) }
-            .map { it == null }
-            .asLiveData(Dispatchers.IO)
+    override val loading: LiveData<Boolean> = liveData {
+        emit(true)
+        emitSource(words.map { false })
+    }
 
     override fun onRemove(word: Word) {
         scope.launch {
