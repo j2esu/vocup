@@ -7,7 +7,7 @@ data class Word(
     val text: String,
     val translations: List<String>,
     val pron: String?,
-    val progress: Int = Random.nextInt(100),
+    val progress: Int = Random.nextInt(100), // TODO: 8/4/2021 increase progress by learning
     val created: Long = System.nanoTime()
 )
 

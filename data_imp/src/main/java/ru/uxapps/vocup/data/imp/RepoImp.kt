@@ -6,7 +6,7 @@ import androidx.core.math.MathUtils
 import androidx.core.os.LocaleListCompat
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.channels.sendBlocking
+import kotlinx.coroutines.channels.trySendBlocking
 import kotlinx.coroutines.flow.*
 import ru.uxapps.vocup.data.api.*
 import ru.uxapps.vocup.data.imp.api.Api
@@ -31,7 +31,7 @@ class RepoImp(
     override fun getWord(wordId: Long): Flow<Word?> = db.getWord(wordId)
 
     override fun getTargetLanguage(): Flow<Language> = callbackFlow<String> {
-        val listener = SharedPreferences.OnSharedPreferenceChangeListener { _, key -> sendBlocking(key) }
+        val listener = SharedPreferences.OnSharedPreferenceChangeListener { _, key -> trySendBlocking(key) }
         prefs.registerOnSharedPreferenceChangeListener(listener)
         awaitClose { prefs.unregisterOnSharedPreferenceChangeListener(listener) }
     }.filter { it == KEY_LANG }.map { currentLang }.onStart { emit(currentLang) }
@@ -112,11 +112,11 @@ class RepoImp(
 
     override suspend fun dismissKit(kit: Kit) {
         dismissedKits = dismissedKits + kit.id
-        dismissedKitsChanged.offer(Unit)
+        dismissedKitsChanged.trySend(Unit)
     }
 
     override suspend fun restoreKit(kit: Kit) {
         dismissedKits = dismissedKits - kit.id
-        dismissedKitsChanged.offer(Unit)
+        dismissedKitsChanged.trySend(Unit)
     }
 }

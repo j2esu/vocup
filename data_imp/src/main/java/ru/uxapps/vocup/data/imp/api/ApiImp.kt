@@ -16,7 +16,6 @@ import ru.uxapps.vocup.data.imp.api.web.DictionaryApi
 import ru.uxapps.vocup.data.imp.api.web.LookupRequest
 import ru.uxapps.vocup.data.imp.api.web.PredictorService
 import java.io.IOException
-import java.util.*
 
 class ApiImp(private val context: Context) : Api {
 
@@ -87,7 +86,7 @@ class ApiImp(private val context: Context) : Api {
 
     override suspend fun getCompletions(input: String): List<String> {
         return if (input.isAscii()) {
-            val lowerInput = input.toLowerCase(Locale.ROOT)
+            val lowerInput = input.lowercase()
             localApi.frequentWords().findCompletions(input, 10)
                 .map { it.text }
                 .toMutableList().apply {
@@ -107,7 +106,7 @@ class ApiImp(private val context: Context) : Api {
         }.also { kitsCache = it }
     }
 
-    private fun String.isAscii() = toCharArray().all { it.toInt() < 128 }
+    private fun String.isAscii() = toCharArray().all { it.code < 128 }
 
     private inline fun <T> withHttp(action: () -> T): T {
         return try {
