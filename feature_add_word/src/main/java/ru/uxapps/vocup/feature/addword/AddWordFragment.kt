@@ -2,7 +2,6 @@ package ru.uxapps.vocup.feature.addword
 
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.observe
 import ru.uxapps.vocup.data.api.Language
 import ru.uxapps.vocup.feature.BaseFragment
 import ru.uxapps.vocup.feature.addword.databinding.FragmentAddWordBinding
@@ -22,7 +21,8 @@ class AddWordFragment : BaseFragment(R.layout.fragment_add_word) {
 
     private val vm by viewModels<AddWordViewModel>()
 
-    @Inject internal lateinit var addWordModel: AddWord
+    @Inject
+    internal lateinit var addWordModel: AddWord
 
     override fun onViewReady(view: View, init: Boolean) {
         vm.addWordComponent.inject(this)

@@ -103,7 +103,7 @@ internal class AddWordImp(
     override val languages = lang.languages
 
     override fun onInput(text: String) {
-        actions.offer(Action.Input(text))
+        actions.trySend(Action.Input(text))
     }
 
     override fun onSave(item: DefItem) {
@@ -113,10 +113,10 @@ internal class AddWordImp(
     override fun onChooseLang(lang: Language) = this.lang.onChooseLang(lang)
 
     override fun onRetry() {
-        retry.offer(Unit)
+        retry.trySend(Unit)
     }
 
     override fun onSearch(text: String) {
-        actions.offer(Action.Search(text))
+        actions.trySend(Action.Search(text))
     }
 }
